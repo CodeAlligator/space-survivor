@@ -1,0 +1,56 @@
+SpaceSurvivor
+	EnemyShip[] enemyShips
+	int time
+	main(String[] args)
+	initialize()
+	startAnimation()
+	updateGraphics()
+	paint(Graphics g)
+	run()
+	stop()
+	keyListener()
+	mouseListener()
+PlayerShip
+	double x, y
+	double dx, dy
+	int shieldsRemaining
+	int ammoRemaining
+	move(double x, double y)
+	draw()
+	boolean collision(Ship ship)
+Score
+	Get score method
+	Set score method
+	Add to score method
+	Draw score method
+EnemyShip interface
+	double x, y
+	double dx, dy
+	Boolean isAlive
+	move()
+	draw()
+	getX()
+	getY()
+Multiple ship classes that implement the enemy ship interface
+	Default
+	Builder
+	Confused
+	Seeker
+	Split
+	Avoider
+	Blob
+PowerUp interface
+	getX()
+	getY()
+ShieldPowerUp implements PowerUp
+	double x, y
+	draw()
+	getX()
+	getY()
+AmmoPowerUp implements PowerUp
+	double x, y
+	draw()
+	getX()
+	getY()
+SpaceKeyListener extends KeyAdapter: key listener used for game
+SpaceMouseListener: mouse listener used for game
