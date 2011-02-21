@@ -4,6 +4,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+/**
+ * 
+ * @author Paul
+ *
+ */
 public class GameMouseListener implements MouseMotionListener, MouseListener {
 
 	@Override

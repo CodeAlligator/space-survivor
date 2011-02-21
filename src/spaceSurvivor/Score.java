@@ -1,5 +1,10 @@
 package spaceSurvivor;
 
+/**
+ * 
+ * @author Paul
+ *
+ */
 public class Score {
 
 	public Score() {

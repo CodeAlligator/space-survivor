@@ -3,6 +3,11 @@ package spaceSurvivor;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * 
+ * @author Paul
+ *
+ */
 public class GameKeyListener implements KeyListener{
 
 	@Override

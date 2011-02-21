@@ -1,5 +1,8 @@
 package spaceSurvivor;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import spaceSurvivor.ship.EnemyShip;
@@ -37,6 +40,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	private Thread anim = null;
 	
 	/**
+	 * Player's ship sprite
+	 */
+    private Image playerShipImage;
+    
+	/**
 	 * Default constructor.
 	 */
 	public SpaceSurvivor() {
@@ -45,6 +53,12 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		addMouseListener(new GameMouseListener());
         addKeyListener(new GameKeyListener());
 		
+        //	load player's ship sprite images
+        /*
+         * TODO create sprites
+         * playerShipImage = new ImageIcon(getClass().getResource("sprites/playerShip.gif")).getImage();
+         */
+        
 		//	start the animation thread
 		if (anim == null) {
             anim = new Thread(this);
