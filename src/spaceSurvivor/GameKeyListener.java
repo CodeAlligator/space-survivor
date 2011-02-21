@@ -14,9 +14,9 @@ public class GameKeyListener implements KeyListener{
 	public void keyPressed(KeyEvent e) {
             int c = e.getKeyCode();
             switch (c) {
-            case KeyEvent.VK_W: SpaceSurvivor.player.setUpKey(true);
+            case KeyEvent.VK_W: SpaceSurvivor.getShip().setUpKey(true);
                 break;
-            case KeyEvent.VK_A: player.setLeftKey(true);
+            case KeyEvent.VK_A: SpaceSurvivor.player.setLeftKey(true);
                 break;
             case KeyEvent.VK_S: player.setDownKey(true);
                 break;

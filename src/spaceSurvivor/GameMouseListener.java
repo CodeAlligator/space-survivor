@@ -19,8 +19,8 @@ public class GameMouseListener implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+            player.setGunX(e.getX());
+            player.setGunY(e.getY());
 	}
 
 	@Override

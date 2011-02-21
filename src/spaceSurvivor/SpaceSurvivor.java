@@ -96,4 +96,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	private void finishOff() {
 		// TODO implement this method
 	}
+
+        public PlayerShip getShip(){
+            return player;
+        }
 }
