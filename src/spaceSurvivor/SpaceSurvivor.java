@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import spaceSurvivor.ship.EnemyShip;
+import spaceSurvivor.ship.PlayerShip;
 
 /**
  * <code>SpaceSurvivor</code> is the main class for this game.
@@ -42,8 +43,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	/**
 	 * Player's ship sprite
 	 */
-    private Image playerShipImage;
-    
+        private Image playerShipImage;
+
+        PlayerShip player;
 	/**
 	 * Default constructor.
 	 */
