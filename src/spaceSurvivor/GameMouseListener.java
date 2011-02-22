@@ -63,11 +63,11 @@ public class GameMouseListener implements MouseMotionListener, MouseListener {
 		return mouseY;
 	}
 
-        public boolean getClicked(){
-            return clicked;
-        }
+    public boolean getClicked(){
+        return clicked;
+    }
 
-        public void clickReset(){
-            clicked = false;
-        }
+    public void clickReset(){
+        clicked = false;
+    }
 }

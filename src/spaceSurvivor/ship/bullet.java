@@ -1,7 +1,9 @@
 package spaceSurvivor.ship;
 import java.awt.*;
+
+import spaceSurvivor.SpaceSurvivor;
 /**
- *
+ * <code>Bullet</code>
  * @author Andrew
  */
 public class bullet {
@@ -41,7 +43,7 @@ double x,y; //position
             x += xdir;
             y += ydir;
         }
-        if (y+RADIUS<0 || y>600+RADIUS || x+RADIUS<0 || x>800+RADIUS)
+        if (y+RADIUS<0 || y>SpaceSurvivor.GAME_HEIGHT+RADIUS || x+RADIUS<0 || x>SpaceSurvivor.GAME_WIDTH+RADIUS)
             active = false;
     }
 

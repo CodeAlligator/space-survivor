@@ -2,6 +2,8 @@ package spaceSurvivor.ship;
 import java.awt.*;
 import java.lang.Math.*;
 
+import spaceSurvivor.SpaceSurvivor;
+
 /**
  * Description: The user controlled space ship
  * COSC 3550 Assignment 4
@@ -36,11 +38,11 @@ public class PlayerShip {
         // move ship position
         if (upKey && y-RADIUS>0)
             y -= SPEED;
-	if (downKey && y+RADIUS<600)
+	if (downKey && y+RADIUS<SpaceSurvivor.GAME_HEIGHT)
 	    y += SPEED;
         if (leftKey && x-RADIUS>0)
 	    x -= SPEED;
-	if (rightKey && x+RADIUS<800)
+	if (rightKey && x+RADIUS<SpaceSurvivor.GAME_WIDTH)
 	    x += SPEED;
 
         // move gun position
