@@ -21,6 +21,7 @@ public class PlayerShip {
     
     //gun variables
     int gunPointX = 100, gunPointY = 100;   //gun direction
+    double tipx,tipy;               //gun tip position
     int[] gunPolyX = new int [4];   //gun shape x coordinates
     int[] gunPolyY = new int [4];   //gun shape y coordinates
     final static int GUNLEN = 12;   //gun's length
@@ -42,7 +43,7 @@ public class PlayerShip {
 	    x += SPEED;
 
         // move gun position
-        double theta, tipx, tipy;
+        double theta;
         if (gunPointX-(double)x==0 && gunPointY>y)
             theta = Math.PI/2;
         else if(gunPointX-(double)x==0 && gunPointY<y)
@@ -108,5 +109,21 @@ public class PlayerShip {
 
     public void setGunY(int val){
 	gunPointY = val;
+    }
+
+    public int getPosX(){
+	return x;
+    }
+
+    public int getPosY(){
+	return y;
+    }
+
+    public double getGunX(){
+	return tipx;
+    }
+
+    public double getGunY(){
+	return tipy;
     }
 }
