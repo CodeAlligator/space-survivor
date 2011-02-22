@@ -17,12 +17,13 @@ import javax.swing.JFrame;
 
 import spaceSurvivor.ship.EnemyShip;
 import spaceSurvivor.ship.PlayerShip;
-import spaceSurvivor.ship.bullet;
+import spaceSurvivor.ship.Bullet;
 
 /**
- * <code>SpaceSurvivor</code> is the main class for this game.
+ * <code>SpaceSurvivor</code> is the main (GUI) class for this game.
+ * Some methods and additional source code are from Dr. Slattery:
+ * http://www.mscs.mu.edu/~mikes/cosc3550/demos/ForestFire-FullScreen/ForestFire.java
  * @author Paul
- *
  */
 public class SpaceSurvivor extends JFrame implements Runnable{
 	/**
@@ -53,10 +54,17 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 */
 	private EnemyShip[] enemyShips;
 	
-        //bullet variables  ~Andrew
-        bullet[] shots;
-        int nextShot;
-        private static final int MAXSHOTS = 30;
+    //Bullet variables  ~Andrew
+	/**
+	 * Array of player's bullets.
+	 */
+    private Bullet[] shots;
+    private int nextShot;
+    
+    /**
+     * Maximum number of bullets player has.
+     */
+    private static final int MAXSHOTS = 30;
 
 	/**
 	 * Time in current level.
@@ -69,9 +77,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	private Thread anim = null;
 	
 	/**
-	 * Player's ship sprite
+	 * Player's ship sprite.
 	 */
-        private Image playerShipImage;
+	private Image playerShipImage;
 
 	/**
 	 * Player's ship.
@@ -92,18 +100,19 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * Default constructor.
 	 */
 	public SpaceSurvivor() {
-		super("Space Survivor");
-
+		super("Space Survivor");	//	Instantiate new JFrame with title
+		
         initFullScreen();
         readyForTermination();
 		
-            //	create listeners for keyboard and mouse
+        //	create listener for keyboard
 		gameKeyListener = new GameKeyListener();
 		addKeyListener(gameKeyListener);
-	
+		
+		//	create listeners for mouse
 		gameMouseListener = new GameMouseListener();
-		addMouseListener(gameMouseListener);
-		addMouseMotionListener(gameMouseListener); //added by Andrew so mouse works
+		addMouseListener(gameMouseListener);		//	handles mouse click, enter, exit, press, release
+		addMouseMotionListener(gameMouseListener);	//	handles mouse drag and move
 		
         //	load player's ship sprite images
         /*
@@ -120,16 +129,22 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         }
 	}
 	
+	/**
+	 * 
+	 */
 	public void setLevel1(){
 		player = new PlayerShip();
-
-                //initialize bullets  ~Andrew
-                shots = new bullet[MAXSHOTS];
-                for (int i=0;i<MAXSHOTS;i++)
-                    shots[i]=new bullet(player);
-                nextShot = 0;
+		
+        //initialize bullets  ~Andrew
+        shots = new Bullet[MAXSHOTS];
+        for (int i=0;i<MAXSHOTS;i++)
+            shots[i]=new Bullet(player);
+        nextShot = 0;
 	}
 	
+	/**
+	 * 
+	 */
 	private void initFullScreen()
     {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -177,9 +192,13 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             });
     }
 	
-	private void setDisplayMode(int width, int height, int bitDepth)
-    // attempt to set the display mode to the given width, height, and bit depth
-    {
+	/**
+	 * Attempts to set the display mode to the given width, height, and bit depth.
+	 * @param width
+	 * @param height
+	 * @param bitDepth
+	 */
+	private void setDisplayMode(int width, int height, int bitDepth){
         if (!gd.isDisplayChangeSupported()) {
             System.out.println("Display mode changing not supported");
             return;
@@ -200,31 +219,32 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             Thread.sleep(1000);  // 1 sec
         }
         catch(InterruptedException ex){}
-    }  // end of setDisplayMode()
-
-    private void setBufferStrategy()
-    /* Switch on page flipping: NUM_BUFFERS == 2 so
-    there will be a 'primary surface' and one 'back buffer'.
+    }
+	
+	/**
+	 *  Switch on page flipping: NUM_BUFFERS == 2 so there will be a 'primary surface' 
+	 *  and one 'back buffer'.
      */
-    { try {
+    private void setBufferStrategy(){
+    	try {
             createBufferStrategy(NUM_BUFFERS);
         }
         catch (Exception e) {
             System.out.println("Error while creating buffer strategy");
             System.exit(0);
         }
+        
         bufferStrategy = getBufferStrategy();  // store for later
     }
 	
-    /* Tasks to do before terminating. Called at end of run()
-    and via the shutdown hook in readyForTermination().
-
-    The call at the end of run() is not really necessary, but
-    included for safety. The flag stops the code being called
-    twice.
+    /**
+     * Tasks to do before terminating. Called at end of run() and via the shutdown 
+     * hook in readyForTermination(). The call at the end of run() is not really 
+     * necessary, but included for safety. The flag stops the code being called twice.
      */
-    private void finishOff()
-    { // System.out.println("finishOff");
+    private void finishOff(){
+    	System.out.println("finishOff");
+    	
         if (!finishedOff) {
             finishedOff = true;
             restoreScreen();
@@ -296,19 +316,18 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     }
     
 	/**
-	 * 
+	 * Main animation loop of this game.
 	 */
 	@Override
 	public void run() {
 		while(anim != null){
 
-                        // move the bullets  ~Andrew
-                        for (int i=0; i<MAXSHOTS; i++)
-                            shots[i].move();
+            // move the bullets  ~Andrew
+            for (int i=0; i<MAXSHOTS; i++)
+                shots[i].move();
 
 			player.move();
 			screenUpdate();
-			//System.out.println("updated");
 			
 			//	check for player input (mouse and keyboard)
 			player.setGunX(gameMouseListener.getMouseX());
@@ -317,32 +336,33 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 			player.setDownKey(gameKeyListener.isKeyDownPressed());
 			player.setLeftKey(gameKeyListener.isKeyLeftPressed());
 			player.setRightKey(gameKeyListener.isKeyRightPressed());
-			player.setSpacebarKey(gameKeyListener.isKeySpacebarPressed());
 
-                        // create new bullets
-                        if (gameMouseListener.getClicked()){
-                            gameMouseListener.clickReset();
-                            if (!shots[nextShot].isActive()){
-                                shots[nextShot].activate();
-                                nextShot = (nextShot+1) %MAXSHOTS;
-                            }
-                        }
-
+            // create new bullets
+            if (gameMouseListener.getClicked()){
+                gameMouseListener.clickReset();
+                if (!shots[nextShot].isActive()){
+                    shots[nextShot].activate();
+                    nextShot = (nextShot+1) %MAXSHOTS;
+                }
+            }
+            
+            //	Pause for animation
             try
             {
                 Thread.sleep(FRAME_DELAY);
             } catch (InterruptedException e)
             {}
         }
-        finishOff();
+		
+        finishOff();	//	not necessary but here for safety
 	}
-
+	
+	/**
+	 * Gets this game started by instantiating a <code>SpaceSurvivor</code> object.
+	 * @param args
+	 */
     public static void main(String args[])
     {
         new SpaceSurvivor();
-    }
-	
-    public PlayerShip getShip(){
-        return player;
     }
 }

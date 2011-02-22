@@ -5,12 +5,11 @@ import java.lang.Math.*;
 import spaceSurvivor.SpaceSurvivor;
 
 /**
- * Description: The user controlled space ship
+ * <code>PlayerShip</code> represents the user controlled space ship.
+ * @author Andrew Johnson
  * COSC 3550 Assignment 4
- * Author: Andrew Johnson
  * Date: 2/21/2011
  */
-
 public class PlayerShip {
 
     // ship variables
@@ -38,12 +37,12 @@ public class PlayerShip {
         // move ship position
         if (upKey && y-RADIUS>0)
             y -= SPEED;
-	if (downKey && y+RADIUS<SpaceSurvivor.GAME_HEIGHT)
-	    y += SPEED;
-        if (leftKey && x-RADIUS>0)
-	    x -= SPEED;
-	if (rightKey && x+RADIUS<SpaceSurvivor.GAME_WIDTH)
-	    x += SPEED;
+		if (downKey && y+RADIUS<SpaceSurvivor.GAME_HEIGHT)
+		    y += SPEED;
+	        if (leftKey && x-RADIUS>0)
+		    x -= SPEED;
+		if (rightKey && x+RADIUS<SpaceSurvivor.GAME_WIDTH)
+		    x += SPEED;
 
         // move gun position
         double theta;

@@ -15,5 +15,4 @@ public class AvoiderEnemy implements EnemyShip {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

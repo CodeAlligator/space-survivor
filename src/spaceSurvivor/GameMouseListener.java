@@ -9,50 +9,55 @@ import java.awt.event.MouseMotionListener;
  * @author Paul
  */
 public class GameMouseListener implements MouseMotionListener, MouseListener {
+	/**
+	 * X coordinate of mouse location.
+	 */
 	private int mouseX;
+	
+	/**
+	 * Y coordinates of mouse location.
+	 */
 	private int mouseY;
-        private boolean clicked = false;
+	
+	/**
+	 * whether mouse button was clicked
+	 */
+	private boolean clicked = false;
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-            mouseX = e.getX();
-            mouseY = e.getY();
+        mouseX = e.getX();
+        mouseY = e.getY();
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-            clicked = true;
-
+		clicked = true;
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public int getMouseX() {

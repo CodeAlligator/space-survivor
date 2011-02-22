@@ -15,5 +15,4 @@ public class ConfusedEnemy implements EnemyShip {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

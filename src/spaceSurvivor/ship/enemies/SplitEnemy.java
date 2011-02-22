@@ -15,5 +15,4 @@ public class SplitEnemy implements EnemyShip {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

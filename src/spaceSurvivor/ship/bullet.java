@@ -6,14 +6,14 @@ import spaceSurvivor.SpaceSurvivor;
  * <code>Bullet</code>
  * @author Andrew
  */
-public class bullet {
-double x,y; //position
-    double xdir, ydir; //movement direction
-    boolean active;
-    PlayerShip p;
-    final static int RADIUS = 2;
+public class Bullet {
+	private double x,y; //position
+    private double xdir, ydir; //movement direction
+    private boolean active;
+    private PlayerShip p;
+    public static final int RADIUS = 2;
 
-    public bullet(PlayerShip player){
+    public Bullet(PlayerShip player){
         p=player;
 //        x=p.getGunX();
 //        y=p.getGunY();
@@ -54,5 +54,3 @@ double x,y; //position
         }
     }
 }
-
-

@@ -12,7 +12,6 @@ public class GameKeyListener implements KeyListener{
 	private boolean keyDownPressed = false;
 	private boolean keyLeftPressed = false;
 	private boolean keyRightPressed = false;
-	private boolean keySpacebarPressed = false;
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -34,10 +33,6 @@ public class GameKeyListener implements KeyListener{
             	keyRightPressed = true;
             	System.out.println("Key press: right");
                 break;
-            case KeyEvent.VK_SPACE:
-            	keySpacebarPressed = true;
-            	System.out.println("Key press: spacebar");
-            	break;
             }
 	}
 
@@ -61,10 +56,6 @@ public class GameKeyListener implements KeyListener{
             	keyRightPressed = false;
             	System.out.println("Key release: right");
                 break;
-            case KeyEvent.VK_SPACE:
-            	keySpacebarPressed = false;
-            	System.out.println("Key release: spacebar");
-            	break;
             }
 
 	}
@@ -90,9 +81,4 @@ public class GameKeyListener implements KeyListener{
 	public boolean isKeyRightPressed() {
 		return keyRightPressed;
 	}
-
-	public boolean isKeySpacebarPressed() {
-		return keySpacebarPressed;
-	}
-
 }

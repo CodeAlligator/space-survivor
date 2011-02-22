@@ -15,5 +15,4 @@ public class BlobEnemy implements EnemyShip {
 		// TODO Auto-generated method stub
 		
 	}
-
 }
