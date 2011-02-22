@@ -5,9 +5,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 /**
- * 
+ * <code>GameMouseListener</code> handles all mouse events.
  * @author Paul
- *
  */
 public class GameMouseListener implements MouseMotionListener, MouseListener {
 	private int mouseX;

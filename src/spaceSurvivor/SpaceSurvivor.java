@@ -38,6 +38,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     private Graphics gScr;
     private BufferStrategy bufferStrategy;
     
+    public static final int GAME_WIDTH = 800;
+    public static final int GAME_HEIGHT = 600;
+    
     // used for full-screen exclusive mode
     private static final int NUM_BUFFERS = 2;    // used for page flipping
     
@@ -251,7 +254,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     {
         //System.out.println("Begin paint");
         g.setColor(Color.white);
-        g.fillRect(0,0,800,600);
+        g.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         //System.out.println("Begin scenery");
         /*for (int i = 0; i < scenery.length; i++)
         {
@@ -292,6 +295,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 			player.setDownKey(gameKeyListener.isKeyDownPressed());
 			player.setLeftKey(gameKeyListener.isKeyLeftPressed());
 			player.setRightKey(gameKeyListener.isKeyRightPressed());
+			player.setSpacebarKey(gameKeyListener.isKeySpacebarPressed());
 			
             try
             {

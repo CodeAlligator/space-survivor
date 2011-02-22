@@ -4,15 +4,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * 
+ * <code>GameKeyListener</code> handles all keyboard events.
  * @author Paul
- *
  */
 public class GameKeyListener implements KeyListener{
 	private boolean keyUpPressed = false;
 	private boolean keyDownPressed = false;
 	private boolean keyLeftPressed = false;
 	private boolean keyRightPressed = false;
+	private boolean keySpacebarPressed = false;
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -34,8 +34,11 @@ public class GameKeyListener implements KeyListener{
             	keyRightPressed = true;
             	System.out.println("Key press: right");
                 break;
-                        }
-
+            case KeyEvent.VK_SPACE:
+            	keySpacebarPressed = true;
+            	System.out.println("Key press: spacebar");
+            	break;
+            }
 	}
 
 	@Override
@@ -58,6 +61,10 @@ public class GameKeyListener implements KeyListener{
             	keyRightPressed = false;
             	System.out.println("Key release: right");
                 break;
+            case KeyEvent.VK_SPACE:
+            	keySpacebarPressed = false;
+            	System.out.println("Key release: spacebar");
+            	break;
             }
 
 	}
@@ -82,6 +89,10 @@ public class GameKeyListener implements KeyListener{
 
 	public boolean isKeyRightPressed() {
 		return keyRightPressed;
+	}
+
+	public boolean isKeySpacebarPressed() {
+		return keySpacebarPressed;
 	}
 
 }

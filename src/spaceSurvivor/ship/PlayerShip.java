@@ -14,7 +14,8 @@ public class PlayerShip {
     // ship variables
     int x = 200, y = 200; // ship position
     boolean upKey = false, downKey = false,
-            leftKey = false, rightKey = false;
+            leftKey = false, rightKey = false,
+            spacebarKey = false;
     boolean alive = true; // ship exists? (not collided)
     final static int RADIUS = 10;
     final static int SPEED = 4;
@@ -28,7 +29,7 @@ public class PlayerShip {
     final static int GUNW = 2;      //gun's width
 
     public PlayerShip() {
-		// TODO Auto-generated constructor stub
+		
     }
 
     public void move(){
@@ -88,21 +89,25 @@ public class PlayerShip {
     }
     
     public void setUpKey(Boolean val){
-	upKey = val;
+    	upKey = val;
     }
 
     public void setDownKey(Boolean val){
-	downKey = val;
+    	downKey = val;
     }
 
     public void setLeftKey(Boolean val){
-	leftKey = val;
+    	leftKey = val;
     }
 
     public void setRightKey(Boolean val){
-	rightKey = val;
+    	rightKey = val;
     }
-
+    
+    public void setSpacebarKey(Boolean val){
+    	spacebarKey = val;
+    }
+    
     public void setGunX(int val){
     	gunPointX = val;
     }
