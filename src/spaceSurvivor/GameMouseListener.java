@@ -11,6 +11,7 @@ import java.awt.event.MouseMotionListener;
 public class GameMouseListener implements MouseMotionListener, MouseListener {
 	private int mouseX;
 	private int mouseY;
+        private boolean clicked = false;
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
@@ -26,7 +27,7 @@ public class GameMouseListener implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+            clicked = true;
 
 	}
 
@@ -62,4 +63,11 @@ public class GameMouseListener implements MouseMotionListener, MouseListener {
 		return mouseY;
 	}
 
+        public boolean getClicked(){
+            return clicked;
+        }
+
+        public void clickReset(){
+            clicked = false;
+        }
 }

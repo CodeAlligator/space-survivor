@@ -41,7 +41,7 @@ double x,y; //position
             x += xdir;
             y += ydir;
         }
-        if (y+RADIUS<0 || y>500+RADIUS || x+RADIUS<0 || x>500+RADIUS)
+        if (y+RADIUS<0 || y>600+RADIUS || x+RADIUS<0 || x>800+RADIUS)
             active = false;
     }
 

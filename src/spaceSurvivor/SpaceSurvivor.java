@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 
 import spaceSurvivor.ship.EnemyShip;
 import spaceSurvivor.ship.PlayerShip;
+import spaceSurvivor.ship.bullet;
 
 /**
  * <code>SpaceSurvivor</code> is the main class for this game.
@@ -52,6 +53,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 */
 	private EnemyShip[] enemyShips;
 	
+        //bullet variables  ~Andrew
+        bullet[] shots;
+        int nextShot;
+        private static final int MAXSHOTS = 30;
+
 	/**
 	 * Time in current level.
 	 */
@@ -65,8 +71,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	/**
 	 * Player's ship sprite
 	 */
-	private Image playerShipImage;
-	
+        private Image playerShipImage;
+
 	/**
 	 * Player's ship.
 	 */
@@ -91,13 +97,13 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         initFullScreen();
         readyForTermination();
 		
-		//	create listeners for keyboard and mouse
+            //	create listeners for keyboard and mouse
 		gameKeyListener = new GameKeyListener();
 		addKeyListener(gameKeyListener);
-		
+	
 		gameMouseListener = new GameMouseListener();
 		addMouseListener(gameMouseListener);
-		
+		addMouseMotionListener(gameMouseListener); //added by Andrew so mouse works
 		
         //	load player's ship sprite images
         /*
@@ -116,6 +122,12 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	
 	public void setLevel1(){
 		player = new PlayerShip();
+
+                //initialize bullets  ~Andrew
+                shots = new bullet[MAXSHOTS];
+                for (int i=0;i<MAXSHOTS;i++)
+                    shots[i]=new bullet(player);
+                nextShot = 0;
 	}
 	
 	private void initFullScreen()
@@ -261,6 +273,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             //System.out.println("In paint loop, i="+i);
             scenery[i].paint(g, boxDebug);
         }*/
+
+        // Draw the bullets  ~Andrew
+        for (int i=0; i<MAXSHOTS; i++)
+            shots[i].draw(g);
+
         player.draw(g);
 
         /*if (wonGame())
@@ -284,6 +301,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	@Override
 	public void run() {
 		while(anim != null){
+
+                        // move the bullets  ~Andrew
+                        for (int i=0; i<MAXSHOTS; i++)
+                            shots[i].move();
+
 			player.move();
 			screenUpdate();
 			//System.out.println("updated");
@@ -296,7 +318,16 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 			player.setLeftKey(gameKeyListener.isKeyLeftPressed());
 			player.setRightKey(gameKeyListener.isKeyRightPressed());
 			player.setSpacebarKey(gameKeyListener.isKeySpacebarPressed());
-			
+
+                        // create new bullets
+                        if (gameMouseListener.getClicked()){
+                            gameMouseListener.clickReset();
+                            if (!shots[nextShot].isActive()){
+                                shots[nextShot].activate();
+                                nextShot = (nextShot+1) %MAXSHOTS;
+                            }
+                        }
+
             try
             {
                 Thread.sleep(FRAME_DELAY);
@@ -305,7 +336,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         }
         finishOff();
 	}
-	
+
     public static void main(String args[])
     {
         new SpaceSurvivor();

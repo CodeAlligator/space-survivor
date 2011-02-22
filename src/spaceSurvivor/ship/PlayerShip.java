@@ -36,11 +36,11 @@ public class PlayerShip {
         // move ship position
         if (upKey && y-RADIUS>0)
             y -= SPEED;
-	if (downKey && y+RADIUS<500)
+	if (downKey && y+RADIUS<600)
 	    y += SPEED;
         if (leftKey && x-RADIUS>0)
 	    x -= SPEED;
-	if (rightKey && x+RADIUS<500)
+	if (rightKey && x+RADIUS<800)
 	    x += SPEED;
 
         // move gun position
