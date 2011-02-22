@@ -104,11 +104,11 @@ public class PlayerShip {
     }
 
     public void setGunX(int val){
-	gunPointX = val;
+    	gunPointX = val;
     }
 
     public void setGunY(int val){
-	gunPointY = val;
+    	gunPointY = val;
     }
 
     public int getPosX(){

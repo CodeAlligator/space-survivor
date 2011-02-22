@@ -10,7 +10,9 @@ import java.awt.event.MouseMotionListener;
  *
  */
 public class GameMouseListener implements MouseMotionListener, MouseListener {
-
+	private int mouseX;
+	private int mouseY;
+	
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -19,8 +21,8 @@ public class GameMouseListener implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-            player.setGunX(e.getX());
-            player.setGunY(e.getY());
+            mouseX = e.getX();
+            mouseY = e.getY();
 	}
 
 	@Override
@@ -51,6 +53,14 @@ public class GameMouseListener implements MouseMotionListener, MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public int getMouseX() {
+		return mouseX;
+	}
+
+	public int getMouseY() {
+		return mouseY;
 	}
 
 }
