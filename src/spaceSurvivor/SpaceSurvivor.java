@@ -40,12 +40,29 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     private Graphics gScr;
     private BufferStrategy bufferStrategy;
     
+    /**
+     * Width of game window.
+     */
     public static final int GAME_WIDTH = 800;
+    
+    /**
+     * Height of game window.
+     */
     public static final int GAME_HEIGHT = 600;
     
-    // used for full-screen exclusive mode
-    private static final int NUM_BUFFERS = 2;    // used for page flipping
+    /**
+     * Bit depth of display.
+     */
+    public static final int BIT_DEPTH = 16;
     
+    /**
+     * Number of buffers for page flipping (used for full screen exclusive mode).
+     */
+    private static final int NUM_BUFFERS = 2;
+    
+    /**
+     * Application finished.
+     */
     private boolean finishedOff = false;
     
 	/**
@@ -120,7 +137,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
          * playerShipImage = new ImageIcon(getClass().getResource("sprites/playerShip.gif")).getImage();
          */
         
-		setLevel1();
+		setLevel1();	//	set up for level 1
 		
 		//	start the animation thread
 		if (anim == null) {
@@ -130,66 +147,67 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	}
 	
 	/**
-	 * 
+	 * Set up for level 1.
 	 */
 	public void setLevel1(){
-		player = new PlayerShip();
+		player = new PlayerShip();	//	initialize player ship
 		
         //initialize bullets  ~Andrew
         shots = new Bullet[MAXSHOTS];
-        for (int i=0;i<MAXSHOTS;i++)
-            shots[i]=new Bullet(player);
+        for(int i=0;i<MAXSHOTS;i++)
+            shots[i] = new Bullet(player);
         nextShot = 0;
 	}
 	
 	/**
 	 * 
 	 */
-	private void initFullScreen()
-    {
+	private void initFullScreen(){
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         gd = ge.getDefaultScreenDevice();
 
         setUndecorated(true);    // no menu bar, borders, etc. or Swing components
         setIgnoreRepaint(true);  // turn off all paint events since doing active rendering
         setResizable(false);
-
+        
+        //	If full screen mode not supported, exit application
         if (!gd.isFullScreenSupported()) {
             System.out.println("Full-screen exclusive mode not supported");
             System.exit(0);
         }
+        
         gd.setFullScreenWindow(this); // switch on full-screen exclusive mode
 
         // we can now adjust the display modes, if we wish
-         setDisplayMode(800, 600, 16);
+         setDisplayMode(GAME_WIDTH, GAME_HEIGHT, BIT_DEPTH);
         // setDisplayMode(1280, 1024, 32);
 
         setBufferStrategy();
     }
 	
-	private void readyForTermination()
-    {
-        addKeyListener( new KeyAdapter() {
-                // listen for esc, q, end, ctrl-c on the canvas to
-                // allow a convenient exit from the full screen configuration
-                public void keyPressed(KeyEvent e)
-                { int keyCode = e.getKeyCode();
-                    if ((keyCode == KeyEvent.VK_ESCAPE) || (keyCode == KeyEvent.VK_Q) ||
-                    (keyCode == KeyEvent.VK_END) ||
-                    ((keyCode == KeyEvent.VK_C) && e.isControlDown()) ) {
-                        anim = null;
-                    }
-                }
-            });
+	/**
+	 * If player presses any of these keys: escape, q, end, ctrl+c, 
+	 * the game will terminate.
+	 */
+	private void readyForTermination(){
+		addKeyListener( new KeyAdapter() {
+			public void keyPressed(KeyEvent e){
+				int keyCode = e.getKeyCode();
+				if ((keyCode == KeyEvent.VK_ESCAPE) || (keyCode == KeyEvent.VK_Q) ||
+				(keyCode == KeyEvent.VK_END) || ((keyCode == KeyEvent.VK_C) && e.isControlDown()) ) {
+					anim = null;
+				}
+			}
+		});
 
         // for shutdown tasks
         // a shutdown may not only come from the program
         Runtime.getRuntime().addShutdownHook(new Thread() {
-                public void run()
-                { anim = null;
-                    finishOff();
-                }
-            });
+            public void run(){
+            	anim = null;
+                finishOff();
+            }
+        });
     }
 	
 	/**
@@ -252,8 +270,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         }
     }
     
-    /* Switch off full screen mode. This also resets the
-    display mode if it's been changed.
+    /**
+     * Switch off full screen mode.
+     * This also resets the display mode if it has been changed.
      */
     private void restoreScreen(){
     	Window w = gd.getFullScreenWindow();
@@ -262,28 +281,37 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         gd.setFullScreenWindow(null);
     }
     
-    private void screenUpdate()
-    // use active rendering
-    { try {
+    /**
+     * use active rendering
+     */
+    private void screenUpdate(){
+    	try {
             gScr = bufferStrategy.getDrawGraphics();
             gameRender(gScr);
             gScr.dispose();
-            if (!bufferStrategy.contentsLost())
-                bufferStrategy.show();
-            else
-                System.out.println("Contents Lost");
+            if (!bufferStrategy.contentsLost()){
+            	bufferStrategy.show();
+            }
+            else{
+            	System.out.println("Contents Lost");
+            }
+            
             // Sync the display on some systems.
             // (on Linux, this fixes event queue problems)
             Toolkit.getDefaultToolkit().sync();
         }
         catch (Exception e)
-        { e.printStackTrace();
+        {
+        	e.printStackTrace();
             anim = null;
         }
     }
     
-    public void gameRender(Graphics g)
-    {
+    /**
+     * 
+     * @param g
+     */
+    public void gameRender(Graphics g){
         //System.out.println("Begin paint");
         g.setColor(Color.white);
         g.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
@@ -326,7 +354,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             for (int i=0; i<MAXSHOTS; i++)
                 shots[i].move();
 
-			player.move();
+			player.move();	//	move the player
+			
 			screenUpdate();
 			
 			//	check for player input (mouse and keyboard)
