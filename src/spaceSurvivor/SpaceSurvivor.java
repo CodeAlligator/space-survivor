@@ -18,7 +18,8 @@ import javax.swing.JFrame;
 import spaceSurvivor.ship.EnemyShip;
 import spaceSurvivor.ship.PlayerShip;
 import spaceSurvivor.ship.Bullet;
-import spaceSurvivor.ship.enemies.*;
+import spaceSurvivor.ship.enemies.ConfusedEnemy;
+import spaceSurvivor.ship.enemies.DefaultEnemy;
 
 /**
  * <code>SpaceSurvivor</code> is the main (GUI) class for this game.
@@ -27,6 +28,11 @@ import spaceSurvivor.ship.enemies.*;
  * @author Paul
  */
 public class SpaceSurvivor extends JFrame implements Runnable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7729402781315095387L;
+
 	/**
 	 * Frames per second that this game will animate.
 	 */
@@ -71,8 +77,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * determined at each level.
 	 */
 	private EnemyShip[] enemyShips;
+	
 	private static final int MAXENEMY = 6;
-
+	
     //Bullet variables  ~Andrew
 	/**
 	 * Array of player's bullets.
@@ -159,14 +166,13 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         for(int i=0;i<MAXSHOTS;i++)
             shots[i] = new Bullet(player);
         nextShot = 0;
-
-                //initialize enemies  ~Andrew
-                enemyShips = new EnemyShip[MAXENEMY];
-                for (int i=0;i<MAXENEMY/2;i++)
-                    enemyShips[i]=new DefaultEnemy();
-                for (int i=MAXENEMY/2;i<MAXENEMY;i++)
-                    enemyShips[i]=new ConfusedEnemy();
-
+        
+		//initialize enemies  ~Andrew
+		enemyShips = new EnemyShip[MAXENEMY];
+		for (int i=0;i<MAXENEMY/2;i++)
+			enemyShips[i]=new DefaultEnemy();
+		for (int i=MAXENEMY/2;i<MAXENEMY;i++)
+			enemyShips[i]=new ConfusedEnemy();
 	}
 	
 	/**
@@ -335,12 +341,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         // Draw the bullets  ~Andrew
         for (int i=0; i<MAXSHOTS; i++)
             shots[i].draw(g);
-
-        // Draw the enemies  ~Andrew
-        for (int i=0; i<MAXENEMY; i++)
-            enemyShips[i].draw(g);
-
-
+        
+		// Draw the enemies  ~Andrew
+		for (int i=0; i<MAXENEMY; i++)
+			enemyShips[i].draw(g);
+        
         player.draw(g);
 
         /*if (wonGame())
@@ -369,11 +374,12 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             for (int i=0; i<MAXSHOTS; i++)
                 shots[i].move();
 
-                        // move the enemies  ~Andrew
-                        for (int i=0; i<MAXENEMY; i++)
-                            enemyShips[i].move();
-
+			// move the enemies  ~Andrew
+			for (int i=0; i<MAXENEMY; i++)
+				enemyShips[i].move();
+			
 			player.move();
+			
 			screenUpdate();
 			
 			//	check for player input (mouse and keyboard)
@@ -386,8 +392,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
             // create new bullets
             if (gameMouseListener.getClicked()){
+            	//System.out.println("clicked");
                 gameMouseListener.clickReset();
                 if (!shots[nextShot].isActive()){
+                	//System.out.println("shot");
                     shots[nextShot].activate();
                     nextShot = (nextShot+1) %MAXSHOTS;
                 }

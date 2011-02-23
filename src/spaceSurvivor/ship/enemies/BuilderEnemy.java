@@ -15,8 +15,8 @@ public class BuilderEnemy implements EnemyShip {
 		// TODO Auto-generated method stub
 		
 	}
-
-    public void move() {
+	
+	public void move() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

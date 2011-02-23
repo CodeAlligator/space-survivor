@@ -8,7 +8,7 @@ import java.awt.event.MouseMotionListener;
  * <code>GameMouseListener</code> handles all mouse events.
  * @author Paul
  */
-public class GameMouseListener implements MouseMotionListener, MouseListener {
+public class GameMouseListener implements MouseListener, MouseMotionListener {
 	/**
 	 * X coordinate of mouse location.
 	 */
@@ -25,49 +25,41 @@ public class GameMouseListener implements MouseMotionListener, MouseListener {
 	private boolean clicked = false;
 	
 	@Override
+	public void mouseClicked(MouseEvent e) {
+		System.out.println("mouse clicked");
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+
+	@Override
+	public void mouseExited(MouseEvent e) {}
+
+	@Override
+	public void mousePressed(MouseEvent e) {}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		System.out.println("mouse released");
+		
+		clicked = true;
+	}
+	
+	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+    	System.out.println("mouse dragged");
+    	
+    	mouseMoved(e);
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-        mouseX = e.getX();
+		System.out.println("mouse moved");
+		
+		mouseX = e.getX();
         mouseY = e.getY();
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		clicked = true;
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	public int getMouseX() {
-		return mouseX;
-	}
-
-	public int getMouseY() {
-		return mouseY;
-	}
-
+	
     public boolean getClicked(){
         return clicked;
     }
@@ -75,4 +67,12 @@ public class GameMouseListener implements MouseMotionListener, MouseListener {
     public void clickReset(){
         clicked = false;
     }
+    
+	public int getMouseX() {
+		return mouseX;
+	}
+
+	public int getMouseY() {
+		return mouseY;
+	}
 }

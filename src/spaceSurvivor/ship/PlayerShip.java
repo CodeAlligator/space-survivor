@@ -15,8 +15,7 @@ public class PlayerShip {
     // ship variables
     int x = 200, y = 200; // ship position
     boolean upKey = false, downKey = false,
-            leftKey = false, rightKey = false,
-            spacebarKey = false;
+            leftKey = false, rightKey = false;
     boolean alive = true; // ship exists? (not collided)
     final static int RADIUS = 10;
     final static int SPEED = 4;
@@ -103,10 +102,6 @@ public class PlayerShip {
 
     public void setRightKey(Boolean val){
     	rightKey = val;
-    }
-    
-    public void setSpacebarKey(Boolean val){
-    	spacebarKey = val;
     }
     
     public void setGunX(int val){

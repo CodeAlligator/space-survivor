@@ -1,7 +1,6 @@
 package spaceSurvivor;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 /**
  * <code>Hittable</code> must be implemented by sprites that can be hit.
@@ -12,5 +11,6 @@ import java.awt.Rectangle;
 public interface Hittable {
 	void paint(Graphics g, boolean debug);
 	
-	Rectangle getBoundingBox();
+	//Rectangle getBoundingBox();
+	java.awt.geom.Ellipse2D.Double getBoundingBall();
 }
