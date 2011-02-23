@@ -90,6 +90,42 @@ public class PlayerShip implements Hittable{
         else g.drawString ("You Died. Sorry.", 200, 250);
     }
     
+    @Override
+	public Double getBoundingBall() {
+		return new java.awt.geom.Ellipse2D.Double(x, y, 2 * RADIUS, 2 * RADIUS);
+	}
+
+	@Override
+	public void paint(Graphics g, boolean debug) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 * Determines if this object has collided with another object.
+	 * @param enemyShip
+	 * @return	true if collided, false otherwise
+	 */
+	public boolean collided(EnemyShip enemyShip){
+		java.awt.geom.Ellipse2D.Double playerBoundingBall = getBoundingBall();
+
+		//	get center of both objects
+		int thisCenterX = (int)playerBoundingBall.getCenterX();
+		int thisCenterY = (int)playerBoundingBall.getCenterY();
+		int otherCenterX = (int)enemyShip.getBoundingBall().getCenterX();
+		int otherCenterY = (int)enemyShip.getBoundingBall().getCenterY();
+		
+		/*
+		 * underlying equation:
+		 * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
+		 */
+		double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
+		double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
+		double radiiComponent = Math.pow(RADIUS + enemyShip.getBoundingBall().height, 2);
+		
+		return (xComponent + yComponent) <= radiiComponent;
+    }
+    
     public void setUpKey(Boolean val){
     	upKey = val;
     }
@@ -115,46 +151,18 @@ public class PlayerShip implements Hittable{
     }
 
     public int getPosX(){
-	return x;
+    	return x;
     }
 
     public int getPosY(){
-	return y;
+    	return y;
     }
 
     public double getGunX(){
-	return tipx;
+    	return tipx;
     }
 
     public double getGunY(){
-	return tipy;
-    }
-
-	@Override
-	public Double getBoundingBall() {
-		return new java.awt.geom.Ellipse2D.Double(x, y, 2 * RADIUS, 2 * RADIUS);
-	}
-
-	@Override
-	public void paint(Graphics g, boolean debug) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public boolean collided(Hittable otherObject){
-		java.awt.geom.Ellipse2D.Double playerBoundingBall = getBoundingBall();
-
-		//	get center of both objects
-		int thisCenterX = (int)playerBoundingBall.getCenterX();
-		int thisCenterY = (int)playerBoundingBall.getCenterY();
-		int otherCenterX = (int)otherObject.getBoundingBall().getCenterX();
-		int otherCenterY = (int)otherObject.getBoundingBall().getCenterY();
-		
-		//	use equation of circle to get bounds on each object
-		//	(x - thisCenterX)^2 + (y - thisCenterY)^2 = RADIUS^2
-		//	(x - otherCenterX)^2 + (y - otherCenterY)^2 = otherObject.getBoundingBall().height^2
-		//	TODO finish implementing this method
-		
-		return false;
+    	return tipy;
     }
 }

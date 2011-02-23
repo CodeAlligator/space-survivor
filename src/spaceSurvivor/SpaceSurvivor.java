@@ -79,7 +79,6 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * determined at each level.
 	 */
 	private EnemyShip[] enemyShips;
-        SeekerEnemy s1, s2; //separate seeker names so can call alternate move method
 	private static final int MAXENEMY = 6;
 	
     //Bullet variables  ~Andrew
@@ -165,20 +164,18 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		
         //initialize bullets  ~Andrew
         shots = new Bullet[MAXSHOTS];
-        for(int i=0;i<MAXSHOTS;i++)
+        for(int i = 0; i < MAXSHOTS; i++)
             shots[i] = new Bullet(player);
         nextShot = 0;
 
-                //initialize enemies  ~Andrew
-                enemyShips = new EnemyShip[MAXENEMY];
-                for (int i=0;i<2;i++)
-                    enemyShips[i]=new DefaultEnemy();
-                for (int i=2;i<4;i++)
-                    enemyShips[i]=new ConfusedEnemy();
-                s1 = new SeekerEnemy();
-                enemyShips[4]= s1;
-                s2 = new SeekerEnemy();
-                enemyShips[5]= s2;
+        //initialize enemies  ~Andrew
+        enemyShips = new EnemyShip[MAXENEMY];
+        for (int i = 0; i < 2; i++)
+            enemyShips[i] = new DefaultEnemy();
+        for (int i = 2; i < 4; i++)
+            enemyShips[i] = new ConfusedEnemy();
+        for(int i = 4; i < 6; i++)
+        	enemyShips[i] = new SeekerEnemy();
 	}
 	
 	/**
@@ -345,7 +342,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         }*/
 
         // Draw the bullets  ~Andrew
-        for (int i=0; i<MAXSHOTS; i++)
+        for (int i = 0; i < MAXSHOTS; i++)
             shots[i].draw(g);
         
 		// Draw the enemies  ~Andrew
@@ -369,6 +366,23 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         }*/
     }
     
+    /**
+     * Determines if player ship has collided with any enemy ships.
+     * @return
+     */
+    public boolean checkPlayerCollisions(){
+    	boolean collided = false;
+    	
+    	for(int i = 0; i < 6; i++){
+    		if(player.collided(enemyShips[i])){
+    			collided = true;
+    			System.out.println("collided with " + enemyShips[i].toString());
+    		}
+    	}
+    	
+    	return collided;
+    }
+    
 	/**
 	 * Main animation loop of this game.
 	 */
@@ -377,19 +391,27 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		while(anim != null){
 
             // move the bullets  ~Andrew
-            for (int i=0; i<MAXSHOTS; i++)
+            for (int i = 0; i < MAXSHOTS; i++)
                 shots[i].move();
-
-                        // move the enemies  ~Andrew
-                        for (int i=0; i<4; i++)
-                            enemyShips[i].move();
-                        s1.move(player);
-                        s2.move(player);
-                        
+            
+            // move the enemies  ~Andrew
+            for (int i = 0; i < 6; i++)
+                enemyShips[i].move(player);
+            
 			player.move();
 			
 			screenUpdate();
 			
+			//	check if player collided with any ships
+			if(checkPlayerCollisions())
+			{
+				/*
+				 * TODO add collision consequence logic here
+				 * decrease score
+				 * decrease shields
+				 * if shields at 0, player dies
+				 */
+			}
 			//	check for player input (mouse and keyboard)
 			player.setGunX(gameMouseListener.getMouseX());
 			player.setGunY(gameMouseListener.getMouseY());
@@ -400,12 +422,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
             // create new bullets
             if (gameMouseListener.getClicked()){
-            	//System.out.println("clicked");
                 gameMouseListener.clickReset();
+                
                 if (!shots[nextShot].isActive()){
-                	//System.out.println("shot");
                     shots[nextShot].activate();
-                    nextShot = (nextShot+1) %MAXSHOTS;
+                    nextShot = (nextShot + 1) % MAXSHOTS;
                 }
             }
             
@@ -426,6 +447,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	private static void detectScreenSize(){
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     	
+		//	based on user's screen width, use the standard size
     	switch(screenSize.width) {
     	case 640:
     		GAME_WIDTH = 640;

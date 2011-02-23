@@ -2,16 +2,20 @@ package spaceSurvivor.ship.enemies;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Ellipse2D.Double;
 import java.util.Random;
+
+import spaceSurvivor.Hittable;
 import spaceSurvivor.SpaceSurvivor;
 import spaceSurvivor.ship.EnemyShip;
 import spaceSurvivor.ship.PlayerShip;
 
-public class SeekerEnemy implements EnemyShip {
+public class SeekerEnemy implements EnemyShip, Hittable {
     double x,y,dx,dy, angle;
     final static int RADIUS = 10;
     final static int SPEED = 3;
     private static Random generator = new Random ();
+    PlayerShip p;
 
     public SeekerEnemy() {
         x = generator.nextInt(200)-100; //spawn within 100 units of edges
@@ -30,6 +34,8 @@ public class SeekerEnemy implements EnemyShip {
     }
 
     public void move(PlayerShip p) {
+    	this.p = p;
+    	
         x += dx;
         y += dy;
 
@@ -63,4 +69,65 @@ public class SeekerEnemy implements EnemyShip {
     public void move() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+	public Double getBoundingBall() {
+		return new java.awt.geom.Ellipse2D.Double(x, y, 2 * RADIUS, 2 * RADIUS);
+	}
+
+	@Override
+	public void paint(Graphics g, boolean debug) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	/**
+	 * Determines if this object has collided with the player.
+	 * @return	true if collided, false otherwise
+	 */
+	public boolean collidedWithPlayer(){
+		java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
+
+		//	get center of both objects
+		int thisCenterX = (int)thisBoundingBall.getCenterX();
+		int thisCenterY = (int)thisBoundingBall.getCenterY();
+		int otherCenterX = (int)p.getBoundingBall().getCenterX();
+		int otherCenterY = (int)p.getBoundingBall().getCenterY();
+		
+		/*
+		 * underlying equation:
+		 * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
+		 */
+		double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
+		double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
+		double radiiComponent = Math.pow(RADIUS + p.getBoundingBall().height, 2);
+		
+		return (xComponent + yComponent) <= radiiComponent;
+    }
+
+	@Override
+	/**
+	 * Determines if this object has collided with another enemy.
+	 * @return	true if collided, false otherwise
+	 */
+	public boolean collidedWithEnemy(EnemyShip e) {
+		java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
+
+		//	get center of both objects
+		int thisCenterX = (int)thisBoundingBall.getCenterX();
+		int thisCenterY = (int)thisBoundingBall.getCenterY();
+		int otherCenterX = (int)e.getBoundingBall().getCenterX();
+		int otherCenterY = (int)e.getBoundingBall().getCenterY();
+		
+		/*
+		 * underlying equation:
+		 * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
+		 */
+		double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
+		double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
+		double radiiComponent = Math.pow(RADIUS + e.getBoundingBall().height, 2);
+		
+		return (xComponent + yComponent) <= radiiComponent;
+	}
 }
