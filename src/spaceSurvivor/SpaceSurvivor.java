@@ -1,12 +1,14 @@
 package spaceSurvivor;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.KeyAdapter;
@@ -215,6 +217,16 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         // setDisplayMode(1280, 1024, 32);
 
         setBufferStrategy();
+        
+        /*
+         * set the custom mouse
+         * mouse icon provided by http://www.hscripts.com/freeimages/icons/web-basic-icons/target-clipart.php
+         */
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image image = toolkit.getImage("target.gif");
+        Cursor c = toolkit.createCustomCursor(image , new Point(0,0), "img");
+        this.setCursor(c);
+
     }
 	
 	/**
