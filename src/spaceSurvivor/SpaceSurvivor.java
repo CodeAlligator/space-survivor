@@ -435,6 +435,13 @@ public class SpaceSurvivor extends JFrame implements Runnable{
                 }
     	}
 
+        //check bullet collisions
+        for(int i = 0; i < 6; i++){
+            if(enemyShips[i].collidedWithBullet()){
+                enemyShips[i].die();
+                score.addScore(2);   
+            }
+        }
     	return collided;
     }
     
