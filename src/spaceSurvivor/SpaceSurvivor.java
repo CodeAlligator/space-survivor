@@ -20,6 +20,7 @@ import spaceSurvivor.ship.PlayerShip;
 import spaceSurvivor.ship.Bullet;
 import spaceSurvivor.ship.enemies.ConfusedEnemy;
 import spaceSurvivor.ship.enemies.DefaultEnemy;
+import spaceSurvivor.ship.enemies.SeekerEnemy;
 
 /**
  * <code>SpaceSurvivor</code> is the main (GUI) class for this game.
@@ -77,7 +78,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * determined at each level.
 	 */
 	private EnemyShip[] enemyShips;
-	
+        SeekerEnemy s1, s2; //separate seeker names so can call alternate move method
 	private static final int MAXENEMY = 6;
 	
     //Bullet variables  ~Andrew
@@ -166,13 +167,17 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         for(int i=0;i<MAXSHOTS;i++)
             shots[i] = new Bullet(player);
         nextShot = 0;
-        
-		//initialize enemies  ~Andrew
-		enemyShips = new EnemyShip[MAXENEMY];
-		for (int i=0;i<MAXENEMY/2;i++)
-			enemyShips[i]=new DefaultEnemy();
-		for (int i=MAXENEMY/2;i<MAXENEMY;i++)
-			enemyShips[i]=new ConfusedEnemy();
+
+                //initialize enemies  ~Andrew
+                enemyShips = new EnemyShip[MAXENEMY];
+                for (int i=0;i<2;i++)
+                    enemyShips[i]=new DefaultEnemy();
+                for (int i=2;i<4;i++)
+                    enemyShips[i]=new ConfusedEnemy();
+                s1 = new SeekerEnemy();
+                enemyShips[4]= s1;
+                s2 = new SeekerEnemy();
+                enemyShips[5]= s2;
 	}
 	
 	/**
@@ -374,10 +379,12 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             for (int i=0; i<MAXSHOTS; i++)
                 shots[i].move();
 
-			// move the enemies  ~Andrew
-			for (int i=0; i<MAXENEMY; i++)
-				enemyShips[i].move();
-			
+                        // move the enemies  ~Andrew
+                        for (int i=0; i<4; i++)
+                            enemyShips[i].move();
+                        s1.move(player);
+                        s2.move(player);
+                        
 			player.move();
 			
 			screenUpdate();
