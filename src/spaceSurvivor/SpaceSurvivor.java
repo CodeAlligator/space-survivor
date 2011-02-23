@@ -100,6 +100,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
     private PowerUp[] powers;
 
+    private Score score;
 
 	/**
 	 * Time in current level.
@@ -191,6 +192,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
                     powers[i]=new AmmoPowerUp();
                 for (int i=2;i<4;i++)
                     powers[i]=new ShieldPowerUp();
+
+                //initialize score object
+                score = new Score();
 	}
 	
 	/**
@@ -224,6 +228,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
          */
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image image = toolkit.getImage("target.gif");
+
+        //cursor image didn't work for me - but this line made it work. Also the SVN didn't get the image for me when i updated.
+        //Image image = new ImageIcon(getClass().getResource("target.gif")).getImage();
+
         Cursor c = toolkit.createCustomCursor(image , new Point(0,0), "img");
         this.setCursor(c);
 
@@ -379,6 +387,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 			powers[i].draw(g);
         
         player.draw(g);
+        
+        score.draw(g);
 
         /*if (wonGame())
         {
@@ -444,6 +454,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 				 * decrease shields
 				 * if shields at 0, player dies
 				 */
+                            score.addScore(-5);
+                            score.addShield(-10);
+
+                            //note - 1 "collision" will result in many because enemy's don't die yet after collision
+                            if (score.getShield()==0) player.die();
 			}
 			//	check for player input (mouse and keyboard)
 			player.setGunX(gameMouseListener.getMouseX());
@@ -457,9 +472,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             if (gameMouseListener.getClicked()){
                 gameMouseListener.clickReset();
                 
-                if (!shots[nextShot].isActive()){
+                if (!shots[nextShot].isActive() && score.getAmmo()!=0){
                     shots[nextShot].activate();
                     nextShot = (nextShot + 1) % MAXSHOTS;
+                    score.addAmmo(-1);
+                    score.addScore(-1);
                 }
             }
             

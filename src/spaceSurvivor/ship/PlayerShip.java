@@ -31,7 +31,8 @@ public class PlayerShip implements Hittable{
     final static int GUNW = 2;      //gun's width
 
     public PlayerShip() {
-		
+	x=SpaceSurvivor.GAME_WIDTH/2;
+        y=SpaceSurvivor.GAME_HEIGHT/2;
     }
 
     public void move(){
@@ -164,5 +165,9 @@ public class PlayerShip implements Hittable{
 
     public double getGunY(){
     	return tipy;
+    }
+
+    public void die(){
+        alive = false;
     }
 }
