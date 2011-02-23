@@ -15,6 +15,9 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import spaceSurvivor.powerUp.AmmoPowerUp;
+import spaceSurvivor.powerUp.PowerUp;
+import spaceSurvivor.powerUp.ShieldPowerUp;
 
 import spaceSurvivor.ship.EnemyShip;
 import spaceSurvivor.ship.PlayerShip;
@@ -89,9 +92,12 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     private int nextShot;
     
     /**
-     * Maximum number of bullets player has.
+     * Maximum number of bullets that can be on screen at once.
      */
     private static final int MAXSHOTS = 30;
+
+    private PowerUp[] powers;
+
 
 	/**
 	 * Time in current level.
@@ -176,6 +182,13 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             enemyShips[i] = new ConfusedEnemy();
         for(int i = 4; i < 6; i++)
         	enemyShips[i] = new SeekerEnemy();
+
+                //initialize powerups
+                powers = new PowerUp[4];
+                for (int i=0;i<2;i++)
+                    powers[i]=new AmmoPowerUp();
+                for (int i=2;i<4;i++)
+                    powers[i]=new ShieldPowerUp();
 	}
 	
 	/**
@@ -348,6 +361,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		// Draw the enemies  ~Andrew
 		for (int i=0; i<MAXENEMY; i++)
 			enemyShips[i].draw(g);
+
+        //Draw the powerups
+        for (int i=0; i<4; i++)
+			powers[i].draw(g);
         
         player.draw(g);
 
@@ -397,6 +414,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             // move the enemies  ~Andrew
             for (int i = 0; i < 6; i++)
                 enemyShips[i].move(player);
+
+            // update powerups (time could expire)
+                         for (int i=0; i<4; i++)
+                            powers[i].update();
             
 			player.move();
 			

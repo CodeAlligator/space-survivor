@@ -18,10 +18,20 @@ public class PowerUp {
 	 * Y coordinate of power up.
 	 */
 	private double y;
+        private int life = 300; //time before it dissapears
+        private boolean active = true; //if hasn't been collected or expired
 	
 	public void draw(Graphics g){
 		//	TODO implement this method
 	}
+
+        public void update(){
+            if (active){
+                life--;
+                if (life<0)
+                    active = false;
+            }
+        }
 	
 	public void setX(double x) {
 		this.x = x;
@@ -38,4 +48,8 @@ public class PowerUp {
 	public double getY() {
 		return y;
 	}
+
+        public boolean isActive(){
+            return active;
+        }
 }
