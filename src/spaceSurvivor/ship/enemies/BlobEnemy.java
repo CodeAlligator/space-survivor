@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.geom.Ellipse2D.Double;
 
 import spaceSurvivor.Hittable;
+import spaceSurvivor.ship.Bullet;
 import spaceSurvivor.ship.EnemyShip;
 import spaceSurvivor.ship.PlayerShip;
 
@@ -11,6 +12,7 @@ public class BlobEnemy implements EnemyShip, Hittable {
 	int RADIUS = 10;
 	double x, y;
 	PlayerShip p;
+	private Bullet[] shots;
 	
 	public BlobEnemy() {
 		// TODO Auto-generated constructor stub
@@ -27,8 +29,9 @@ public class BlobEnemy implements EnemyShip, Hittable {
     }
 
 	@Override
-	public void move(PlayerShip p) {
+	public void move(PlayerShip p, Bullet[] shots) {
 		this.p = p;
+		this.shots = shots;
 		move();
 	}
 
@@ -63,7 +66,7 @@ public class BlobEnemy implements EnemyShip, Hittable {
 		 */
 		double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
 		double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
-		double radiiComponent = Math.pow(RADIUS + p.getBoundingBall().height, 2);
+		double radiiComponent = Math.pow(RADIUS + p.getBoundingBall().height / 2, 2);
 		
 		return (xComponent + yComponent) <= radiiComponent;
     }
@@ -88,8 +91,41 @@ public class BlobEnemy implements EnemyShip, Hittable {
 		 */
 		double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
 		double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
-		double radiiComponent = Math.pow(RADIUS + e.getBoundingBall().height, 2);
+		double radiiComponent = Math.pow(RADIUS + e.getBoundingBall().height / 2, 2);
 		
 		return (xComponent + yComponent) <= radiiComponent;
+	}
+	
+	@Override
+	/**
+	 * Determines if this object has collided with any bullet.
+	 * @return	true if collided, false otherwise
+	 */
+	public boolean collidedWithBullet() {
+		java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
+
+		int thisCenterX = (int)thisBoundingBall.getCenterX();
+		int thisCenterY = (int)thisBoundingBall.getCenterY();
+		
+		boolean hitBullet = false;
+		
+		for(int i = 0; i < shots.length; i++){
+			int otherCenterX = (int)shots[i].getBoundingBall().getCenterX();
+			int otherCenterY = (int)shots[i].getBoundingBall().getCenterY();
+			
+			/*
+			 * underlying equation:
+			 * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
+			 */
+			double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
+			double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
+			double radiiComponent = Math.pow(RADIUS + shots[i].getBoundingBall().height / 2, 2);
+			
+			if((xComponent + yComponent) <= radiiComponent){
+				hitBullet = true;
+			}
+		}
+		
+		return hitBullet;
 	}
 }

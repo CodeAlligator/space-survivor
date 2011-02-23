@@ -425,7 +425,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             
             // move the enemies  ~Andrew
             for (int i = 0; i < 6; i++)
-                enemyShips[i].move(player);
+                enemyShips[i].move(player, shots);
 
             // update powerups (time could expire)
                          for (int i=0; i<4; i++)

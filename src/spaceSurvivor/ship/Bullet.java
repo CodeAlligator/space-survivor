@@ -1,5 +1,6 @@
 package spaceSurvivor.ship;
 import java.awt.*;
+import java.awt.geom.Ellipse2D.Double;
 
 import spaceSurvivor.SpaceSurvivor;
 /**
@@ -53,4 +54,8 @@ public class Bullet {
             g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
         }
     }
+    
+	public Double getBoundingBall() {
+		return new java.awt.geom.Ellipse2D.Double(x, y, 2 * RADIUS, 2 * RADIUS);
+	}
 }
