@@ -1,6 +1,8 @@
 package spaceSurvivor.powerUp;
 
 import java.awt.Graphics;
+import java.awt.geom.Ellipse2D.Double;
+import spaceSurvivor.Hittable;
 
 /**
  * <code>PowerUp</code> represents a power up that is non-moving.
@@ -8,7 +10,7 @@ import java.awt.Graphics;
  * @see AmmoPowerUp
  * @see ShieldPowerUp
  */
-public class PowerUp {
+public class PowerUp implements Hittable {
 	/**
 	 * X coordinate of power up.
 	 */
@@ -18,18 +20,18 @@ public class PowerUp {
 	 * Y coordinate of power up.
 	 */
 	private double y;
-        private int life = 300; //time before it dissapears
-        private boolean active = true; //if hasn't been collected or expired
+        private int life = 500; //time before it dissapears
+        private boolean alive = true; //if hasn't been collected or expired
 	
 	public void draw(Graphics g){
 		//	TODO implement this method
 	}
 
         public void update(){
-            if (active){
+            if (alive){
                 life--;
                 if (life<0)
-                    active = false;
+                    alive = false;
             }
         }
 	
@@ -49,7 +51,23 @@ public class PowerUp {
 		return y;
 	}
 
-        public boolean isActive(){
-            return active;
+        public boolean isAlive(){
+            return alive;
         }
+
+        public void die(){
+            alive=false;
+        }
+
+        public int type(){
+            return 0; // generic powerup
+        }
+
+    public void paint(Graphics g, boolean debug) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Double getBoundingBall() {
+        return new java.awt.geom.Ellipse2D.Double(x, y, 30, 30);
+    }
 }

@@ -23,7 +23,12 @@ public class ShieldPowerUp extends PowerUp {
 
         @Override
         public void draw(Graphics g){
-        if(this.isActive())
+        if(this.isAlive())
             g.drawImage(shieldPic, (int)this.getX(), (int)this.getY(),null);
+        }
+
+        @Override
+        public int type(){
+            return 2; //shield powerup
         }
 }

@@ -107,7 +107,8 @@ public class PlayerShip implements Hittable{
 	 * @param enemyShip
 	 * @return	true if collided, false otherwise
 	 */
-	public boolean collided(EnemyShip enemyShip){
+	public boolean collided(Hittable enemyShip){
+            if(enemyShip.isAlive()){
 		java.awt.geom.Ellipse2D.Double playerBoundingBall = getBoundingBall();
 
 		//	get center of both objects
@@ -125,6 +126,8 @@ public class PlayerShip implements Hittable{
 		double radiiComponent = Math.pow(RADIUS + enemyShip.getBoundingBall().height, 2);
 		
 		return (xComponent + yComponent) <= radiiComponent;
+            }
+            else return false;
     }
     
     public void setUpKey(Boolean val){
@@ -169,5 +172,9 @@ public class PlayerShip implements Hittable{
 
     public void die(){
         alive = false;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 }

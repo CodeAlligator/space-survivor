@@ -128,4 +128,12 @@ public class AvoiderEnemy implements EnemyShip, Hittable {
 		
 		return hitBullet;
 	}
+
+    public void die() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean isAlive() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

@@ -10,7 +10,9 @@ import java.awt.Graphics;
  */
 public interface Hittable {
 	void paint(Graphics g, boolean debug);
-	
+	boolean isAlive();
+        void die();
 	//Rectangle getBoundingBox();
 	java.awt.geom.Ellipse2D.Double getBoundingBall();
+
 }

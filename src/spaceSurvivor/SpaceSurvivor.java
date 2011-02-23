@@ -227,10 +227,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
          * mouse icon provided by http://www.hscripts.com/freeimages/icons/web-basic-icons/target-clipart.php
          */
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image image = toolkit.getImage("target.gif");
+        //Image image = toolkit.getImage("target.gif");
 
         //cursor image didn't work for me - but this line made it work. Also the SVN didn't get the image for me when i updated.
-        //Image image = new ImageIcon(getClass().getResource("target.gif")).getImage();
+        Image image = new ImageIcon(getClass().getResource("target.gif")).getImage();
 
         Cursor c = toolkit.createCustomCursor(image , new Point(0,0), "img");
         this.setCursor(c);
@@ -410,15 +410,31 @@ public class SpaceSurvivor extends JFrame implements Runnable{
      * @return
      */
     public boolean checkPlayerCollisions(){
-    	boolean collided = false;
-    	
+    	boolean collided = false; //unnecessary?
+
+        //collided with enemy
     	for(int i = 0; i < 6; i++){
     		if(player.collided(enemyShips[i])){
     			collided = true;
     			System.out.println("collided with " + enemyShips[i].toString());
-    		}
+                        enemyShips[i].die();
+                        score.addScore(-5);
+                        if (score.getShield()==0) player.die();
+                        score.addShield(-10);
+                }
     	}
-    	
+
+
+        //collided with powerup
+        for(int i = 0; i < 4; i++){
+    		if(player.collided(powers[i])){
+                        powers[i].die();
+                        score.addScore(10);
+                        if (powers[i].type()==1) score.addAmmo(10);
+                        if (powers[i].type()==2) score.addShield(10);
+                }
+    	}
+
     	return collided;
     }
     
@@ -454,11 +470,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 				 * decrease shields
 				 * if shields at 0, player dies
 				 */
-                            score.addScore(-5);
-                            score.addShield(-10);
-
-                            //note - 1 "collision" will result in many because enemy's don't die yet after collision
-                            if (score.getShield()==0) player.die();
+                            //moved this logic to collision method above
 			}
 			//	check for player input (mouse and keyboard)
 			player.setGunX(gameMouseListener.getMouseX());

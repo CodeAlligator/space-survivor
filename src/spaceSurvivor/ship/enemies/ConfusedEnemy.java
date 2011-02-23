@@ -19,6 +19,7 @@ public class ConfusedEnemy implements EnemyShip, Hittable {
     private static Random generator = new Random ();
     PlayerShip p;
 	private Bullet[] shots;
+        boolean alive;
 
     public ConfusedEnemy() {
 	x = generator.nextInt(200)-100; //spawn within 100 units of edges
@@ -28,32 +29,37 @@ public class ConfusedEnemy implements EnemyShip, Hittable {
         angle = generator.nextDouble()*2*Math.PI; //random direction
         dx=SPEED*Math.cos(angle);
         dy=SPEED*Math.sin(angle);
+        alive = true;
     }
 
     public void draw(Graphics g) {
-        g.setColor(Color.MAGENTA);
-        g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
+        if(alive){
+            g.setColor(Color.MAGENTA);
+            g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
+        }
     }
 
     public void move() {
-        x += dx;
-        y += dy;
+        if(alive){
+            x += dx;
+            y += dy;
 
-        //randomly change direction occasionally up to 45 degrees
-        angle += generator.nextGaussian()*.4;
+            //randomly change direction occasionally up to 45 degrees
+            angle += generator.nextGaussian()*.4;
 
-        dx=SPEED*Math.cos(angle);
-        dy=SPEED*Math.sin(angle);
+            dx=SPEED*Math.cos(angle);
+            dy=SPEED*Math.sin(angle);
 
-      
-        //bounce off of edges
-        if ((y < RADIUS && dy <0) || (y+RADIUS > SpaceSurvivor.GAME_HEIGHT && dy>0)){
-            dy*=-1;
-            angle = Math.asin(dy/SPEED);
-        }
-        if ((x < RADIUS && dx<0) || (x+RADIUS > SpaceSurvivor.GAME_WIDTH && dx>0)){
-            dx *= -1;
-            angle = Math.acos(dx/SPEED);
+
+            //bounce off of edges
+            if ((y < RADIUS && dy <0) || (y+RADIUS > SpaceSurvivor.GAME_HEIGHT && dy>0)){
+                dy*=-1;
+                angle = Math.asin(dy/SPEED);
+            }
+            if ((x < RADIUS && dx<0) || (x+RADIUS > SpaceSurvivor.GAME_WIDTH && dx>0)){
+                dx *= -1;
+                angle = Math.acos(dx/SPEED);
+            }
         }
     }
 
@@ -157,4 +163,12 @@ public class ConfusedEnemy implements EnemyShip, Hittable {
 		
 		return hitBullet;
 	}
+
+    public void die() {
+        alive=false;
+    }
+
+    public boolean isAlive(){
+        return alive;
+    }
 }

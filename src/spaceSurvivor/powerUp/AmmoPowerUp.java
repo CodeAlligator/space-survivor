@@ -23,7 +23,12 @@ public class AmmoPowerUp extends PowerUp{
 
     @Override
         public void draw(Graphics g){
-        if(this.isActive())
+        if(this.isAlive())
             g.drawImage(ammoPic, (int)this.getX(), (int)this.getY(),null);
         }
+
+    @Override
+    public int type(){
+            return 1; //ammo powerup
+    }
 }
