@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import spaceSurvivor.ship.EnemyShip;
 import spaceSurvivor.ship.PlayerShip;
 import spaceSurvivor.ship.Bullet;
+import spaceSurvivor.ship.enemies.*;
 
 /**
  * <code>SpaceSurvivor</code> is the main (GUI) class for this game.
@@ -70,7 +71,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * determined at each level.
 	 */
 	private EnemyShip[] enemyShips;
-	
+	private static final int MAXENEMY = 6;
+
     //Bullet variables  ~Andrew
 	/**
 	 * Array of player's bullets.
@@ -157,6 +159,14 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         for(int i=0;i<MAXSHOTS;i++)
             shots[i] = new Bullet(player);
         nextShot = 0;
+
+                //initialize enemies  ~Andrew
+                enemyShips = new EnemyShip[MAXENEMY];
+                for (int i=0;i<MAXENEMY/2;i++)
+                    enemyShips[i]=new DefaultEnemy();
+                for (int i=MAXENEMY/2;i<MAXENEMY;i++)
+                    enemyShips[i]=new ConfusedEnemy();
+
 	}
 	
 	/**
@@ -313,7 +323,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
      */
     public void gameRender(Graphics g){
         //System.out.println("Begin paint");
-        g.setColor(Color.white);
+        g.setColor(Color.BLACK);
         g.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         //System.out.println("Begin scenery");
         /*for (int i = 0; i < scenery.length; i++)
@@ -325,6 +335,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         // Draw the bullets  ~Andrew
         for (int i=0; i<MAXSHOTS; i++)
             shots[i].draw(g);
+
+        // Draw the enemies  ~Andrew
+        for (int i=0; i<MAXENEMY; i++)
+            enemyShips[i].draw(g);
+
 
         player.draw(g);
 
@@ -354,8 +369,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             for (int i=0; i<MAXSHOTS; i++)
                 shots[i].move();
 
-			player.move();	//	move the player
-			
+                        // move the enemies  ~Andrew
+                        for (int i=0; i<MAXENEMY; i++)
+                            enemyShips[i].move();
+
+			player.move();
 			screenUpdate();
 			
 			//	check for player input (mouse and keyboard)

@@ -7,5 +7,6 @@ import java.awt.Graphics;
  * @author Paul Schrauder
  */
 public interface EnemyShip {
-	public void draw(Graphics g);
+    public void draw(Graphics g);
+    public void move();
 }
