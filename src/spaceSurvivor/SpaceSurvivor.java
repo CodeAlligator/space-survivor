@@ -1,6 +1,7 @@
 package spaceSurvivor;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.Graphics;
 import java.awt.GraphicsDevice;
@@ -51,12 +52,12 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     /**
      * Width of game window.
      */
-    public static final int GAME_WIDTH = 800;
+    public static int GAME_WIDTH = 1280;
     
     /**
      * Height of game window.
      */
-    public static final int GAME_HEIGHT = 600;
+    public static int GAME_HEIGHT = 1024;
     
     /**
      * Bit depth of display.
@@ -420,11 +421,55 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	}
 	
 	/**
+	 * Detect user's screen size and set game for this size.
+	 */
+	private static void detectScreenSize(){
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    	
+    	switch(screenSize.width) {
+    	case 640:
+    		GAME_WIDTH = 640;
+    		GAME_HEIGHT = 480;
+    		break;
+    	case 800:
+    		GAME_WIDTH = 800;
+    		GAME_HEIGHT = 600;
+    		break;
+    	case 1024:
+    		GAME_WIDTH = 1024;
+    		GAME_HEIGHT = 768;
+    		break;
+    	case 1280:
+    		GAME_WIDTH = 1280;
+    		GAME_HEIGHT = 1024;
+    		break;
+    	case 1600:
+    		GAME_WIDTH = 1600;
+    		GAME_HEIGHT = 1200;
+    		break;
+    	default:
+    		GAME_WIDTH = 800;
+    		GAME_HEIGHT = 600;
+    		break;
+    	}
+	}
+	
+	/**
 	 * Gets this game started by instantiating a <code>SpaceSurvivor</code> object.
-	 * @param args
+	 * Game screen size automatically detected from user's current screen resolution.
+	 * Otherwise, run this application with two parameters: screen width, screen height
+	 * @param args	[0]-screen width [1]-screen height
 	 */
     public static void main(String args[])
     {
+    	if(args.length >= 2){
+    		GAME_WIDTH = Integer.getInteger(args[0]);
+    		GAME_HEIGHT = Integer.getInteger(args[1]);
+    	}
+    	else{
+    		SpaceSurvivor.detectScreenSize();
+    	}
+    	
         new SpaceSurvivor();
     }
 }

@@ -1,7 +1,9 @@
 package spaceSurvivor.ship;
 import java.awt.*;
+import java.awt.geom.Ellipse2D.Double;
 import java.lang.Math.*;
 
+import spaceSurvivor.Hittable;
 import spaceSurvivor.SpaceSurvivor;
 
 /**
@@ -10,7 +12,7 @@ import spaceSurvivor.SpaceSurvivor;
  * COSC 3550 Assignment 4
  * Date: 2/21/2011
  */
-public class PlayerShip {
+public class PlayerShip implements Hittable{
 
     // ship variables
     int x = 200, y = 200; // ship position
@@ -126,5 +128,33 @@ public class PlayerShip {
 
     public double getGunY(){
 	return tipy;
+    }
+
+	@Override
+	public Double getBoundingBall() {
+		return new java.awt.geom.Ellipse2D.Double(x, y, 2 * RADIUS, 2 * RADIUS);
+	}
+
+	@Override
+	public void paint(Graphics g, boolean debug) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public boolean collided(Hittable otherObject){
+		java.awt.geom.Ellipse2D.Double playerBoundingBall = getBoundingBall();
+
+		//	get center of both objects
+		int thisCenterX = (int)playerBoundingBall.getCenterX();
+		int thisCenterY = (int)playerBoundingBall.getCenterY();
+		int otherCenterX = (int)otherObject.getBoundingBall().getCenterX();
+		int otherCenterY = (int)otherObject.getBoundingBall().getCenterY();
+		
+		//	use equation of circle to get bounds on each object
+		//	(x - thisCenterX)^2 + (y - thisCenterY)^2 = RADIUS^2
+		//	(x - otherCenterX)^2 + (y - otherCenterY)^2 = otherObject.getBoundingBall().height^2
+		//	TODO finish implementing this method
+		
+		return false;
     }
 }
