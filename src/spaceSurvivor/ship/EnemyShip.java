@@ -128,6 +128,7 @@ public class EnemyShip implements Hittable{
 			
 			if((xComponent + yComponent) <= radiiComponent){
 				hitBullet = true;
+                                shots[i].die();
 			}
 		}
 		

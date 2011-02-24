@@ -1,16 +1,17 @@
 package spaceSurvivor.ship;
 import java.awt.*;
 import java.awt.geom.Ellipse2D.Double;
+import spaceSurvivor.Hittable;
 
 import spaceSurvivor.SpaceSurvivor;
 /**
  * <code>Bullet</code>
  * @author Andrew
  */
-public class Bullet {
+public class Bullet implements Hittable{
 	private double x,y; //position
     private double xdir, ydir; //movement direction
-    private boolean active;
+    private boolean alive;
     private PlayerShip p;
     public static final int RADIUS = 2;
 
@@ -20,7 +21,7 @@ public class Bullet {
 //        y=p.getGunY();
 //        xdir=x-p.getPosX();
 //        ydir=y-p.getPosY();
-        active=false;
+        alive=false;
     }
 
     public void activate(){
@@ -28,28 +29,28 @@ public class Bullet {
         y=p.getGunY();
         xdir=x-p.getPosX();
         ydir=y-p.getPosY();
-        active=true;
+        alive=true;
     }
 
-    public void deactivate(){
-        active=false;
+    public void die(){
+        alive=false;
     }
 
-    public boolean isActive(){
-        return active;
+    public boolean isAlive(){
+        return alive;
     }
 
     public void move(){
-        if(active){
+        if(alive){
             x += xdir;
             y += ydir;
         }
         if (y+RADIUS<0 || y>SpaceSurvivor.GAME_HEIGHT+RADIUS || x+RADIUS<0 || x>SpaceSurvivor.GAME_WIDTH+RADIUS)
-            active = false;
+            alive = false;
     }
 
     public void draw(Graphics g){
-        if(active){
+        if(alive){
             g.setColor(Color.YELLOW);
             g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
         }

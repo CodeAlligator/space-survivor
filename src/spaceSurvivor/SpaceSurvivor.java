@@ -102,6 +102,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
     private Score score;
 
+    Image background;
+
 	/**
 	 * Time in current level.
 	 */
@@ -170,7 +172,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 */
 	public void setLevel1(){
 		player = new PlayerShip();	//	initialize player ship
-		
+
+           background = new ImageIcon(getClass().getResource("background.gif")).getImage();
+
+
         //initialize bullets  ~Andrew
         shots = new Bullet[MAXSHOTS];
         for(int i = 0; i < MAXSHOTS; i++)
@@ -367,6 +372,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         //System.out.println("Begin paint");
         g.setColor(Color.BLACK);
         g.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+
+        
+        g.drawImage(background, 0, 0,this);
+
         //System.out.println("Begin scenery");
         /*for (int i = 0; i < scenery.length; i++)
         {
@@ -439,7 +448,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         for(int i = 0; i < 6; i++){
             if(enemyShips[i].collidedWithBullet()){
                 enemyShips[i].die();
-                score.addScore(2);   
+                score.addScore(2);
             }
         }
     	return collided;
@@ -491,7 +500,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             if (gameMouseListener.getClicked()){
                 gameMouseListener.clickReset();
                 
-                if (!shots[nextShot].isActive() && score.getAmmo()!=0){
+                if (!shots[nextShot].isAlive() && score.getAmmo()!=0){
                     shots[nextShot].activate();
                     nextShot = (nextShot + 1) % MAXSHOTS;
                     score.addAmmo(-1);
@@ -537,6 +546,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     	case 1600:
     		GAME_WIDTH = 1600;
     		GAME_HEIGHT = 1200;
+    		break;
+        case 1920:
+    		GAME_WIDTH = 1920;
+    		GAME_HEIGHT = 1080;
     		break;
     	default:
     		GAME_WIDTH = 800;
