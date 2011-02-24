@@ -1,7 +1,5 @@
 package spaceSurvivor;
 
-import java.awt.Graphics;
-
 /**
  * <code>Hittable</code> must be implemented by sprites that can be hit.
  * Source code of this interface based off of Hittable interface by Dr. Slattery:
@@ -9,7 +7,7 @@ import java.awt.Graphics;
  * @author Paul
  */
 public interface Hittable {
-	void paint(Graphics g, boolean debug);
+	
 	boolean isAlive();
         void die();
 	//Rectangle getBoundingBox();

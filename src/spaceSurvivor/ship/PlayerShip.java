@@ -37,14 +37,23 @@ public class PlayerShip implements Hittable{
 
     public void move(){
         // move ship position
+        double dx=0, dy=0;
         if (upKey && y-RADIUS>0)
-            y -= SPEED;
+            dy -= 1;
 		if (downKey && y+RADIUS<SpaceSurvivor.GAME_HEIGHT)
-		    y += SPEED;
+		    dy += 1;
 	        if (leftKey && x-RADIUS>0)
-		    x -= SPEED;
+		    dx -= 1;
 		if (rightKey && x+RADIUS<SpaceSurvivor.GAME_WIDTH)
-		    x += SPEED;
+		    dx += 1;
+        //if traveling at diagonal, speed is still maintained
+        if(dx*dx+dy*dy>1){
+            dx*=.707;
+            dy*=.707;
+        }
+
+        x+=Math.round(dx*SPEED);
+        y+=Math.round(dy*SPEED);
 
         // move gun position
         double theta;
@@ -95,12 +104,8 @@ public class PlayerShip implements Hittable{
 	public Double getBoundingBall() {
 		return new java.awt.geom.Ellipse2D.Double(x, y, 2 * RADIUS, 2 * RADIUS);
 	}
+	
 
-	@Override
-	public void paint(Graphics g, boolean debug) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	/**
 	 * Determines if this object has collided with another object.

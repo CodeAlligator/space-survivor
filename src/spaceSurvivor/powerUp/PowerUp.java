@@ -63,10 +63,6 @@ public class PowerUp implements Hittable {
             return 0; // generic powerup
         }
 
-    public void paint(Graphics g, boolean debug) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public Double getBoundingBall() {
         return new java.awt.geom.Ellipse2D.Double(x, y, 30, 30);
     }
