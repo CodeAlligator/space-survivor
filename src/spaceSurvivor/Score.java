@@ -10,14 +10,26 @@ import java.awt.Graphics;
 public class Score {
 	/**
 	 * Current score of this game.
-         * Also includes ammo and shield counters
 	 */
-	private int score, shield, ammo;
+	private int score;
 	
+	/**
+	 * Shield remaining counter.
+	 */
+	private int shield;
+	
+	/**
+	 * Ammo remaining counter.
+	 */
+	private int ammo;
+	
+	/**
+	 * Instantiates new <code>Score</code> object with score of 0, shield of 50, and ammo of 50.
+	 */
 	public Score() {
 		score = 0;
-                shield = 50;
-                ammo = 50;
+        shield = 50;
+        ammo = 50;
 	}
 	
 	/**
@@ -25,8 +37,8 @@ public class Score {
 	 */
 	public void resetScore(){
 		score = 0;
-                shield = 0;
-                ammo = 0;
+        shield = 0;
+        ammo = 0;
 	}
 	
 	/**
@@ -37,41 +49,65 @@ public class Score {
 	}
 
 	/**
-	 * @return the score
+	 * @return this score
 	 */
 	public int getScore() {
 		return score;
 	}
-
-        public int getShield() {
+	
+	/**
+	 * 
+	 * @return	this shield
+	 */
+    public int getShield() {
 		return shield;
 	}
-
-        public int getAmmo() {
+    
+    /**
+     * 
+     * @return	this ammo
+     */
+    public int getAmmo() {
 		return ammo;
 	}
+    
+    /**
+     * 
+     * @param add	amount to add to this score
+     */
+    public void addScore(int add){
+        score += add;
+    }
+    
+    /**
+     * 
+     * @param add	amount to add to this shield
+     */
+    public void addShield(int add){
+        shield += add;
+        if (shield>100) shield = 100;
+        if (shield<0) shield = 0;
+    }
+    
+    /**
+     * 
+     * @param add	amount to add to this ammo
+     */
+    public void addAmmo(int add){
+        ammo += add;
+    }
+    
+    /**
+     * Draws this score, shield, and ammo to the game screen.
+     * @param g
+     */
+    public void draw(Graphics g){
+        g.setColor(Color.GREEN);
+        g.drawString("Shield: "+shield+"%", 10, 10);
+        g.drawString("Ammo: "+ammo, SpaceSurvivor.GAME_WIDTH-70, 10);
 
-        public void addScore(int add){
-            score +=add;
-        }
+        g.setColor(Color.ORANGE);
+        g.drawString("Score: "+score, SpaceSurvivor.GAME_WIDTH/2-70, 10);
 
-        public void addShield(int add){
-            shield +=add;
-            if (shield>100) shield = 100;
-            if (shield<0) shield = 0;
-        }
-
-        public void addAmmo(int add){
-            ammo +=add;
-        }
-
-        public void draw(Graphics g){
-            g.setColor(Color.GREEN);
-            g.drawString("Shield: "+shield+"%", 10, 10);
-            g.drawString("Ammo: "+ammo, SpaceSurvivor.GAME_WIDTH-70, 10);
-
-            g.setColor(Color.ORANGE);
-            g.drawString("Score: "+score, SpaceSurvivor.GAME_WIDTH/2-70, 10);
-
-        }
+    }
 }
