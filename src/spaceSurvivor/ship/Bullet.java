@@ -13,7 +13,7 @@ public class Bullet implements Hittable{
     private double xdir, ydir; //movement direction
     private boolean alive;
     private PlayerShip p;
-    public static final int RADIUS = 2;
+    public static final int RADIUS = 4;
 
     public Bullet(PlayerShip player){
         p=player;
@@ -27,8 +27,8 @@ public class Bullet implements Hittable{
     public void activate(){
         x=p.getGunX();
         y=p.getGunY();
-        xdir=x-p.getPosX();
-        ydir=y-p.getPosY();
+        xdir=(x-p.getPosX())/2;
+        ydir=(y-p.getPosY())/2;
         alive=true;
     }
 

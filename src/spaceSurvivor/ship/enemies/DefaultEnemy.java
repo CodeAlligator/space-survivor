@@ -20,7 +20,7 @@ public class DefaultEnemy extends EnemyShip{
             //	testing code => show bounding ball
             Ellipse2D.Double bb = getBoundingBall();
             g.setColor(Color.WHITE);
-            g.drawOval((int)bb.x, (int)bb.y, (int)bb.width, (int)bb.height);
+            g.drawOval((int)(bb.x-bb.width/2), (int)(bb.y-bb.height/2), (int)bb.width, (int)bb.height);
         }
     }
 

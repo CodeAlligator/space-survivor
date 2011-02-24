@@ -13,7 +13,7 @@ import spaceSurvivor.SpaceSurvivor;
 public class EnemyShip implements Hittable{
 
     protected double x,y,dx,dy,angle;
-    public final static int RADIUS = 10;
+    public final static int RADIUS = 20;
     public final static int SPEED = 4;
     protected static Random generator = new Random ();
     protected PlayerShip p;
@@ -123,6 +123,7 @@ public class EnemyShip implements Hittable{
 			boolean hitBullet = false;
 			
 			for(int i = 0; i < shots.length; i++){
+                            if(shots[i].isAlive()){
 				int otherCenterX = (int)shots[i].getBoundingBall().getCenterX();
 				int otherCenterY = (int)shots[i].getBoundingBall().getCenterY();
 				
@@ -136,8 +137,9 @@ public class EnemyShip implements Hittable{
 				
 				if((xComponent + yComponent) <= radiiComponent){
 					hitBullet = true;
-                    shots[i].die();
+                                        shots[i].die();
 				}
+                            }
 			}
 			
 			return hitBullet;

@@ -43,7 +43,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	/**
 	 * Frames per second that this game will animate.
 	 */
-	private static final long FRAMES_PER_SECOND = 30;
+	private static final long FRAMES_PER_SECOND = 60;
 	
 	/**
 	 * Delay between frames in milliseconds.

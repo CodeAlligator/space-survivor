@@ -30,7 +30,7 @@ public class PlayerShip implements Hittable{
     /**
      * Radius of this ship's bounding ball.
      */
-    public final static int RADIUS = 10;
+    public final static int RADIUS = 20;
     
     /**
      * Speed of this ship.
@@ -42,8 +42,8 @@ public class PlayerShip implements Hittable{
     private double tipx,tipy;               //gun tip position
     private int[] gunPolyX = new int [4];   //gun shape x coordinates
     private int[] gunPolyY = new int [4];   //gun shape y coordinates
-    public final static int GUNLEN = 12;   //gun's length
-    public final static int GUNW = 2;      //gun's width
+    public final static int GUNLEN = RADIUS+4;   //gun's length
+    public final static int GUNW = 4;      //gun's width
     
     /**
      * Default constructor.
@@ -117,7 +117,7 @@ public class PlayerShip implements Hittable{
             //	testing code => show bounding ball
             Ellipse2D.Double bb = getBoundingBall();
             g.setColor(Color.WHITE);
-            g.drawOval((int)bb.x, (int)bb.y, (int)bb.width, (int)bb.height);
+            g.drawOval((int)(bb.x-bb.width/2), (int)(bb.y-bb.height/2), (int)bb.width, (int)bb.height);
         }
         // if dead, replace ship with failure text
         else g.drawString ("You Died. Sorry.", 200, 250);
