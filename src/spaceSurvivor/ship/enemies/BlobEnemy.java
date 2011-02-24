@@ -1,9 +1,7 @@
 package spaceSurvivor.ship.enemies;
 
 import java.awt.Graphics;
-import spaceSurvivor.ship.Bullet;
 import spaceSurvivor.ship.EnemyShip;
-import spaceSurvivor.ship.PlayerShip;
 
 public class BlobEnemy extends EnemyShip {
 	
@@ -21,13 +19,5 @@ public class BlobEnemy extends EnemyShip {
 	public void move() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-	@Override
-	public void move(PlayerShip p, Bullet[] shots) {
-		this.p = p;
-		this.shots = shots;
-		move();
-	}
-
 
 }

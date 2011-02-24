@@ -19,6 +19,7 @@ public class EnemyShip implements Hittable{
     public static Random generator = new Random ();
     public PlayerShip p;
     public Bullet[] shots;
+    public EnemyShip[] enemies;
     public boolean alive;
 
     public EnemyShip(){
@@ -35,10 +36,21 @@ public class EnemyShip implements Hittable{
     public void draw(Graphics g){}
     public void move(){}
 
-    public void move(PlayerShip p, Bullet[] shots){
-        this.p = p;
-        this.shots = shots;
-        move();
+    public void move(PlayerShip p, Bullet[] shots, EnemyShip[] enemies){
+        if(alive){
+            this.p = p;
+            this.shots = shots;
+            this.enemies = enemies;
+            move();
+            for(int i=0;i<enemies.length;i++){
+                if (this != enemies[i] && this.isAlive() && enemies[i].isAlive())
+                    if(this.collidedWithEnemy(enemies[i])){
+                        angle = Math.atan2(y-enemies[i].y, x-enemies[i].x);
+                        dx=SPEED*Math.cos(angle);
+                        dy=SPEED*Math.sin(angle);
+                }
+            }
+        }
     }
 
     public Double getBoundingBall(){
@@ -66,6 +78,7 @@ public class EnemyShip implements Hittable{
     }
 
     public boolean collidedWithEnemy(EnemyShip e) {
+        if(alive){
 		java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
 
 		//	get center of both objects
@@ -84,6 +97,8 @@ public class EnemyShip implements Hittable{
 		
 		return (xComponent + yComponent) <= radiiComponent;
 	}
+        else return false;
+    }
 	
 	
 	/**

@@ -3,9 +3,7 @@ package spaceSurvivor.ship.enemies;
 import java.awt.Color;
 import java.awt.Graphics;
 import spaceSurvivor.SpaceSurvivor;
-import spaceSurvivor.ship.Bullet;
 import spaceSurvivor.ship.EnemyShip;
-import spaceSurvivor.ship.PlayerShip;
 
 public class SeekerEnemy extends EnemyShip {
     
@@ -21,11 +19,9 @@ public class SeekerEnemy extends EnemyShip {
     }
 
     @Override
-    public void move(PlayerShip p, Bullet[] shots) {
+    public void move() {
         if(alive){
-            this.p = p;
-            this.shots = shots;
-
+            
             x += dx;
             y += dy;
 
