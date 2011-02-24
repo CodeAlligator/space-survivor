@@ -2,6 +2,8 @@ package spaceSurvivor.ship.enemies;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Ellipse2D;
+
 import spaceSurvivor.SpaceSurvivor;
 import spaceSurvivor.ship.EnemyShip;
 
@@ -14,6 +16,11 @@ public class DefaultEnemy extends EnemyShip{
         if(isAlive()){
             g.setColor(Color.PINK);
             g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
+            
+            //	testing code => show bounding ball
+            Ellipse2D.Double bb = getBoundingBall();
+            g.setColor(Color.WHITE);
+            g.drawOval((int)bb.x, (int)bb.y, (int)bb.width, (int)bb.height);
         }
     }
 
@@ -30,9 +37,4 @@ public class DefaultEnemy extends EnemyShip{
                 dx *= -1;
         }
     }
-
-	
-	
-	
-
 }

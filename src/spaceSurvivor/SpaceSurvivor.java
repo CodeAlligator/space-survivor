@@ -102,7 +102,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
     private Score score;
 
-    Image background;
+    private Image background;
 
 	/**
 	 * Time in current level.
@@ -160,7 +160,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         
 		setLevel1();	//	set up for level 1
 		
-		//	start the animation thread
+		//	start the animation thread if not yet started
 		if (anim == null) {
             anim = new Thread(this);
             anim.start();
@@ -173,8 +173,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	public void setLevel1(){
 		player = new PlayerShip();	//	initialize player ship
 
-           background = new ImageIcon(getClass().getResource("background.gif")).getImage();
-
+		background = new ImageIcon(getClass().getResource("background.gif")).getImage();
 
         //initialize bullets  ~Andrew
         shots = new Bullet[MAXSHOTS];
@@ -191,15 +190,15 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         for(int i = 4; i < 6; i++)
         	enemyShips[i] = new SeekerEnemy();
 
-                //initialize powerups
-                powers = new PowerUp[4];
-                for (int i=0;i<2;i++)
-                    powers[i]=new AmmoPowerUp();
-                for (int i=2;i<4;i++)
-                    powers[i]=new ShieldPowerUp();
-
-                //initialize score object
-                score = new Score();
+	    //initialize powerups
+	    powers = new PowerUp[4];
+	    for (int i=0;i<2;i++)
+	        powers[i]=new AmmoPowerUp();
+	    for (int i=2;i<4;i++)
+	        powers[i]=new ShieldPowerUp();
+	
+	    //initialize score object
+	    score = new Score();
 	}
 	
 	/**
@@ -227,20 +226,21 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
         setBufferStrategy();
         
-        /*
-         * set the custom mouse
-         * mouse icon provided by http://www.hscripts.com/freeimages/icons/web-basic-icons/target-clipart.php
-         */
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        //Image image = toolkit.getImage("target.gif");
-
-        //cursor image didn't work for me - but this line made it work. Also the SVN didn't get the image for me when i updated.
+        setCustomCursor();
+    }
+	
+	/**
+     * set the custom mouse
+     * mouse icon provided by http://www.hscripts.com/freeimages/icons/web-basic-icons/target-clipart.php
+     */
+	public void setCustomCursor(){
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+        
         Image image = new ImageIcon(getClass().getResource("target.gif")).getImage();
 
         Cursor c = toolkit.createCustomCursor(image , new Point(0,0), "img");
         this.setCursor(c);
-
-    }
+	}
 	
 	/**
 	 * If player presses any of these keys: escape, q, end, ctrl+c, 
@@ -318,9 +318,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
      * necessary, but included for safety. The flag stops the code being called twice.
      */
     private void finishOff(){
-    	System.out.println("finishOff");
-    	
         if (!finishedOff) {
+        	System.out.println("finishOff");
+        	
             finishedOff = true;
             restoreScreen();
             System.exit(0);
@@ -426,22 +426,22 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     		if(player.collided(enemyShips[i])){
     			collided = true;
     			System.out.println("collided with " + enemyShips[i].toString());
-                        enemyShips[i].die();
-                        score.addScore(-5);
-                        if (score.getShield()==0) player.die();
-                        score.addShield(-10);
-                }
+                enemyShips[i].die();
+                score.addScore(-5);
+                if (score.getShield()==0) player.die();
+                	score.addShield(-10);
+            }
     	}
 
 
         //collided with powerup
         for(int i = 0; i < 4; i++){
     		if(player.collided(powers[i])){
-                        powers[i].die();
-                        score.addScore(10);
-                        if (powers[i].type()==1) score.addAmmo(10);
-                        if (powers[i].type()==2) score.addShield(10);
-                }
+                powers[i].die();
+                score.addScore(10);
+                if(powers[i] instanceof AmmoPowerUp) score.addAmmo(10);
+                if(powers[i] instanceof ShieldPowerUp) score.addShield(10);
+            }
     	}
 
         //check bullet collisions
@@ -451,6 +451,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
                 score.addScore(2);
             }
         }
+        
     	return collided;
     }
     
@@ -525,37 +526,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	private static void detectScreenSize(){
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     	
-		//	based on user's screen width, use the standard size
-    	switch(screenSize.width) {
-    	case 640:
-    		GAME_WIDTH = 640;
-    		GAME_HEIGHT = 480;
-    		break;
-    	case 800:
-    		GAME_WIDTH = 800;
-    		GAME_HEIGHT = 600;
-    		break;
-    	case 1024:
-    		GAME_WIDTH = 1024;
-    		GAME_HEIGHT = 768;
-    		break;
-    	case 1280:
-    		GAME_WIDTH = 1280;
-    		GAME_HEIGHT = 1024;
-    		break;
-    	case 1600:
-    		GAME_WIDTH = 1600;
-    		GAME_HEIGHT = 1200;
-    		break;
-        case 1920:
-    		GAME_WIDTH = 1920;
-    		GAME_HEIGHT = 1080;
-    		break;
-    	default:
-    		GAME_WIDTH = 800;
-    		GAME_HEIGHT = 600;
-    		break;
-    	}
+		//	set game full screen size to match user's current screen size
+		GAME_WIDTH = screenSize.width;
+		GAME_HEIGHT = screenSize.height;
 	}
 	
 	/**

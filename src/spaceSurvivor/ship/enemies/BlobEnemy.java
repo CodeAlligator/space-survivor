@@ -1,6 +1,9 @@
 package spaceSurvivor.ship.enemies;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Ellipse2D;
+
 import spaceSurvivor.ship.EnemyShip;
 
 public class BlobEnemy extends EnemyShip {
@@ -11,8 +14,10 @@ public class BlobEnemy extends EnemyShip {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+        //	testing code => show bounding ball
+        Ellipse2D.Double bb = getBoundingBall();
+        g.setColor(Color.WHITE);
+        g.drawOval((int)bb.x, (int)bb.y, (int)bb.width, (int)bb.height);
 	}
 	
     @Override

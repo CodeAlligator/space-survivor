@@ -2,6 +2,7 @@ package spaceSurvivor.ship.enemies;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Ellipse2D;
 import java.util.Random;
 import spaceSurvivor.SpaceSurvivor;
 import spaceSurvivor.ship.Bullet;
@@ -34,11 +35,19 @@ public class SplitEnemy extends EnemyShip {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.BLUE);
-        if (!split)
-            g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
-        else
-            for (int i=0;i<NUMMINI;i++)
-                g.fillOval((int)minix[i]-MINIRAD, (int)miniy[i]-MINIRAD, MINIRAD*2, MINIRAD*2);
+        if (!split){
+        	g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
+            
+	        //	testing code => show bounding ball
+	        Ellipse2D.Double bb = getBoundingBall();
+	        g.setColor(Color.WHITE);
+	        g.drawOval((int)bb.x, (int)bb.y, (int)bb.width, (int)bb.height);
+        }
+        else{
+        	for (int i=0;i<NUMMINI;i++){
+        		g.fillOval((int)minix[i]-MINIRAD, (int)miniy[i]-MINIRAD, MINIRAD*2, MINIRAD*2);
+        	}
+        }
     }
 
     @Override

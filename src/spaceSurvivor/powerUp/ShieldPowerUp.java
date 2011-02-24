@@ -11,24 +11,19 @@ public class ShieldPowerUp extends PowerUp {
 	 * Amount of additional shield that player receives if he gets this power up.
 	 */
 	public static final int SHIELD_AMMOUNT = 10;
-        private static Random generator = new Random ();
-        Image shieldPic;
+    private static Random generator = new Random ();
+    Image shieldPic;
 	
 	public ShieldPowerUp() {
-            //set random starting position away from edges
-            this.setX(generator.nextInt(SpaceSurvivor.GAME_WIDTH-50)+25);
-            this.setY(generator.nextInt(SpaceSurvivor.GAME_HEIGHT-50)+25);
-            shieldPic = new ImageIcon(getClass().getResource("ShieldPowerUp.gif")).getImage();
+        //set random starting position away from edges
+        this.setX(generator.nextInt(SpaceSurvivor.GAME_WIDTH-50)+25);
+        this.setY(generator.nextInt(SpaceSurvivor.GAME_HEIGHT-50)+25);
+        shieldPic = new ImageIcon(getClass().getResource("ShieldPowerUp.gif")).getImage();
 	}
 
-        @Override
-        public void draw(Graphics g){
-        if(this.isAlive())
-            g.drawImage(shieldPic, (int)this.getX(), (int)this.getY(),null);
-        }
-
-        @Override
-        public int type(){
-            return 2; //shield powerup
-        }
+    @Override
+    public void draw(Graphics g){
+    	if(this.isAlive())
+    		g.drawImage(shieldPic, (int)this.getX(), (int)this.getY(),null);
+    }
 }

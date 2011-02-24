@@ -7,10 +7,22 @@ package spaceSurvivor;
  * @author Paul
  */
 public interface Hittable {
+	/**
+	 * Checks whether this object is alive.
+	 * @return	true if alive, false otherwise
+	 */
+	public boolean isAlive();
 	
-	boolean isAlive();
-        void die();
-	//Rectangle getBoundingBox();
-	java.awt.geom.Ellipse2D.Double getBoundingBall();
-
+	/**
+	 * Sets the object to die.
+	 */
+    public void die();
+    
+    /**
+     * Gets the bounding ball of the object.
+     * Note this is a bounding ball instead of bounding rectangle because the objects 
+     * implementing this interface are mostly circular in shape.
+     * @return
+     */
+	public java.awt.geom.Ellipse2D.Double getBoundingBall();
 }

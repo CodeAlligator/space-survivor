@@ -1,7 +1,7 @@
 package spaceSurvivor.ship;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Ellipse2D.Double;
-import java.lang.Math.*;
 
 import spaceSurvivor.Hittable;
 import spaceSurvivor.SpaceSurvivor;
@@ -15,23 +15,41 @@ import spaceSurvivor.SpaceSurvivor;
 public class PlayerShip implements Hittable{
 
     // ship variables
-    int x = 200, y = 200; // ship position
-    boolean upKey = false, downKey = false,
+	/**
+	 * This ship position.
+	 */
+    private int x = 200, y = 200;
+    
+    /**
+     * key pressed by user
+     */
+    private boolean upKey = false, downKey = false,
             leftKey = false, rightKey = false;
-    boolean alive = true; // ship exists? (not collided)
-    final static int RADIUS = 10;
-    final static int SPEED = 4;
+    private boolean alive = true; // ship exists? (not collided)
+    
+    /**
+     * Radius of this ship's bounding ball.
+     */
+    public final static int RADIUS = 10;
+    
+    /**
+     * Speed of this ship.
+     */
+    public final static int SPEED = 4;
     
     //gun variables
-    int gunPointX = 100, gunPointY = 100;   //gun direction
-    double tipx,tipy;               //gun tip position
-    int[] gunPolyX = new int [4];   //gun shape x coordinates
-    int[] gunPolyY = new int [4];   //gun shape y coordinates
-    final static int GUNLEN = 12;   //gun's length
-    final static int GUNW = 2;      //gun's width
-
+    private int gunPointX = 100, gunPointY = 100;   //gun direction
+    private double tipx,tipy;               //gun tip position
+    private int[] gunPolyX = new int [4];   //gun shape x coordinates
+    private int[] gunPolyY = new int [4];   //gun shape y coordinates
+    public final static int GUNLEN = 12;   //gun's length
+    public final static int GUNW = 2;      //gun's width
+    
+    /**
+     * Default constructor.
+     */
     public PlayerShip() {
-	x=SpaceSurvivor.GAME_WIDTH/2;
+    	x=SpaceSurvivor.GAME_WIDTH/2;
         y=SpaceSurvivor.GAME_HEIGHT/2;
     }
 
@@ -95,6 +113,11 @@ public class PlayerShip implements Hittable{
             g.fillPolygon(gunPolyX, gunPolyY, 4);
             g.setColor(Color.cyan);
             g.fillOval(x-RADIUS/2, y-RADIUS/2, RADIUS, RADIUS);
+            
+            //	testing code => show bounding ball
+            Ellipse2D.Double bb = getBoundingBall();
+            g.setColor(Color.WHITE);
+            g.drawOval((int)bb.x, (int)bb.y, (int)bb.width, (int)bb.height);
         }
         // if dead, replace ship with failure text
         else g.drawString ("You Died. Sorry.", 200, 250);
@@ -113,26 +136,26 @@ public class PlayerShip implements Hittable{
 	 * @return	true if collided, false otherwise
 	 */
 	public boolean collided(Hittable enemyShip){
-            if(enemyShip.isAlive()){
-		java.awt.geom.Ellipse2D.Double playerBoundingBall = getBoundingBall();
-
-		//	get center of both objects
-		int thisCenterX = (int)playerBoundingBall.getCenterX();
-		int thisCenterY = (int)playerBoundingBall.getCenterY();
-		int otherCenterX = (int)enemyShip.getBoundingBall().getCenterX();
-		int otherCenterY = (int)enemyShip.getBoundingBall().getCenterY();
-		
-		/*
-		 * underlying equation:
-		 * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
-		 */
-		double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
-		double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
-		double radiiComponent = Math.pow(RADIUS + enemyShip.getBoundingBall().height, 2);
-		
-		return (xComponent + yComponent) <= radiiComponent;
-            }
-            else return false;
+        if(enemyShip.isAlive()){
+			java.awt.geom.Ellipse2D.Double playerBoundingBall = getBoundingBall();
+	
+			//	get center of both objects
+			int thisCenterX = (int)playerBoundingBall.getCenterX();
+			int thisCenterY = (int)playerBoundingBall.getCenterY();
+			int otherCenterX = (int)enemyShip.getBoundingBall().getCenterX();
+			int otherCenterY = (int)enemyShip.getBoundingBall().getCenterY();
+			
+			/*
+			 * underlying equation:
+			 * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
+			 */
+			double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
+			double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
+			double radiiComponent = Math.pow(RADIUS + enemyShip.getBoundingBall().height / 2, 2);
+			
+			return (xComponent + yComponent) <= radiiComponent;
+        }
+        else return false;
     }
     
     public void setUpKey(Boolean val){
