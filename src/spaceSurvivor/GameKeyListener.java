@@ -20,19 +20,19 @@ public class GameKeyListener implements KeyListener{
             switch (c) {
             case KeyEvent.VK_W:
             	keyUpPressed = true;
-            	System.out.println("Key press: up");
+            	//System.out.println("Key press: up");
                 break;
             case KeyEvent.VK_A:
             	keyLeftPressed = true;
-            	System.out.println("Key press: left");
+            	//System.out.println("Key press: left");
                 break;
             case KeyEvent.VK_S:
             	keyDownPressed = true;
-            	System.out.println("Key press: down");
+            	//System.out.println("Key press: down");
                 break;
             case KeyEvent.VK_D:
             	keyRightPressed = true;
-            	System.out.println("Key press: right");
+            	//System.out.println("Key press: right");
                 break;
             }
 	}
@@ -43,23 +43,23 @@ public class GameKeyListener implements KeyListener{
             switch (c) {
             case KeyEvent.VK_W:
             	keyUpPressed = false;
-            	System.out.println("Key release: up");
+            	//System.out.println("Key release: up");
                 break;
             case KeyEvent.VK_A:
             	keyLeftPressed = false;
-            	System.out.println("Key release: left");
+            	//System.out.println("Key release: left");
                 break;
             case KeyEvent.VK_S:
             	keyDownPressed = false;
-            	System.out.println("Key release: down");
+            	//System.out.println("Key release: down");
                 break;
             case KeyEvent.VK_D:
             	keyRightPressed = false;
-            	System.out.println("Key release: right");
+            	//System.out.println("Key release: right");
                 break;
             case KeyEvent.VK_B:
             	keyBPressed = !keyBPressed;
-            	System.out.println("Key press: b");
+            	//System.out.println("Key press: b");
             	break;
             }
 

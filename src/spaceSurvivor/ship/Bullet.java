@@ -5,35 +5,35 @@ import spaceSurvivor.Hittable;
 
 import spaceSurvivor.SpaceSurvivor;
 /**
- * <code>Bullet</code>
+ * <code>Bullet</code> represents a bullet that the player shot.
  * @author Andrew
  */
 public class Bullet implements Hittable{
 	private double x,y; //position
     private double xdir, ydir; //movement direction
     private boolean alive;
-    private PlayerShip p;
+    private PlayerShip playerShip;
     public static final int RADIUS = 4;
-
+    
+    /**
+     * Instantiates a new <code>Bullet</code> object.
+     * @param player	the player's ship
+     */
     public Bullet(PlayerShip player){
-        p=player;
-//        x=p.getGunX();
-//        y=p.getGunY();
-//        xdir=x-p.getPosX();
-//        ydir=y-p.getPosY();
-        alive=false;
+        playerShip = player;
+        alive = false;
     }
 
     public void activate(){
-        x=p.getGunX();
-        y=p.getGunY();
-        xdir=(x-p.getPosX())/2;
-        ydir=(y-p.getPosY())/2;
-        alive=true;
+        x = playerShip.getGunX();
+        y = playerShip.getGunY();
+        xdir = (x - playerShip.getPosX()) / 2;
+        ydir = (y - playerShip.getPosY()) / 2;
+        alive = true;
     }
 
     public void die(){
-        alive=false;
+        alive = false;
     }
 
     public boolean isAlive(){
@@ -45,14 +45,14 @@ public class Bullet implements Hittable{
             x += xdir;
             y += ydir;
         }
-        if (y+RADIUS<0 || y>SpaceSurvivor.GAME_HEIGHT+RADIUS || x+RADIUS<0 || x>SpaceSurvivor.GAME_WIDTH+RADIUS)
+        if((y + RADIUS < 0) || (y > SpaceSurvivor.GAME_HEIGHT + RADIUS) || (x + RADIUS < 0) || (x > SpaceSurvivor.GAME_WIDTH + RADIUS))
             alive = false;
     }
 
     public void draw(Graphics g){
         if(alive){
             g.setColor(Color.YELLOW);
-            g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
+            g.fillOval((int)x - RADIUS, (int)y - RADIUS, RADIUS * 2, RADIUS * 2);
         }
     }
     

@@ -26,7 +26,7 @@ public class GameMouseListener implements MouseListener, MouseMotionListener {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("mouse clicked");
+		//System.out.println("mouse clicked");
 	}
 
 	@Override
@@ -40,22 +40,19 @@ public class GameMouseListener implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		System.out.println("mouse released");
-		
+		//System.out.println("mouse released");
 		clicked = true;
 	}
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-    	System.out.println("mouse dragged");
-    	
+    	//System.out.println("mouse dragged");
     	mouseMoved(e);
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		System.out.println("mouse moved");
-		
+		//System.out.println("mouse moved");
 		mouseX = e.getX();
         mouseY = e.getY();
 	}
