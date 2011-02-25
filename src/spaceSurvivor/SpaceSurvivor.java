@@ -18,6 +18,9 @@ import java.awt.image.BufferStrategy;
 import java.util.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+import spaceSurvivor.eventListener.GameKeyListener;
+import spaceSurvivor.eventListener.GameMouseListener;
 import spaceSurvivor.powerUp.AmmoPowerUp;
 import spaceSurvivor.powerUp.PowerUp;
 import spaceSurvivor.powerUp.ShieldPowerUp;

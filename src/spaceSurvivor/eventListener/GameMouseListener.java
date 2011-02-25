@@ -1,4 +1,4 @@
-package spaceSurvivor;
+package spaceSurvivor.eventListener;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
