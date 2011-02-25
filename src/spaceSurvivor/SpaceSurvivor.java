@@ -15,7 +15,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
-
+import java.util.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import spaceSurvivor.powerUp.AmmoPowerUp;
@@ -105,10 +105,22 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
     private Image background;
 
-	/**
-	 * Time in current level.
+    /**
+	 * Time allowed to complete level in seconds.
 	 */
-	private int time;
+	public int timeAllowed = 30;
+	
+	public boolean timeUp = false;
+	
+	/**
+	 * Timer
+	 */
+	private Timer timer = new Timer();
+	
+	/**
+	 * Game timer that holds the time remaining in this level.
+	 */
+	private GameTimer gameTimer;
 	
 	/**
 	 * Animation thread.
@@ -202,6 +214,13 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	        powers[i]=new ShieldPowerUp();
 	
 	   
+	    
+	    //	initialize time thread
+	    //	TODO the following three lines should be called whenever ANY level starts
+	    timer.cancel();
+	    timer = new Timer();
+		gameTimer = new GameTimer(20);
+		timer.scheduleAtFixedRate(gameTimer, 0, 1000);
 	}
 	
 	/**
@@ -416,7 +435,14 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         }
         
         score.draw(g);
-
+        
+        gameTimer.draw(g);
+        
+        if(gameTimer.getTime() == 0){
+        	//	level over
+        	g.drawString("Time is up", GAME_WIDTH / 2, GAME_HEIGHT / 2);
+        }
+        
         /*if (wonGame())
         {
             g.setColor(Color.black);
