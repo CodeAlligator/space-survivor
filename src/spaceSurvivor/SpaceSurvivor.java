@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.ImageIcon;
@@ -396,6 +397,21 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 			powers[i].draw(g);
         
         player.draw(g);
+        
+        //	draw the bounding boxes if user chose to display them
+        if(gameKeyListener.isKeyBPressed()){
+        	Ellipse2D.Double bb = player.getBoundingBall();
+            g.setColor(Color.WHITE);
+            g.drawOval((int)(bb.x-bb.width/2), (int)(bb.y-bb.height/2), (int)bb.width, (int)bb.height);
+            
+            for(int i = 0; i < enemyShips.length; i++){
+            	if(enemyShips[i].isAlive()){
+            		Ellipse2D.Double bbe = enemyShips[i].getBoundingBall();
+                    g.setColor(Color.WHITE);
+                    g.drawOval((int)(bbe.x - bbe.width / 2), (int)(bbe.y - bbe.height / 2), (int)bbe.width, (int)bbe.height);
+            	}
+            }
+        }
         
         score.draw(g);
 

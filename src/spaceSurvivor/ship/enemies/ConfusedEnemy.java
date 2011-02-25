@@ -16,11 +16,6 @@ public class ConfusedEnemy extends EnemyShip {
         if(alive){
             g.setColor(Color.MAGENTA);
             g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
-            
-            //	testing code => show bounding ball
-            Ellipse2D.Double bb = getBoundingBall();
-            g.setColor(Color.WHITE);
-            g.drawOval((int)(bb.x-bb.width/2), (int)(bb.y-bb.height/2), (int)bb.width, (int)bb.height);
         }
     }
 

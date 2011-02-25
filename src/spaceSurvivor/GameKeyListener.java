@@ -12,6 +12,7 @@ public class GameKeyListener implements KeyListener{
 	private boolean keyDownPressed = false;
 	private boolean keyLeftPressed = false;
 	private boolean keyRightPressed = false;
+	private boolean keyBPressed = false;
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -56,6 +57,10 @@ public class GameKeyListener implements KeyListener{
             	keyRightPressed = false;
             	System.out.println("Key release: right");
                 break;
+            case KeyEvent.VK_B:
+            	keyBPressed = !keyBPressed;
+            	System.out.println("Key press: b");
+            	break;
             }
 
 	}
@@ -80,5 +85,9 @@ public class GameKeyListener implements KeyListener{
 
 	public boolean isKeyRightPressed() {
 		return keyRightPressed;
+	}
+
+	public boolean isKeyBPressed() {
+		return keyBPressed;
 	}
 }

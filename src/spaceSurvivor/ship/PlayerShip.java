@@ -113,11 +113,6 @@ public class PlayerShip implements Hittable{
             g.fillPolygon(gunPolyX, gunPolyY, 4);
             g.setColor(Color.cyan);
             g.fillOval(x-RADIUS/2, y-RADIUS/2, RADIUS, RADIUS);
-            
-            //	testing code => show bounding ball
-            Ellipse2D.Double bb = getBoundingBall();
-            g.setColor(Color.WHITE);
-            g.drawOval((int)(bb.x-bb.width/2), (int)(bb.y-bb.height/2), (int)bb.width, (int)bb.height);
         }
         // if dead, replace ship with failure text
         else g.drawString ("You Died. Sorry.", 200, 250);
