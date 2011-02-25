@@ -16,15 +16,15 @@ public class AmmoPowerUp extends PowerUp{
 
 	public AmmoPowerUp() {
         //set random starting position away from edges
-        this.setX(generator.nextInt(SpaceSurvivor.GAME_WIDTH-50)+25);
-        this.setY(generator.nextInt(SpaceSurvivor.GAME_HEIGHT-50)+25);
+        x = generator.nextInt(SpaceSurvivor.GAME_WIDTH - 50) + 25;
+        y = generator.nextInt(SpaceSurvivor.GAME_HEIGHT - 50) + 25;
         ammoPic = new ImageIcon(getClass().getResource("AmmoPowerUp.gif")).getImage();
-	alive=false;
-        }
+        alive = false;
+    }
 
     @Override
     public void draw(Graphics g){
-    if(this.isAlive())
-        g.drawImage(ammoPic, (int)this.getX(), (int)this.getY(),null);
+    if(isAlive())
+        g.drawImage(ammoPic, (int)x, (int)y, null);
     }
 }

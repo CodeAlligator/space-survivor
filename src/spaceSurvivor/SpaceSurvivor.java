@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -158,6 +159,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	GameMouseListener gameMouseListener;
 	
 	/**
+	 * Whether player is currently on splash screen.
+	 */
+	private boolean onSplash = true;
+	
+	/**
 	 * Default constructor.
 	 */
 	public SpaceSurvivor() {
@@ -282,8 +288,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		addKeyListener( new KeyAdapter() {
 			public void keyPressed(KeyEvent e){
 				int keyCode = e.getKeyCode();
-				if ((keyCode == KeyEvent.VK_ESCAPE) || (keyCode == KeyEvent.VK_Q) ||
-				(keyCode == KeyEvent.VK_END) || ((keyCode == KeyEvent.VK_C) && e.isControlDown()) ) {
+				if ((keyCode == KeyEvent.VK_ESCAPE) || (keyCode == KeyEvent.VK_Q) || (keyCode == KeyEvent.VK_END)){
 					anim = null;
 				}
 			}
@@ -376,7 +381,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     private void screenUpdate(){
     	try {
             gScr = bufferStrategy.getDrawGraphics();
+            
             gameRender(gScr);
+            
             gScr.dispose();
             if (!bufferStrategy.contentsLost()){
             	bufferStrategy.show();
@@ -397,17 +404,67 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     }
     
     /**
+     * Shows the splash screen.
+     * @param g
+     */
+    private void splashScreen(Graphics g){
+    	int splashX = 200;
+    	int splashY = 200;
+    	int splashWidth = GAME_WIDTH - 2 * splashX;
+    	int splashHeight = GAME_HEIGHT - 2 * splashY;
+    	Font fontHeader = new Font("SansSerif", Font.BOLD, 20);
+    	Font fontSecondary = new Font("SansSerif", Font.PLAIN, 14);
+    	
+		g.setColor(new Color(128, 255, 128, 56));
+	    g.fillRect(splashX, splashY, splashWidth, splashHeight);
+	    
+	    g.setColor(Color.WHITE);
+	    g.setFont(fontHeader);
+		g.drawString("Space Survivor", splashX + splashWidth / 2 - 60, splashY + 50);
+		
+		g.setFont(fontSecondary);
+		int lineSpacing = 20;
+		int firstLineY = splashY + 100;
+		String text1 = "Press Enter to start game.";
+		g.drawString(text1, splashX + 200, firstLineY);
+		
+		g.drawString("Objective of game is to shoot as many enemy ships as possible before time runs out", splashX + 200, firstLineY + lineSpacing * 2);
+		g.drawString("and without getting hit by enemy ships too many times.", splashX + 200, firstLineY + lineSpacing * 3);
+		g.drawString("Collect power ups to increase your shield and ammo.", splashX + 200, firstLineY + lineSpacing * 4);
+		g.drawString("Keep track of your shield and ammo remaining in the top of the screen.", splashX + 200, firstLineY + lineSpacing * 5);
+		g.drawString("If your shield gets to 0%, you die.", splashX + 200, firstLineY + lineSpacing * 6);
+		g.drawString("The color of the ring around your ship reflects the amount of shield remaining (green=good, red=bad).", splashX + 200, firstLineY + lineSpacing * 7);
+		g.drawString("Game controls:", splashX + 200, firstLineY + lineSpacing * 9);
+		g.drawString("W moves up", splashX + 250, firstLineY + lineSpacing * 10);
+		g.drawString("A moves left", splashX + 250, firstLineY + lineSpacing * 11);
+		g.drawString("S moves down", splashX + 250, firstLineY + lineSpacing * 12);
+		g.drawString("D moves right", splashX + 250, firstLineY + lineSpacing * 13);
+		g.drawString("Move mouse to rotate gun", splashX + 250, firstLineY + lineSpacing * 14);
+		g.drawString("Left mouse click to fire gun", splashX + 250, firstLineY + lineSpacing * 15);
+		g.drawString("To quit the game: Press Esc, Q, or End", splashX + 250, firstLineY + lineSpacing * 17);
+		g.drawString("For testing: press B to toggle bounding ball visibility on/off", splashX + 250, firstLineY + lineSpacing * 19);
+		
+		onSplash = !gameKeyListener.isKeyEnterPressed();
+    }
+    
+    /**
      * 
      * @param g
      */
     public void gameRender(Graphics g){
         //System.out.println("Begin paint");
         g.setColor(Color.BLACK);
-        g.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        g.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-        
         g.drawImage(background, 0, 0,this);
-
+        
+        //	display splash screen at start
+        if(onSplash){
+        	splashScreen(g);
+        	
+			return;
+        }
+        
         //System.out.println("Begin scenery");
         /*for (int i = 0; i < scenery.length; i++)
         {
@@ -431,15 +488,25 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         
         //	draw the bounding boxes if user chose to display them
         if(gameKeyListener.isKeyBPressed()){
-        	Ellipse2D.Double bb = player.getBoundingBall();
-            g.setColor(Color.WHITE);
-            g.drawOval((int)(bb.x-bb.width/2), (int)(bb.y-bb.height/2), (int)bb.width, (int)bb.height);
-            
+        	if(player.isAlive()){
+        		Ellipse2D.Double b = player.getBoundingBall();
+                g.setColor(Color.WHITE);
+                g.drawOval((int)(b.x-b.width/2), (int)(b.y-b.height/2), (int)b.width, (int)b.height);
+        	}
+        	
             for(int i = 0; i < enemyShips.length; i++){
             	if(enemyShips[i].isAlive()){
-            		Ellipse2D.Double bbe = enemyShips[i].getBoundingBall();
+            		Ellipse2D.Double b = enemyShips[i].getBoundingBall();
                     g.setColor(Color.WHITE);
-                    g.drawOval((int)(bbe.x - bbe.width / 2), (int)(bbe.y - bbe.height / 2), (int)bbe.width, (int)bbe.height);
+                    g.drawOval((int)(b.x - b.width / 2), (int)(b.y - b.height / 2), (int)b.width, (int)b.height);
+            	}
+            }
+            
+            for(int i = 0; i < shots.length; i++){
+            	if(shots[i].isAlive()){
+            		Ellipse2D.Double b = shots[i].getBoundingBall();
+                    g.setColor(Color.WHITE);
+                    g.drawOval((int)(b.x - b.width / 2), (int)(b.y - b.height / 2), (int)b.width, (int)b.height);
             	}
             }
         }
@@ -515,59 +582,58 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	@Override
 	public void run() {
 		while(anim != null){
+			if(!onSplash){
+				//spawn enemies incrementally
+				spawn();
 
-                //spawn enemies incrementally
+	            // move the bullets  ~Andrew
+	            for (int i = 0; i < MAXSHOTS; i++)
+	                shots[i].move();
+	            
+	            // move the enemies  ~Andrew
+	            for (int i = 0; i < MAXENEMY; i++)
+	                enemyShips[i].move(player, shots, enemyShips);
 
-                    spawn();
+	            // update powerups (time could expire)
+	                         for (int i=0; i<MAXPOWER; i++)
+	                            powers[i].update();
+	            
+				player.move();
+				
+				//	check if player collided with any ships
+				if(checkPlayerCollisions())
+				{
+					/*
+					 * TODO add collision consequence logic here
+					 * decrease score
+					 * decrease shields
+					 * if shields at 0, player dies
+					 */
+	                            //moved this logic to collision method above
+				}
+				//	check for player input (mouse and keyboard)
+				player.setGunX(gameMouseListener.getMouseX());
+				player.setGunY(gameMouseListener.getMouseY());
+				player.setUpKey(gameKeyListener.isKeyUpPressed());
+				player.setDownKey(gameKeyListener.isKeyDownPressed());
+				player.setLeftKey(gameKeyListener.isKeyLeftPressed());
+				player.setRightKey(gameKeyListener.isKeyRightPressed());
 
-
-            // move the bullets  ~Andrew
-            for (int i = 0; i < MAXSHOTS; i++)
-                shots[i].move();
-            
-            // move the enemies  ~Andrew
-            for (int i = 0; i < MAXENEMY; i++)
-                enemyShips[i].move(player, shots, enemyShips);
-
-            // update powerups (time could expire)
-                         for (int i=0; i<MAXPOWER; i++)
-                            powers[i].update();
-            
-			player.move();
+	            // create new bullets
+	            if (gameMouseListener.getClicked()){
+	                gameMouseListener.clickReset();
+	                
+	                if (!shots[nextShot].isAlive() && score.getAmmo()!=0){
+	                    shots[nextShot].activate();
+	                    nextShot = (nextShot + 1) % MAXSHOTS;
+	                    score.addAmmo(-1);
+	                    score.addScore(-1);
+	                }
+	            }
+			}
 			
 			screenUpdate();
 			
-			//	check if player collided with any ships
-			if(checkPlayerCollisions())
-			{
-				/*
-				 * TODO add collision consequence logic here
-				 * decrease score
-				 * decrease shields
-				 * if shields at 0, player dies
-				 */
-                            //moved this logic to collision method above
-			}
-			//	check for player input (mouse and keyboard)
-			player.setGunX(gameMouseListener.getMouseX());
-			player.setGunY(gameMouseListener.getMouseY());
-			player.setUpKey(gameKeyListener.isKeyUpPressed());
-			player.setDownKey(gameKeyListener.isKeyDownPressed());
-			player.setLeftKey(gameKeyListener.isKeyLeftPressed());
-			player.setRightKey(gameKeyListener.isKeyRightPressed());
-
-            // create new bullets
-            if (gameMouseListener.getClicked()){
-                gameMouseListener.clickReset();
-                
-                if (!shots[nextShot].isAlive() && score.getAmmo()!=0){
-                    shots[nextShot].activate();
-                    nextShot = (nextShot + 1) % MAXSHOTS;
-                    score.addAmmo(-1);
-                    score.addScore(-1);
-                }
-            }
-            
             //	Pause for animation
             try
             {

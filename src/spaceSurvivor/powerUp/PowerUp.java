@@ -14,23 +14,36 @@ public class PowerUp implements Hittable {
 	/**
 	 * X coordinate of power up.
 	 */
-	private double x;
+	protected double x;
 	
 	/**
 	 * Y coordinate of power up.
 	 */
-	private double y;
-    private int life = 1000; //time before it dissapears
-    protected boolean alive; //if hasn't been collected or expired
+	protected double y;
+	
+	protected static final int RADIUS = 15;
+	
+	/**
+	 * Time before this power up disappears
+	 */
+    private int life = 1000;
+    
+    /**
+     * True if this power up has not been collected or expired.
+     */
+    protected boolean alive;
+    
+    
 	
 	public void draw(Graphics g){
 		//	TODO implement this method
 	}
-
+	
     public void update(){
-        if (alive){
+        if(alive){
             life--;
-            if (life<0)
+            
+            if(life < 0)
                 alive = false;
         }
     }
@@ -56,7 +69,7 @@ public class PowerUp implements Hittable {
     }
 
     public void die(){
-        alive=false;
+        alive = false;
     }
 
     public void activate(){
@@ -64,6 +77,6 @@ public class PowerUp implements Hittable {
     }
     
     public Double getBoundingBall() {
-        return new java.awt.geom.Ellipse2D.Double(x, y, 30, 30);
+        return new java.awt.geom.Ellipse2D.Double(x, y, 2 * RADIUS, 2 * RADIUS);
     }
 }
