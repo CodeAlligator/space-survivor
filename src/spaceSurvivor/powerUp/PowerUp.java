@@ -21,7 +21,7 @@ public class PowerUp implements Hittable {
 	 */
 	private double y;
     private int life = 1000; //time before it dissapears
-    private boolean alive = true; //if hasn't been collected or expired
+    protected boolean alive; //if hasn't been collected or expired
 	
 	public void draw(Graphics g){
 		//	TODO implement this method
@@ -57,6 +57,10 @@ public class PowerUp implements Hittable {
 
     public void die(){
         alive=false;
+    }
+
+    public void activate(){
+        alive = true;
     }
     
     public Double getBoundingBall() {

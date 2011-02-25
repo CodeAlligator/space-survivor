@@ -19,7 +19,8 @@ public class AmmoPowerUp extends PowerUp{
         this.setX(generator.nextInt(SpaceSurvivor.GAME_WIDTH-50)+25);
         this.setY(generator.nextInt(SpaceSurvivor.GAME_HEIGHT-50)+25);
         ammoPic = new ImageIcon(getClass().getResource("AmmoPowerUp.gif")).getImage();
-	}
+	alive=false;
+        }
 
     @Override
     public void draw(Graphics g){

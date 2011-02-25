@@ -88,7 +88,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * determined at each level.
 	 */
 	private EnemyShip[] enemyShips;
-	private static final int MAXENEMY = 6;
+	private static final int MAXENEMY = 300;
 	
     //Bullet variables  ~Andrew
 	/**
@@ -103,6 +103,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     private static final int MAXSHOTS = 30;
 
     private PowerUp[] powers;
+    private static final int MAXPOWER = 100;
 
     private Score score;
 
@@ -204,21 +205,21 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
         //initialize enemies  ~Andrew
         enemyShips = new EnemyShip[MAXENEMY];
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < MAXENEMY; i+=2)
             enemyShips[i] = new DefaultEnemy();
-        for (int i = 2; i < 4; i++)
+        for (int i = 1; i < MAXENEMY; i+=4)
             enemyShips[i] = new ConfusedEnemy();
-        for(int i = 4; i < 6; i++)
+        for(int i = 3; i < MAXENEMY; i+=4)
         	enemyShips[i] = new SeekerEnemy();
 
 	    //initialize powerups
-	    powers = new PowerUp[4];
-	    for (int i=0;i<2;i++)
+	    powers = new PowerUp[MAXPOWER];
+	    for (int i=0;i<MAXPOWER;i+=2)
 	        powers[i]=new AmmoPowerUp();
-	    for (int i=2;i<4;i++)
+	    for (int i=1;i<MAXPOWER;i+=2)
 	        powers[i]=new ShieldPowerUp();
 	
-	   
+	  
 	    
 	    //	initialize time thread
 	    //	TODO the following three lines should be called whenever ANY level starts
@@ -419,7 +420,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 			enemyShips[i].draw(g);
 
         //Draw the powerups
-        for (int i=0; i<4; i++)
+        for (int i=0; i<MAXPOWER; i++)
 			powers[i].draw(g);
         
         player.draw(g);
@@ -471,7 +472,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     	boolean collided = false; //unnecessary?
 
         //collided with enemy
-    	for(int i = 0; i < 6; i++){
+    	for(int i = 0; i < MAXENEMY; i++){
     		if(player.collided(enemyShips[i])){
     			collided = true;
     			System.out.println("collided with " + enemyShips[i].toString());
@@ -484,7 +485,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
 
         //collided with powerup
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < MAXPOWER; i++){
     		if(player.collided(powers[i])){
                 powers[i].die();
                 score.addScore(10);
@@ -494,7 +495,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     	}
 
         //check bullet collisions
-        for(int i = 0; i < 6; i++){
+        for(int i = 0; i < MAXENEMY; i++){
             if(enemyShips[i].collidedWithBullet()){
                 enemyShips[i].die();
                 score.addScore(2);
@@ -516,11 +517,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
                 shots[i].move();
             
             // move the enemies  ~Andrew
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < MAXENEMY; i++)
                 enemyShips[i].move(player, shots, enemyShips);
 
             // update powerups (time could expire)
-                         for (int i=0; i<4; i++)
+                         for (int i=0; i<MAXPOWER; i++)
                             powers[i].update();
             
 			player.move();

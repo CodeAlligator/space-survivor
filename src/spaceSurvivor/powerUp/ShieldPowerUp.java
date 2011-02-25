@@ -19,7 +19,8 @@ public class ShieldPowerUp extends PowerUp {
         this.setX(generator.nextInt(SpaceSurvivor.GAME_WIDTH-50)+25);
         this.setY(generator.nextInt(SpaceSurvivor.GAME_HEIGHT-50)+25);
         shieldPic = new ImageIcon(getClass().getResource("ShieldPowerUp.gif")).getImage();
-	}
+	alive=false;
+        }
 
     @Override
     public void draw(Graphics g){

@@ -22,7 +22,7 @@ public class Score {
 	 * Ammo remaining counter.
 	 */
 	private int ammo;
-	
+
 	/**
 	 * Instantiates new <code>Score</code> object with score of 0, shield of 50, and ammo of 50.
 	 */
@@ -62,7 +62,7 @@ public class Score {
     public int getShield() {
 		return shield;
 	}
-    
+
     /**
      * 
      * @return	this ammo

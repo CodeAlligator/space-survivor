@@ -34,7 +34,7 @@ public class EnemyShip implements Hittable{
         dx = SPEED * Math.cos(angle);
         dy = SPEED * Math.sin(angle);
         
-        alive = true;
+        alive = false;
     }
 
     public void draw(Graphics g){}
@@ -163,5 +163,9 @@ public class EnemyShip implements Hittable{
 
     public double getY(){
         return y;
+    }
+
+    public void activate(){
+        alive = true;
     }
 }
