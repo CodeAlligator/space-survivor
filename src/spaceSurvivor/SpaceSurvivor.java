@@ -122,6 +122,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 */
 	private GameTimer gameTimer;
 	
+	private int levelTimeSeconds = 20;
+	
 	/**
 	 * Animation thread.
 	 */
@@ -184,10 +186,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * Set up for level 1.
 	 */
 	public void setLevel1(){
-	 //initialize score object
+		//initialize score object
 	    score = new Score();
             
-            player = new PlayerShip(score);	//	initialize player ship
+	    player = new PlayerShip(score);	//	initialize player ship
 
 		background = new ImageIcon(getClass().getResource("background.gif")).getImage();
 
@@ -219,7 +221,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	    //	TODO the following three lines should be called whenever ANY level starts
 	    timer.cancel();
 	    timer = new Timer();
-		gameTimer = new GameTimer(20);
+		gameTimer = new GameTimer(levelTimeSeconds);
 		timer.scheduleAtFixedRate(gameTimer, 0, 1000);
 	}
 	

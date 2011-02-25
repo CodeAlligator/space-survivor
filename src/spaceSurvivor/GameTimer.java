@@ -48,10 +48,18 @@ public class GameTimer extends TimerTask{
     	}
     }
     
+    /**
+     * Gets the amount of time remaining.
+     * @return	time in seconds
+     */
 	public int getTime() {
 		return time;
 	}
-
+	
+	/**
+	 * Sets the amount of time remaining.
+	 * @param time
+	 */
 	public void setTime(int time) {
 		if(time >= 0){
 			this.time = time;
