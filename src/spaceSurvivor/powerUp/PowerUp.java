@@ -20,7 +20,7 @@ public class PowerUp implements Hittable {
 	 * Y coordinate of power up.
 	 */
 	private double y;
-    private int life = 500; //time before it dissapears
+    private int life = 1000; //time before it dissapears
     private boolean alive = true; //if hasn't been collected or expired
 	
 	public void draw(Graphics g){

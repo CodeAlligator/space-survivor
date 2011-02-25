@@ -172,7 +172,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * Set up for level 1.
 	 */
 	public void setLevel1(){
-		player = new PlayerShip();	//	initialize player ship
+	 //initialize score object
+	    score = new Score();
+            
+            player = new PlayerShip(score);	//	initialize player ship
 
 		background = new ImageIcon(getClass().getResource("background.gif")).getImage();
 
@@ -198,8 +201,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	    for (int i=2;i<4;i++)
 	        powers[i]=new ShieldPowerUp();
 	
-	    //initialize score object
-	    score = new Score();
+	   
 	}
 	
 	/**

@@ -5,6 +5,7 @@ import java.awt.geom.Ellipse2D.Double;
 
 import spaceSurvivor.Hittable;
 import spaceSurvivor.SpaceSurvivor;
+import spaceSurvivor.Score;
 
 /**
  * <code>PlayerShip</code> represents the user controlled space ship.
@@ -36,6 +37,9 @@ public class PlayerShip implements Hittable{
      * Speed of this ship.
      */
     public final static int SPEED = 4;
+
+    Score score;
+    Color shieldColor;
     
     //gun variables
     private int gunPointX = 100, gunPointY = 100;   //gun direction
@@ -48,9 +52,10 @@ public class PlayerShip implements Hittable{
     /**
      * Default constructor.
      */
-    public PlayerShip() {
+    public PlayerShip(Score gamescore) {
     	x=SpaceSurvivor.GAME_WIDTH/2;
         y=SpaceSurvivor.GAME_HEIGHT/2;
+        score = gamescore;
     }
 
     public void move(){
@@ -103,19 +108,28 @@ public class PlayerShip implements Hittable{
         gunPolyY[1] = (int) (y - yOff);
         gunPolyY[2] = (int) (tipy - yOff);
         gunPolyY[3] = (int) (tipy + yOff);
+
+        //update shield color
+        shieldColor = new Color(255-score.getShield()*255/100, score.getShield()*255/100, 0);
    }
 
     public void draw(Graphics g){
-        g.setColor(Color.red);
+        
         if(alive){
+            g.setColor(shieldColor);
             g.fillOval(x-RADIUS, y-RADIUS, RADIUS*2, RADIUS*2);
+            g.setColor(Color.red);
+            g.fillOval(x-RADIUS+4, y-RADIUS+4, RADIUS*2-8, RADIUS*2-8);
             g.setColor(Color.ORANGE);
             g.fillPolygon(gunPolyX, gunPolyY, 4);
             g.setColor(Color.cyan);
             g.fillOval(x-RADIUS/2, y-RADIUS/2, RADIUS, RADIUS);
         }
         // if dead, replace ship with failure text
-        else g.drawString ("You Died. Sorry.", 200, 250);
+        else{
+            g.setColor(Color.red);
+            g.drawString ("You Died. Sorry.", 200, 250);
+        }
     }
     
     @Override
