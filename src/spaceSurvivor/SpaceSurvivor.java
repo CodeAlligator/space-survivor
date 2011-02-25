@@ -88,7 +88,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * determined at each level.
 	 */
 	private EnemyShip[] enemyShips;
-	private static final int MAXENEMY = 300;
+	private static final int MAXENEMY = 400;
 	
     //Bullet variables  ~Andrew
 	/**
@@ -126,8 +126,12 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 */
 	private GameTimer gameTimer;
 	
-	private int levelTimeSeconds = 20;
-	
+	private int levelTimeSeconds = 60;
+
+        //for incrementally spawning enemies
+        private int counter = 0; //frame count
+        int eCount=0;       //enemy count
+        int pCount=0;       //powerup count
 	/**
 	 * Animation thread.
 	 */
@@ -512,6 +516,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	public void run() {
 		while(anim != null){
 
+                //spawn enemies incrementally
+
+                    spawn();
+
+
             // move the bullets  ~Andrew
             for (int i = 0; i < MAXSHOTS; i++)
                 shots[i].move();
@@ -569,7 +578,24 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		
         finishOff();	//	not necessary but here for safety
 	}
-	
+
+        // spawn enemies and power-ups slowly. can be replaced by multiple levels later
+        private void spawn(){
+            if(gameTimer.getTime() != 0){
+                counter++;
+                if (counter % 150 == 0 && eCount<MAXENEMY){
+                    enemyShips[eCount].activate();
+                    eCount++;
+                }
+                if (counter % 300 == 0 && pCount<MAXPOWER){
+                    powers[pCount].activate();
+                    pCount++;
+                }
+            }
+        }
+        
+
+
 	/**
 	 * Detect user's screen size and set game for this size.
 	 */
