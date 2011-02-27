@@ -20,6 +20,7 @@ import java.util.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import spaceSurvivor.audio.GameAudioPlayer;
 import spaceSurvivor.eventListener.GameKeyListener;
 import spaceSurvivor.eventListener.GameMouseListener;
 import spaceSurvivor.powerUp.AmmoPowerUp;
@@ -164,6 +165,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	private boolean onSplash = true;
 	
 	/**
+	 * Used to play audio sounds in game.
+	 */
+	GameAudioPlayer audioFX = new GameAudioPlayer();
+	
+	/**
 	 * Default constructor.
 	 */
 	public SpaceSurvivor() {
@@ -275,7 +281,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
         
         Image image = new ImageIcon(getClass().getResource("target.gif")).getImage();
-
+        
         Cursor c = toolkit.createCustomCursor(image , new Point(0,0), "img");
         this.setCursor(c);
 	}
@@ -545,6 +551,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         //collided with enemy
     	for(int i = 0; i < MAXENEMY; i++){
     		if(player.collided(enemyShips[i])){
+    			audioFX.playCrash();	//	play crash SFX
+    			
     			collided = true;
     			System.out.println("collided with " + enemyShips[i].toString());
                 enemyShips[i].die();
@@ -558,6 +566,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         //collided with powerup
         for(int i = 0; i < MAXPOWER; i++){
     		if(player.collided(powers[i])){
+    			audioFX.playPowerup();	//	play powerup SFX
+    			
                 powers[i].die();
                 score.addScore(10);
                 if(powers[i] instanceof AmmoPowerUp) score.addAmmo(10);
@@ -628,6 +638,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	                    nextShot = (nextShot + 1) % MAXSHOTS;
 	                    score.addAmmo(-1);
 	                    score.addScore(-1);
+	                    audioFX.playGunShot();
 	                }
 	            }
 			}

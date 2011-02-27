@@ -50,7 +50,8 @@ public class PlayerShip implements Hittable{
     public final static int GUNW = 4;      //gun's width
     
     /**
-     * Default constructor.
+     * Creates a new <code>PlayerShip</code> object.
+     * @param gamescore
      */
     public PlayerShip(Score gamescore) {
     	x=SpaceSurvivor.GAME_WIDTH/2;
