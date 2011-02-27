@@ -281,8 +281,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
         
         Image image = new ImageIcon(getClass().getResource("target.gif")).getImage();
-        
-        Cursor c = toolkit.createCustomCursor(image , new Point(0,0), "img");
+        /*
+         * 	cursor image is 30x30 px
+         * so the hot spot should be at half of this 15,15
+         */
+        Cursor c = toolkit.createCustomCursor(image , new Point(15, 15), "img");
         this.setCursor(c);
 	}
 	
