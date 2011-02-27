@@ -90,7 +90,6 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * determined at each level.
 	 */
 	private EnemyShip[] enemyShips;
-	private static final int MAXENEMY = 400;
 	
     //Bullet variables  ~Andrew
 	/**
@@ -103,9 +102,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
      * Maximum number of bullets that can be on screen at once.
      */
     private static final int MAXSHOTS = 30;
-
+    
     private PowerUp[] powers;
-    private static final int MAXPOWER = 100;
+    
 
     private Score score;
 
@@ -128,12 +127,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 */
 	private GameTimer gameTimer;
 	
-	private int levelTimeSeconds = 60;
-
-        //for incrementally spawning enemies
-        private int counter = 0; //frame count
-        int eCount=0;       //enemy count
-        int pCount=0;       //powerup count
+    //for incrementally spawning enemies
+    //private int counter = 0; //frame count
+    //int eCount=0;       //enemy count
+    //int pCount=0;       //powerup count
+    
 	/**
 	 * Animation thread.
 	 */
@@ -168,6 +166,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	 * Used to play audio sounds in game.
 	 */
 	GameAudioPlayer audioFX = new GameAudioPlayer();
+	
+	/**
+	 * Current level.
+	 */
+	Level level;
 	
 	/**
 	 * Default constructor.
@@ -218,30 +221,57 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         for(int i = 0; i < MAXSHOTS; i++)
             shots[i] = new Bullet(player);
         nextShot = 0;
-
-        //initialize enemies  ~Andrew
-        enemyShips = new EnemyShip[MAXENEMY];
-        for (int i = 0; i < MAXENEMY; i+=2)
-            enemyShips[i] = new DefaultEnemy();
-        for (int i = 1; i < MAXENEMY; i+=4)
-            enemyShips[i] = new ConfusedEnemy();
-        for(int i = 3; i < MAXENEMY; i+=4)
-        	enemyShips[i] = new SeekerEnemy();
-
-	    //initialize powerups
-	    powers = new PowerUp[MAXPOWER];
-	    for (int i=0;i<MAXPOWER;i+=2)
-	        powers[i]=new AmmoPowerUp();
-	    for (int i=1;i<MAXPOWER;i+=2)
-	        powers[i]=new ShieldPowerUp();
-	
-	  
-	    
+        
+        
+        level = LevelCreator.loadLevel(LevelCreator.LEVEL1);
+        
+        enemyShips = new EnemyShip[level.getEnemyShips().length];
+    	powers = new PowerUp[level.getPowerUps().length];
+        
+        //	load the enemy ships
+        for(int i = 0; i < level.getEnemyShips().length; i++){
+        	enemyShips[i] = level.getEnemyShips()[i];
+        }
+        
+        //	load the power ups
+        for(int i = 0; i < level.getPowerUps().length; i++){
+        	powers[i] = level.getPowerUps()[i];
+        }
+        
+        
 	    //	initialize time thread
 	    //	TODO the following three lines should be called whenever ANY level starts
 	    timer.cancel();
 	    timer = new Timer();
-		gameTimer = new GameTimer(levelTimeSeconds);
+		gameTimer = new GameTimer(level.getLevelTime());
+		timer.scheduleAtFixedRate(gameTimer, 0, 1000);
+	}
+	
+	/**
+	 * Load the next level.
+	 */
+	public void nextLevel(){
+        level = LevelCreator.loadLevel(level.getLevelNumber() + 1);
+        
+        enemyShips = new EnemyShip[level.getEnemyShips().length];
+    	powers = new PowerUp[level.getPowerUps().length];
+        
+        //	load the enemy ships
+        for(int i = 0; i < level.getEnemyShips().length; i++){
+        	enemyShips[i] = level.getEnemyShips()[i];
+        }
+        
+        //	load the power ups
+        for(int i = 0; i < level.getPowerUps().length; i++){
+        	powers[i] = level.getPowerUps()[i];
+        }
+        
+        
+	    //	initialize time thread
+	    //	TODO the following three lines should be called whenever ANY level starts
+	    timer.cancel();
+	    timer = new Timer();
+		gameTimer = new GameTimer(level.getLevelTime());
 		timer.scheduleAtFixedRate(gameTimer, 0, 1000);
 	}
 	
@@ -486,11 +516,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             shots[i].draw(g);
         
 		// Draw the enemies  ~Andrew
-		for (int i=0; i<MAXENEMY; i++)
+		for (int i=0; i<level.getEnemyShips().length; i++)
 			enemyShips[i].draw(g);
 
         //Draw the powerups
-        for (int i=0; i<MAXPOWER; i++)
+        for (int i=0; i<level.getPowerUps().length; i++)
 			powers[i].draw(g);
         
         player.draw(g);
@@ -527,7 +557,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         if(gameTimer.getTime() == 0){
         	//	level over
         	g.drawString("Time is up", GAME_WIDTH / 2, GAME_HEIGHT / 2);
+        	
+        	nextLevel();
         }
+        
         
         /*if (wonGame())
         {
@@ -552,7 +585,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     	boolean collided = false; //unnecessary?
 
         //collided with enemy
-    	for(int i = 0; i < MAXENEMY; i++){
+    	for(int i = 0; i < level.getEnemyShips().length; i++){
     		if(player.collided(enemyShips[i])){
     			audioFX.playCrash();	//	play crash SFX
     			
@@ -567,7 +600,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
 
         //collided with powerup
-        for(int i = 0; i < MAXPOWER; i++){
+        for(int i = 0; i < level.getPowerUps().length; i++){
     		if(player.collided(powers[i])){
     			audioFX.playPowerup();	//	play powerup SFX
     			
@@ -579,7 +612,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     	}
 
         //check bullet collisions
-        for(int i = 0; i < MAXENEMY; i++){
+        for(int i = 0; i < level.getEnemyShips().length; i++){
             if(enemyShips[i].collidedWithBullet()){
                 enemyShips[i].die();
                 score.addScore(2);
@@ -604,11 +637,11 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	                shots[i].move();
 	            
 	            // move the enemies  ~Andrew
-	            for (int i = 0; i < MAXENEMY; i++)
+	            for (int i = 0; i < level.getEnemyShips().length; i++)
 	                enemyShips[i].move(player, shots, enemyShips);
 
 	            // update powerups (time could expire)
-	                         for (int i=0; i<MAXPOWER; i++)
+	                         for (int i=0; i<level.getPowerUps().length; i++)
 	                            powers[i].update();
 	            
 				player.move();
@@ -661,16 +694,29 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
         // spawn enemies and power-ups slowly. can be replaced by multiple levels later
         private void spawn(){
-            if(gameTimer.getTime() != 0){
-                counter++;
-                if (counter % 150 == 0 && eCount<MAXENEMY){
-                    enemyShips[eCount].activate();
-                    eCount++;
-                }
-                if (counter % 300 == 0 && pCount<MAXPOWER){
-                    powers[pCount].activate();
-                    pCount++;
-                }
+        	int time = gameTimer.getTime();
+            if(time != 0){
+            	for(int i = 0; i < level.getEnemyShips().length; i++){
+            		if(level.getShipEntranceTimes()[i] == level.getLevelTime() - time){
+            			enemyShips[i].activate();
+            		}
+            	}
+            	for(int i = 0; i < level.getPowerUps().length; i++){
+            		if(level.getPowerUpStartTimes()[i] == level.getLevelTime() - time){
+            			powers[i].activate();
+            		}
+            		else if(level.getPowerUpStopTimes()[i] == level.getLevelTime() - time){
+            			powers[i].die();
+            		}
+            	}
+            }
+            else{
+            	for(int i = 0; i < level.getEnemyShips().length; i++){
+        			enemyShips[i].die();
+            	}
+            	for(int i = 0; i < level.getPowerUps().length; i++){
+    			powers[i].die();	
+            	}
             }
         }
         
