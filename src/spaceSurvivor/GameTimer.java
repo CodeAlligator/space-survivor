@@ -1,6 +1,7 @@
 package spaceSurvivor;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.TimerTask;
 
@@ -32,8 +33,18 @@ public class GameTimer extends TimerTask{
      */
     public void draw(Graphics g){
         g.setColor(Color.YELLOW);
-        g.drawString("Time left: " + time + "s", SpaceSurvivor.GAME_WIDTH / 2 - 80, 30);
-
+        Font font = new Font("SansSerif", Font.PLAIN, 10);
+        g.setFont(font);
+        int changeAtTime = 15;
+        
+        if(time < changeAtTime){
+        	font = new Font("SansSerif", Font.PLAIN, 50 - time);
+            g.setFont(font);
+        	g.drawString("Time left: " + time + "s", SpaceSurvivor.GAME_WIDTH / 2 - 130 + changeAtTime - time, 50 + changeAtTime - time);
+        }
+        else{
+        	g.drawString("Time left: " + time + "s", SpaceSurvivor.GAME_WIDTH / 2 - 80, 40);
+        }
     }
     
     /**

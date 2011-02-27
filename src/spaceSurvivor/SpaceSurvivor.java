@@ -110,11 +110,6 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 
     private Image background;
 
-    /**
-	 * Time allowed to complete level in seconds.
-	 */
-	public int timeAllowed = 30;
-	
 	public boolean timeUp = false;
 	
 	/**
@@ -559,7 +554,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         
         if(gameTimer.getTime() == 0){
         	//	level over
-        	g.drawString("Time is up", GAME_WIDTH / 2, GAME_HEIGHT / 2);
+        	//g.drawString("Time is up", GAME_WIDTH / 2, GAME_HEIGHT / 2);
         	
         	nextLevel();
         }
