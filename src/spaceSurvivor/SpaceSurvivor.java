@@ -239,12 +239,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         }
         
         
-	    //	initialize time thread
-	    //	TODO the following three lines should be called whenever ANY level starts
-	    timer.cancel();
-	    timer = new Timer();
-		gameTimer = new GameTimer(level.getLevelTime());
-		timer.scheduleAtFixedRate(gameTimer, 0, 1000);
+	    
 	}
 	
 	/**
@@ -268,7 +263,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         
         
 	    //	initialize time thread
-	    //	TODO the following three lines should be called whenever ANY level starts
+	    //	the following three lines should be called whenever ANY level starts
 	    timer.cancel();
 	    timer = new Timer();
 		gameTimer = new GameTimer(level.getLevelTime());
@@ -484,6 +479,14 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		g.drawString("For testing: press B to toggle bounding ball visibility on/off", splashX + 250, firstLineY + lineSpacing * 19);
 		
 		onSplash = !gameKeyListener.isKeyEnterPressed();
+		
+		if(!onSplash){
+			//	initialize time thread
+		    timer.cancel();
+		    timer = new Timer();
+			gameTimer = new GameTimer(level.getLevelTime());
+			timer.scheduleAtFixedRate(gameTimer, 0, 1000);
+		}
     }
     
     /**
