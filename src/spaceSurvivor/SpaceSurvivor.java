@@ -206,7 +206,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	public void setLevel1(){
 		//initialize score object
 	    score = new Score();
-            
+	    
 	    player = new PlayerShip(score);	//	initialize player ship
 
 		background = new ImageIcon(getClass().getResource("background.gif")).getImage();
@@ -476,6 +476,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		onSplash = !gameKeyListener.isKeyEnterPressed();
 		
 		if(!onSplash){
+			//	in case player pressed mouse button during splash screen
+		    gameMouseListener.clickReset();
+			
 			//	initialize time thread
 		    timer.cancel();
 		    timer = new Timer();
@@ -644,17 +647,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	            
 				player.move();
 				
-				//	check if player collided with any ships
-				if(checkPlayerCollisions())
-				{
-					/*
-					 * TODO add collision consequence logic here
-					 * decrease score
-					 * decrease shields
-					 * if shields at 0, player dies
-					 */
-	                            //moved this logic to collision method above
-				}
+				//	check if player collided with any objects
+				checkPlayerCollisions();
+				
 				//	check for player input (mouse and keyboard)
 				player.setGunX(gameMouseListener.getMouseX());
 				player.setGunY(gameMouseListener.getMouseY());
@@ -690,33 +685,35 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         finishOff();	//	not necessary but here for safety
 	}
 
-        // spawn enemies and power-ups slowly. can be replaced by multiple levels later
-        private void spawn(){
-        	int time = gameTimer.getTime();
-            if(time != 0){
-            	for(int i = 0; i < level.getEnemyShips().length; i++){
-            		if(level.getShipEntranceTimes()[i] == level.getLevelTime() - time){
-            			enemyShips[i].activate();
-            		}
-            	}
-            	for(int i = 0; i < level.getPowerUps().length; i++){
-            		if(level.getPowerUpStartTimes()[i] == level.getLevelTime() - time){
-            			powers[i].activate();
-            		}
-            		else if(level.getPowerUpStopTimes()[i] == level.getLevelTime() - time){
-            			powers[i].die();
-            		}
-            	}
-            }
-            else{
-            	for(int i = 0; i < level.getEnemyShips().length; i++){
-        			enemyShips[i].die();
-            	}
-            	for(int i = 0; i < level.getPowerUps().length; i++){
-    			powers[i].die();	
-            	}
-            }
+    /**
+     * Spawn enemies and power-ups according to timing defined in this level.
+     */
+    private void spawn(){
+    	int time = gameTimer.getTime();
+        if(time != 0){
+        	for(int i = 0; i < level.getEnemyShips().length; i++){
+        		if(level.getShipEntranceTimes()[i] == level.getLevelTime() - time){
+        			enemyShips[i].activate();
+        		}
+        	}
+        	for(int i = 0; i < level.getPowerUps().length; i++){
+        		if(level.getPowerUpStartTimes()[i] == level.getLevelTime() - time){
+        			powers[i].activate();
+        		}
+        		else if(level.getPowerUpStopTimes()[i] == level.getLevelTime() - time){
+        			powers[i].die();
+        		}
+        	}
         }
+        else{
+        	for(int i = 0; i < level.getEnemyShips().length; i++){
+    			enemyShips[i].die();
+        	}
+        	for(int i = 0; i < level.getPowerUps().length; i++){
+			powers[i].die();	
+        	}
+        }
+    }
         
 
 

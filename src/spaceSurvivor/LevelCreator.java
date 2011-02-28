@@ -141,7 +141,7 @@ public class LevelCreator {
 				break;
 			case LEVEL2:
 				numEnemyShips = 50;
-				numPowerUps = 8;
+				numPowerUps = 15;
 				
 				enemyShips = new EnemyShip[numEnemyShips];
 				shipEntranceTimes = new int[numEnemyShips];
@@ -234,24 +234,24 @@ public class LevelCreator {
 				shipEntranceTimes[29] = 50;
 				shipEntranceTimes[30] = 46;
 				shipEntranceTimes[31] = 30;
-				shipEntranceTimes[32] = 30;
-				shipEntranceTimes[33] = 30;
-				shipEntranceTimes[34] = 30;
-				shipEntranceTimes[35] = 31;
-				shipEntranceTimes[36] = 31;
-				shipEntranceTimes[37] = 31;
-				shipEntranceTimes[38] = 32;
-				shipEntranceTimes[39] = 32;
-				shipEntranceTimes[40] = 46;
-				shipEntranceTimes[41] = 30;
-				shipEntranceTimes[42] = 30;
-				shipEntranceTimes[43] = 30;
-				shipEntranceTimes[44] = 30;
-				shipEntranceTimes[45] = 31;
-				shipEntranceTimes[46] = 31;
-				shipEntranceTimes[47] = 31;
-				shipEntranceTimes[48] = 32;
-				shipEntranceTimes[49] = 32;
+				shipEntranceTimes[32] = 31;
+				shipEntranceTimes[33] = 32;
+				shipEntranceTimes[34] = 33;
+				shipEntranceTimes[35] = 34;
+				shipEntranceTimes[36] = 35;
+				shipEntranceTimes[37] = 36;
+				shipEntranceTimes[38] = 37;
+				shipEntranceTimes[39] = 38;
+				shipEntranceTimes[40] = 39;
+				shipEntranceTimes[41] = 40;
+				shipEntranceTimes[42] = 41;
+				shipEntranceTimes[43] = 42;
+				shipEntranceTimes[44] = 43;
+				shipEntranceTimes[45] = 44;
+				shipEntranceTimes[46] = 45;
+				shipEntranceTimes[47] = 46;
+				shipEntranceTimes[48] = 47;
+				shipEntranceTimes[49] = 48;
 				
 				powerUps[0] = new AmmoPowerUp();
 				powerUps[1] = new AmmoPowerUp();
@@ -260,12 +260,19 @@ public class LevelCreator {
 				powerUps[4] = new ShieldPowerUp();
 				powerUps[5] = new ShieldPowerUp();
 				powerUps[6] = new AmmoPowerUp();
-				powerUps[7] = new ShieldPowerUp();
+				powerUps[7] = new AmmoPowerUp();
+				powerUps[8] = new ShieldPowerUp();
+				powerUps[9] = new AmmoPowerUp();
+				powerUps[10] = new AmmoPowerUp();
+				powerUps[11] = new ShieldPowerUp();
+				powerUps[12] = new AmmoPowerUp();
+				powerUps[13] = new AmmoPowerUp();
+				powerUps[14] = new ShieldPowerUp();
 				
-				powerUpStartTimes[0] = 2;
-				powerUpStopTimes[0] = 10;
-				powerUpStartTimes[1] = 6;
-				powerUpStopTimes[1] = 22;
+				powerUpStartTimes[0] = 6;
+				powerUpStopTimes[0] = 15;
+				powerUpStartTimes[1] = 10;
+				powerUpStopTimes[1] = 19;
 				powerUpStartTimes[2] = 12;
 				powerUpStopTimes[2] = 18;
 				powerUpStartTimes[3] = 26;
@@ -274,15 +281,29 @@ public class LevelCreator {
 				powerUpStopTimes[4] = 36;
 				powerUpStartTimes[5] = 36;
 				powerUpStopTimes[5] = 47;
-				powerUpStartTimes[6] = 30;
-				powerUpStopTimes[6] = 45;
-				powerUpStartTimes[7] = 36;
-				powerUpStopTimes[7] = 50;
+				powerUpStartTimes[6] = 6;
+				powerUpStopTimes[6] = 15;
+				powerUpStartTimes[7] = 10;
+				powerUpStopTimes[7] = 19;
+				powerUpStartTimes[8] = 12;
+				powerUpStopTimes[8] = 18;
+				powerUpStartTimes[9] = 5;
+				powerUpStopTimes[9] = 25;
+				powerUpStartTimes[10] = 7;
+				powerUpStopTimes[10] = 27;
+				powerUpStartTimes[11] = 9;
+				powerUpStopTimes[11] = 29;
+				powerUpStartTimes[12] = 11;
+				powerUpStopTimes[12] = 31;
+				powerUpStartTimes[13] = 13;
+				powerUpStopTimes[13] = 33;
+				powerUpStartTimes[14] = 15;
+				powerUpStopTimes[14] = 35;
 				
 				break;
 			default:
 				numEnemyShips = 20;
-				numPowerUps = 6;
+				numPowerUps = 15;
 				
 				enemyShips = new EnemyShip[numEnemyShips];
 				shipEntranceTimes = new int[numEnemyShips];
@@ -340,6 +361,15 @@ public class LevelCreator {
 				powerUps[3] = new AmmoPowerUp();
 				powerUps[4] = new ShieldPowerUp();
 				powerUps[5] = new ShieldPowerUp();
+				powerUps[6] = new AmmoPowerUp();
+				powerUps[7] = new AmmoPowerUp();
+				powerUps[8] = new ShieldPowerUp();
+				powerUps[9] = new AmmoPowerUp();
+				powerUps[10] = new AmmoPowerUp();
+				powerUps[11] = new ShieldPowerUp();
+				powerUps[12] = new AmmoPowerUp();
+				powerUps[13] = new AmmoPowerUp();
+				powerUps[14] = new ShieldPowerUp();
 				
 				powerUpStartTimes[0] = 6;
 				powerUpStopTimes[0] = 15;
@@ -353,6 +383,24 @@ public class LevelCreator {
 				powerUpStopTimes[4] = 36;
 				powerUpStartTimes[5] = 36;
 				powerUpStopTimes[5] = 47;
+				powerUpStartTimes[6] = 6;
+				powerUpStopTimes[6] = 15;
+				powerUpStartTimes[7] = 10;
+				powerUpStopTimes[7] = 19;
+				powerUpStartTimes[8] = 12;
+				powerUpStopTimes[8] = 18;
+				powerUpStartTimes[9] = 5;
+				powerUpStopTimes[9] = 25;
+				powerUpStartTimes[10] = 7;
+				powerUpStopTimes[10] = 27;
+				powerUpStartTimes[11] = 9;
+				powerUpStopTimes[11] = 29;
+				powerUpStartTimes[12] = 11;
+				powerUpStopTimes[12] = 31;
+				powerUpStartTimes[13] = 13;
+				powerUpStopTimes[13] = 33;
+				powerUpStartTimes[14] = 15;
+				powerUpStopTimes[14] = 35;
 				
 				break;
 		}
