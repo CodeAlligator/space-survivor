@@ -1,6 +1,7 @@
 package spaceSurvivor;
 
 import spaceSurvivor.powerUp.AmmoPowerUp;
+import spaceSurvivor.powerUp.BigBulletPowerUp;
 import spaceSurvivor.powerUp.PowerUp;
 import spaceSurvivor.powerUp.ShieldPowerUp;
 import spaceSurvivor.ship.EnemyShip;
@@ -75,7 +76,7 @@ public class LevelCreator {
 				
 				
 				powerUps[0] = new AmmoPowerUp();
-				powerUps[1] = new AmmoPowerUp();
+				powerUps[1] = new BigBulletPowerUp();
 				powerUps[2] = new ShieldPowerUp();
 				powerUps[3] = new AmmoPowerUp();
 				powerUps[4] = new ShieldPowerUp();
@@ -89,7 +90,7 @@ public class LevelCreator {
 				
 				powerUpStartTimes[0] = 6;
 				powerUpStopTimes[0] = 15;
-				powerUpStartTimes[1] = 10;
+				powerUpStartTimes[1] = 4;
 				powerUpStopTimes[1] = 19;
 				powerUpStartTimes[2] = 12;
 				powerUpStopTimes[2] = 18;

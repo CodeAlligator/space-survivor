@@ -24,6 +24,7 @@ import spaceSurvivor.audio.GameAudioPlayer;
 import spaceSurvivor.eventListener.GameKeyListener;
 import spaceSurvivor.eventListener.GameMouseListener;
 import spaceSurvivor.powerUp.AmmoPowerUp;
+import spaceSurvivor.powerUp.BigBulletPowerUp;
 import spaceSurvivor.powerUp.PowerUp;
 import spaceSurvivor.powerUp.ShieldPowerUp;
 
@@ -168,6 +169,12 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	Level level;
 	
 	/**
+	 * Allows player to shoot large bullets if true.
+	 * If player got BigBulletPowerUp, then true.
+	 */
+	boolean bigBullets = false;
+	
+	/**
 	 * Default constructor.
 	 */
 	public SpaceSurvivor() {
@@ -210,7 +217,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	    player = new PlayerShip(score);	//	initialize player ship
 
 		background = new ImageIcon(getClass().getResource("background.gif")).getImage();
-
+		
         //initialize bullets  ~Andrew
         shots = new Bullet[MAXSHOTS];
         for(int i = 0; i < MAXSHOTS; i++)
@@ -256,6 +263,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         	powers[i] = level.getPowerUps()[i];
         }
         
+        //	player starts with normal-sized bullets
+		bigBullets = false;
         
 	    //	initialize time thread
 	    //	the following three lines should be called whenever ANY level starts
@@ -607,8 +616,9 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     			
                 powers[i].die();
                 score.addScore(10);
-                if(powers[i] instanceof AmmoPowerUp) score.addAmmo(10);
-                if(powers[i] instanceof ShieldPowerUp) score.addShield(10);
+                if(powers[i] instanceof AmmoPowerUp) score.addAmmo(AmmoPowerUp.AMMO_AMMOUNT);
+                if(powers[i] instanceof ShieldPowerUp) score.addShield(ShieldPowerUp.SHIELD_AMMOUNT);
+                if(powers[i] instanceof BigBulletPowerUp) bigBullets = true;
             }
     	}
 
@@ -616,7 +626,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         for(int i = 0; i < level.getEnemyShips().length; i++){
             if(enemyShips[i].collidedWithBullet()){
                 enemyShips[i].die();
-                score.addScore(2);
+                score.addScore(10);
             }
         }
         
@@ -657,12 +667,19 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 				player.setDownKey(gameKeyListener.isKeyDownPressed());
 				player.setLeftKey(gameKeyListener.isKeyLeftPressed());
 				player.setRightKey(gameKeyListener.isKeyRightPressed());
-
+				
 	            // create new bullets
 	            if (gameMouseListener.getClicked()){
 	                gameMouseListener.clickReset();
 	                
 	                if (!shots[nextShot].isAlive() && score.getAmmo()!=0){
+	                	if(bigBullets){
+							shots[nextShot].setBigBullet(true);
+						}
+						else{
+							shots[nextShot].setBigBullet(false);
+						}
+	                	
 	                    shots[nextShot].activate();
 	                    nextShot = (nextShot + 1) % MAXSHOTS;
 	                    score.addAmmo(-1);

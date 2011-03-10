@@ -13,7 +13,10 @@ public class Bullet implements Hittable{
     private double xdir, ydir; //movement direction
     private boolean alive;
     private PlayerShip playerShip;
-    public static final int RADIUS = 4;
+    public static final int NORMAL_BULLET_RADIUS = 4;
+    public static final int BIG_BULLET_RADIUS = 10;
+    public static int radius = NORMAL_BULLET_RADIUS;
+    private boolean bigBullet = false;
     
     /**
      * Instantiates a new <code>Bullet</code> object.
@@ -30,6 +33,13 @@ public class Bullet implements Hittable{
         xdir = (x - playerShip.getPosX()) / 2;
         ydir = (y - playerShip.getPosY()) / 2;
         alive = true;
+        
+        if(bigBullet){
+        	radius = BIG_BULLET_RADIUS;
+        }
+        else{
+        	radius = NORMAL_BULLET_RADIUS;
+        }
     }
 
     public void die(){
@@ -45,19 +55,19 @@ public class Bullet implements Hittable{
             x += xdir;
             y += ydir;
         }
-        if((y + RADIUS < 0) || (y > SpaceSurvivor.GAME_HEIGHT + RADIUS) || (x + RADIUS < 0) || (x > SpaceSurvivor.GAME_WIDTH + RADIUS))
+        if((y + radius < 0) || (y > SpaceSurvivor.GAME_HEIGHT + radius) || (x + radius < 0) || (x > SpaceSurvivor.GAME_WIDTH + radius))
             alive = false;
     }
 
     public void draw(Graphics g){
         if(alive){
             g.setColor(Color.YELLOW);
-            g.fillOval((int)x - RADIUS, (int)y - RADIUS, RADIUS * 2, RADIUS * 2);
+            g.fillOval((int)x - radius, (int)y - radius, radius * 2, radius * 2);
         }
     }
     
 	public Double getBoundingBall() {
-		return new java.awt.geom.Ellipse2D.Double(x, y, 2 * RADIUS, 2 * RADIUS);
+		return new java.awt.geom.Ellipse2D.Double(x, y, 2 * radius, 2 * radius);
 	}
 
         public double getDX(){
@@ -67,4 +77,18 @@ public class Bullet implements Hittable{
         public double getDY(){
             return ydir;
         }
+
+		/**
+		 * @return the bigBullet
+		 */
+		public boolean isBigBullet() {
+			return bigBullet;
+		}
+
+		/**
+		 * @param bigBullet the bigBullet to set
+		 */
+		public void setBigBullet(boolean bigBullet) {
+			this.bigBullet = bigBullet;
+		}
 }
