@@ -9,6 +9,9 @@ import spaceSurvivor.ship.Bullet;
 import spaceSurvivor.ship.EnemyShip;
 import spaceSurvivor.ship.PlayerShip;
 
+/*------------------------------------------------------------------------------
+These enemies split into 4 SplitMiniEnemies when they die
+------------------------------------------------------------------------------*/
 public class SplitEnemy extends EnemyShip {
 
     EnemyShip[] minis;
@@ -29,7 +32,6 @@ public class SplitEnemy extends EnemyShip {
 
     @Override
     public void draw(Graphics g) {
-        
         if (isAlive()){
                 g.setColor(Color.BLUE);
         	g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
@@ -52,7 +54,6 @@ public class SplitEnemy extends EnemyShip {
             if ((x < RADIUS && dx<0) || (x+RADIUS > SpaceSurvivor.GAME_WIDTH && dx>0))
                 dx *= -1;
         }
-        
     }
 
     @Override
@@ -95,23 +96,22 @@ public class SplitEnemy extends EnemyShip {
          minis[2].setY(y+20);
          minis[3].setX(x-20);
          minis[3].setY(y-20);
-
     }
 
     @Override
-	public boolean collidedWithBullet() {
+    public boolean collidedWithBullet() {
         if(alive){
-			java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
+            java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
 
-			double thisCenterX = thisBoundingBall.getCenterX();
-			double thisCenterY = thisBoundingBall.getCenterY();
+            double thisCenterX = thisBoundingBall.getCenterX();
+            double thisCenterY = thisBoundingBall.getCenterY();
 
-			boolean hitBullet = false;
+            boolean hitBullet = false;
 
-			for(int i = 0; i < shots.length; i++){
-                            if(shots[i].isAlive()){
-				double otherCenterX = shots[i].getBoundingBall().getCenterX();
-				double otherCenterY = shots[i].getBoundingBall().getCenterY();
+            for(int i = 0; i < shots.length; i++){
+                if(shots[i].isAlive()){
+                    double otherCenterX = shots[i].getBoundingBall().getCenterX();
+                    double otherCenterY = shots[i].getBoundingBall().getCenterY();
 
 //                                // checks bullet in 4 different previous spots since it moves fast enought to skip collisions
 //                                double shotX,shotY,shipX,shipY;
@@ -121,34 +121,28 @@ public class SplitEnemy extends EnemyShip {
 //                                    shipX = thisCenterX + dx*j/25;
 //                                    shipY = thisCenterY + dy*j/25;
 
-                                    /*
-                                     * underlying equation:
-                                     * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
-                                     */
-                                    double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
-                                    double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
-                                    double radiiComponent = Math.pow(RADIUS + shots[i].getBoundingBall().height / 2, 2);
+                    /*
+                     * underlying equation:
+                     * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
+                     */
+                    double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
+                    double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
+                    double radiiComponent = Math.pow(RADIUS + shots[i].getBoundingBall().height / 2, 2);
 
-                                    if((xComponent + yComponent) <= radiiComponent){
-                                            hitBullet = true;
-                                            shots[i].die();
-                                    }
-
-                            }
-			}
-
-			return hitBullet;
-        }
-        else{
-
-            for(int i=0;i<4;i++){
-
-                if(minis[i].collidedWithBullet()){
-                    minis[i].die();
-
+                    if((xComponent + yComponent) <= radiiComponent){
+                            hitBullet = true;
+                            shots[i].die();
+                    }
                 }
             }
-
+            return hitBullet;
+        }
+        else{
+            for(int i=0;i<4;i++){
+                if(minis[i].collidedWithBullet()){
+                    minis[i].die();
+                }
+            }
             return false;
         }
     }

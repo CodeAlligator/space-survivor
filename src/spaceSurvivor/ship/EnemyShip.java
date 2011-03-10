@@ -23,7 +23,7 @@ public class EnemyShip implements Hittable{
     protected EnemyShip[] enemies;
     protected Score score;
     protected boolean alive;
-    GameAudioPlayer audioFX = new GameAudioPlayer();
+    protected GameAudioPlayer audioFX = new GameAudioPlayer();
 
     public EnemyShip(){
         x = generator.nextInt(200) - 100; //spawn within 100 units of edges
@@ -58,7 +58,7 @@ public class EnemyShip implements Hittable{
             	//	if this enemy is alive, only check against other alive enemies
                 if (this != enemies[i] && this.isAlive() && enemies[i].isAlive()){
                 	if(this.collidedWithEnemy(enemies[i])){
-                        angle = Math.atan2(y-enemies[i].y, x-enemies[i].x);
+                        angle = Math.atan2(y-enemies[i].getY(), x-enemies[i].getX());
                         dx = SPEED*Math.cos(angle);
                         dy = SPEED*Math.sin(angle);
                     }

@@ -6,6 +6,9 @@ import java.awt.Graphics;
 import spaceSurvivor.SpaceSurvivor;
 import spaceSurvivor.ship.EnemyShip;
 
+/*------------------------------------------------------------------------------
+These are only created as a result of the Split Enemy dying
+------------------------------------------------------------------------------*/
 public class SplitMiniEnemy extends EnemyShip{
 
     public final static int RADIUS = 10;
@@ -32,7 +35,5 @@ public class SplitMiniEnemy extends EnemyShip{
             if ((x < RADIUS && dx<0) || (x+RADIUS > SpaceSurvivor.GAME_WIDTH && dx>0))
                 dx *= -1;
         }
-    }
-
-    
+    }  
 }
