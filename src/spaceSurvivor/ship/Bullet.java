@@ -59,4 +59,12 @@ public class Bullet implements Hittable{
 	public Double getBoundingBall() {
 		return new java.awt.geom.Ellipse2D.Double(x, y, 2 * RADIUS, 2 * RADIUS);
 	}
+
+        public double getDX(){
+            return xdir;
+        }
+
+        public double getDY(){
+            return ydir;
+        }
 }

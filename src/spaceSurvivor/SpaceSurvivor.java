@@ -582,22 +582,22 @@ public class SpaceSurvivor extends JFrame implements Runnable{
      * Determines if player ship has collided with any enemy ships.
      * @return
      */
-    public boolean checkPlayerCollisions(){
-    	boolean collided = false; //unnecessary?
-
-        //collided with enemy
-    	for(int i = 0; i < level.getEnemyShips().length; i++){
-    		if(player.collided(enemyShips[i])){
-    			audioFX.playCrash();	//	play crash SFX
-    			
-    			collided = true;
-    			System.out.println("collided with " + enemyShips[i].toString());
-                enemyShips[i].die();
-                score.addScore(-5);
-                if (score.getShield()==0) player.die();
-                	score.addShield(-10);
-            }
-    	}
+    public void checkPlayerCollisions(){
+    	
+        // moved detection to EnemyShip class   ~Andrew
+//        //collided with enemy
+//    	for(int i = 0; i < level.getEnemyShips().length; i++){
+//    		if(player.collided(enemyShips[i])){
+//    			audioFX.playCrash();	//	play crash SFX
+//
+//
+//    			System.out.println("collided with " + enemyShips[i].toString());
+//                enemyShips[i].die();
+//                score.addScore(-5);
+//                if (score.getShield()==0) player.die();
+//                	score.addShield(-10);
+//            }
+//    	}
 
 
         //collided with powerup
@@ -620,7 +620,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
             }
         }
         
-    	return collided;
+    	
     }
     
 	/**
@@ -639,7 +639,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	            
 	            // move the enemies  ~Andrew
 	            for (int i = 0; i < level.getEnemyShips().length; i++)
-	                enemyShips[i].move(player, shots, enemyShips);
+	                enemyShips[i].move(player, shots, enemyShips, score);
 
 	            // update powerups (time could expire)
 	                         for (int i=0; i<level.getPowerUps().length; i++)
