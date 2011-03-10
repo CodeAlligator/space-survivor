@@ -129,51 +129,50 @@ public class EnemyShip implements Hittable{
 	 * Determines if this object has collided with any bullet.
 	 * @return	true if collided, false otherwise
 	 */
-	public boolean collidedWithBullet() {
+    public boolean collidedWithBullet() {
         if(alive){
-			java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
-	
-			double thisCenterX = thisBoundingBall.getCenterX();
-			double thisCenterY = thisBoundingBall.getCenterY();
-			
-			boolean hitBullet = false;
-			
-			for(int i = 0; i < shots.length; i++){
-                            if(shots[i].isAlive()){
-				double otherCenterX = shots[i].getBoundingBall().getCenterX();
-				double otherCenterY = shots[i].getBoundingBall().getCenterY();
+            java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
 
-                                // Doesn't work, need to debug or try something else   ~Andrew
-//                                // checks bullet in 4 different previous spots since it moves fast enought to skip collisions
-//                                double shotX,shotY,shipX,shipY;
-//                                for (double j=0;j<26;j+=1.0){
-//                                    shotX = otherCenterX + shots[i].getDX()*j/25;
-//                                    shotY = otherCenterY + shots[i].getDY()*j/25;
-//                                    shipX = thisCenterX + dx*j/25;
-//                                    shipY = thisCenterY + dy*j/25;
+            double thisCenterX = thisBoundingBall.getCenterX();
+            double thisCenterY = thisBoundingBall.getCenterY();
 
-                                    /*
-                                     * underlying equation:
-                                     * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
-                                     */
-                                    double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
-                                    double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
-                                    double radiiComponent = Math.pow(RADIUS + shots[i].getBoundingBall().height / 2, 2);
+            boolean hitBullet = false;
 
-                                    if((xComponent + yComponent) <= radiiComponent){
-                                            hitBullet = true;
-                                            shots[i].die();
-                                    }
-                                
-                            }
-			}
-			
-			return hitBullet;
+            for(int i = 0; i < shots.length; i++){
+                if(shots[i].isAlive()){
+                    double otherCenterX = shots[i].getBoundingBall().getCenterX();
+                    double otherCenterY = shots[i].getBoundingBall().getCenterY();
+
+                    // Sorta works, though not perfect   ~Andrew
+                    // checks bullet in 4 different previous spots since it moves fast enought to skip collisions
+                    double shotX,shotY;
+                    for (double j=0;j<26;j+=1.0){
+                        shotX = otherCenterX - (shots[i].getDX()*j/25);
+                        shotY = otherCenterY - (shots[i].getDY()*j/25);
+
+                         /*
+                         * underlying equation:
+                         * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
+                         */
+                        double xComponent = Math.pow(thisCenterX - shotX, 2);
+                        double yComponent = Math.pow(thisCenterY - shotY, 2);
+                        double radiiComponent = Math.pow(RADIUS + shots[i].getBoundingBall().height / 2, 2);
+
+                        if((xComponent + yComponent) <= radiiComponent){
+                                hitBullet = true;
+                                shots[i].die();
+                        }
+
+                    }
+                }
+            }
+
+            return hitBullet;
         }
         else{
         	return false;
         }
-	}
+    }
 
     public void die() {
         alive = false;

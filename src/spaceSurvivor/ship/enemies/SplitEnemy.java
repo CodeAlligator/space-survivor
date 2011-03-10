@@ -36,7 +36,7 @@ public class SplitEnemy extends EnemyShip {
                 g.setColor(Color.BLUE);
         	g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
         }
-        else {
+        else { //if dead draw minis
             for(int i=0;i<4;i++)
                 minis[i].draw(g);
         }
@@ -77,7 +77,7 @@ public class SplitEnemy extends EnemyShip {
                 }
             }
         }
-        else {
+        else {  //if dead move minis instead of self
             for(int i=0;i<4;i++)
                 minis[i].move(p, shots, enemies, score);
         }
@@ -86,6 +86,8 @@ public class SplitEnemy extends EnemyShip {
     @Override
     public void die() {
         alive = false;
+
+        //active minis when dies
         for(int i=0;i<4;i++)
              minis[i].activate();
          minis[0].setX(x+20);
@@ -113,30 +115,32 @@ public class SplitEnemy extends EnemyShip {
                     double otherCenterX = shots[i].getBoundingBall().getCenterX();
                     double otherCenterY = shots[i].getBoundingBall().getCenterY();
 
-//                                // checks bullet in 4 different previous spots since it moves fast enought to skip collisions
-//                                double shotX,shotY,shipX,shipY;
-//                                for (double j=0;j<26;j+=1.0){
-//                                    shotX = otherCenterX + shots[i].getDX()*j/25;
-//                                    shotY = otherCenterY + shots[i].getDY()*j/25;
-//                                    shipX = thisCenterX + dx*j/25;
-//                                    shipY = thisCenterY + dy*j/25;
+//                  // Sorta works, though not perfect   ~Andrew
+                    // checks bullet in 4 different previous spots since it moves fast enought to skip collisions
+                    double shotX,shotY;
+                    for (double j=0;j<26;j+=1.0){
+                        shotX = otherCenterX - (shots[i].getDX()*j/25);
+                        shotY = otherCenterY - (shots[i].getDY()*j/25);
 
-                    /*
-                     * underlying equation:
-                     * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
-                     */
-                    double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
-                    double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
-                    double radiiComponent = Math.pow(RADIUS + shots[i].getBoundingBall().height / 2, 2);
+                         /*
+                         * underlying equation:
+                         * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
+                         */
+                        double xComponent = Math.pow(thisCenterX - shotX, 2);
+                        double yComponent = Math.pow(thisCenterY - shotY, 2);
+                        double radiiComponent = Math.pow(RADIUS + shots[i].getBoundingBall().height / 2, 2);
 
-                    if((xComponent + yComponent) <= radiiComponent){
-                            hitBullet = true;
-                            shots[i].die();
+                        if((xComponent + yComponent) <= radiiComponent){
+                                hitBullet = true;
+                                shots[i].die();
+                        }
                     }
                 }
             }
             return hitBullet;
         }
+
+        //check mini collisions if main spliter is already dead
         else{
             for(int i=0;i<4;i++){
                 if(minis[i].collidedWithBullet()){

@@ -2,11 +2,13 @@ package spaceSurvivor.ship.enemies;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.geom.Ellipse2D;
 
 import spaceSurvivor.SpaceSurvivor;
 import spaceSurvivor.ship.EnemyShip;
 
+/*------------------------------------------------------------------------------
+These default enemies fly straight and bounce off of walls
+------------------------------------------------------------------------------*/
 public class DefaultEnemy extends EnemyShip{
     
     public DefaultEnemy() {    }

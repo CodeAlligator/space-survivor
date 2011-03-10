@@ -36,10 +36,12 @@ public class BuilderEnemy extends EnemyShip {
 
     @Override
     public void draw(Graphics g) {
+        //draw self
         if (isAlive()){
             g.setColor(Color.ORANGE);
             g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
         }
+        //draw wall sprites
         for(int i=0;i<100;i++)
             walls[i].draw(g);
     }
@@ -52,10 +54,7 @@ public class BuilderEnemy extends EnemyShip {
             y += dy;
             moveCount++;
 
-            //randomly changes direction
-            //TODO
-
-            //periodically build wall enemies
+            //periodically build stationary wall enemies
             if (moveCount % 40 == 0 && wallIndex<100){
                 walls[wallIndex].activate();
                 walls[wallIndex].setX(x-dx*10);
@@ -103,13 +102,15 @@ public class BuilderEnemy extends EnemyShip {
             }
 
         }
+        //needs to move wall sprites in addition to itself
         for(int i=0;i<100;i++)
             walls[i].move(p, shots, enemies, score);
     }
 
      @Override
     public boolean collidedWithBullet() {
-        for(int i=0;i<100;i++){
+        //needs to check wall sprites in addition to itself
+         for(int i=0;i<100;i++){
             if(walls[i].collidedWithBullet()){
                 walls[i].die();
             }
@@ -127,26 +128,26 @@ public class BuilderEnemy extends EnemyShip {
                 if(shots[i].isAlive()){
                     double otherCenterX = shots[i].getBoundingBall().getCenterX();
                     double otherCenterY = shots[i].getBoundingBall().getCenterY();
+                    
+                    // Sorta works, though not perfect   ~Andrew
+                    // checks bullet in 4 different previous spots since it moves fast enought to skip collisions
+                    double shotX,shotY;
+                    for (double j=0;j<26;j+=1.0){
+                        shotX = otherCenterX - (shots[i].getDX()*j/25);
+                        shotY = otherCenterY - (shots[i].getDY()*j/25);
 
-//                                // checks bullet in 4 different previous spots since it moves fast enought to skip collisions
-//                                double shotX,shotY,shipX,shipY;
-//                                for (double j=0;j<26;j+=1.0){
-//                                    shotX = otherCenterX + shots[i].getDX()*j/25;
-//                                    shotY = otherCenterY + shots[i].getDY()*j/25;
-//                                    shipX = thisCenterX + dx*j/25;
-//                                    shipY = thisCenterY + dy*j/25;
+                         /*
+                         * underlying equation:
+                         * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
+                         */
+                        double xComponent = Math.pow(thisCenterX - shotX, 2);
+                        double yComponent = Math.pow(thisCenterY - shotY, 2);
+                        double radiiComponent = Math.pow(RADIUS + shots[i].getBoundingBall().height / 2, 2);
 
-                    /*
-                     * underlying equation:
-                     * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
-                     */
-                    double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
-                    double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
-                    double radiiComponent = Math.pow(RADIUS + shots[i].getBoundingBall().height / 2, 2);
-
-                    if((xComponent + yComponent) <= radiiComponent){
-                            hitBullet = true;
-                            shots[i].die();
+                        if((xComponent + yComponent) <= radiiComponent){
+                                hitBullet = true;
+                                shots[i].die();
+                        }
                     }
                 }
             }

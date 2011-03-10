@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import spaceSurvivor.SpaceSurvivor;
 import spaceSurvivor.ship.Bullet;
-
 import spaceSurvivor.ship.EnemyShip;
 
 /*------------------------------------------------------------------------------
@@ -12,7 +11,7 @@ These enemies try to dodge bullets near them
 ------------------------------------------------------------------------------*/
 public class AvoiderEnemy extends EnemyShip{
 	
-    public AvoiderEnemy() {	}
+    public AvoiderEnemy() {}
 
     @Override
     public void draw(Graphics g) {
@@ -69,12 +68,7 @@ public class AvoiderEnemy extends EnemyShip{
                     dx*=-1;
                     dy*=-1;
                 }
-
-
             }
-
-
-
 
             //bounce off of edges
             if ((y < RADIUS && dy <0) || (y+RADIUS > SpaceSurvivor.GAME_HEIGHT && dy>0))
