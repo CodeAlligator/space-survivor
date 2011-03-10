@@ -5,6 +5,7 @@ import spaceSurvivor.powerUp.BigBulletPowerUp;
 import spaceSurvivor.powerUp.PowerUp;
 import spaceSurvivor.powerUp.ShieldPowerUp;
 import spaceSurvivor.ship.EnemyShip;
+import spaceSurvivor.ship.enemies.AvoiderEnemy;
 import spaceSurvivor.ship.enemies.BlobEnemy;
 import spaceSurvivor.ship.enemies.BuilderEnemy;
 import spaceSurvivor.ship.enemies.ConfusedEnemy;
@@ -39,7 +40,7 @@ public class LevelCreator {
 		
 		
 		switch(levelNumber){
-			case LEVEL1:
+			case LEVEL1:        // currently being used as testing level
 				numEnemyShips = 10;
 				numPowerUps = 12;
 				
@@ -51,16 +52,16 @@ public class LevelCreator {
 				
 				level.setLevelTime(60);
 				
-				enemyShips[0] = new BlobEnemy();
+				enemyShips[0] = new AvoiderEnemy();
 				enemyShips[1] = new DefaultEnemy();
 				enemyShips[2] = new DefaultEnemy();
                                 enemyShips[3] = new DefaultEnemy();
-				enemyShips[4] = new BlobEnemy();
+				enemyShips[4] = new AvoiderEnemy();
 				enemyShips[5] = new SplitEnemy();
 				enemyShips[6] = new SeekerEnemy();
                                 enemyShips[7] = new BuilderEnemy();
 				enemyShips[8] = new BlobEnemy();
-				enemyShips[9] = new BlobEnemy();
+				enemyShips[9] = new AvoiderEnemy();
 				
 				
 				shipEntranceTimes[0] = 1;
