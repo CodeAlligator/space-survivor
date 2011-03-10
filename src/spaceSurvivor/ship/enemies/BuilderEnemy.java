@@ -109,7 +109,13 @@ public class BuilderEnemy extends EnemyShip {
 
      @Override
     public boolean collidedWithBullet() {
-        if(alive){
+        for(int i=0;i<100;i++){
+            if(walls[i].collidedWithBullet()){
+                walls[i].die();
+            }
+        }
+
+         if(alive){
             java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
 
             double thisCenterX = thisBoundingBall.getCenterX();
@@ -146,11 +152,7 @@ public class BuilderEnemy extends EnemyShip {
             }
             return hitBullet;
         }
-        for(int i=0;i<100;i++){
-            if(walls[i].collidedWithBullet()){
-                walls[i].die();
-            }
-        }
+        
         return false;
         
     }

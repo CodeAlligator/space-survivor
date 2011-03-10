@@ -199,6 +199,14 @@ public class EnemyShip implements Hittable{
         y=ypos;
     }
 
+    public void setDX(double xdir){
+        dx=xdir;
+    }
+
+    public void setDY(double ydir){
+        dy=ydir;
+    }
+
     public void activate(){
         alive = true;
     }

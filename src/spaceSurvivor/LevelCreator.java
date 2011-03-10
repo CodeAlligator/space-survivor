@@ -4,6 +4,7 @@ import spaceSurvivor.powerUp.AmmoPowerUp;
 import spaceSurvivor.powerUp.PowerUp;
 import spaceSurvivor.powerUp.ShieldPowerUp;
 import spaceSurvivor.ship.EnemyShip;
+import spaceSurvivor.ship.enemies.BlobEnemy;
 import spaceSurvivor.ship.enemies.BuilderEnemy;
 import spaceSurvivor.ship.enemies.ConfusedEnemy;
 import spaceSurvivor.ship.enemies.DefaultEnemy;
@@ -38,7 +39,7 @@ public class LevelCreator {
 		
 		switch(levelNumber){
 			case LEVEL1:
-				numEnemyShips = 25;
+				numEnemyShips = 10;
 				numPowerUps = 12;
 				
 				enemyShips = new EnemyShip[numEnemyShips];
@@ -49,39 +50,17 @@ public class LevelCreator {
 				
 				level.setLevelTime(60);
 				
-				enemyShips[0] = new DefaultEnemy();
-				enemyShips[1] = new ConfusedEnemy();
-				enemyShips[2] = new SeekerEnemy();
-                                enemyShips[3] = new SplitEnemy(); //added splits for testing
-				enemyShips[4] = new SplitEnemy();
+				enemyShips[0] = new BlobEnemy();
+				enemyShips[1] = new DefaultEnemy();
+				enemyShips[2] = new DefaultEnemy();
+                                enemyShips[3] = new DefaultEnemy();
+				enemyShips[4] = new BlobEnemy();
 				enemyShips[5] = new SplitEnemy();
-				enemyShips[6] = new SplitEnemy();
-                                enemyShips[7] = new BuilderEnemy(); //added builders for testing
-				enemyShips[8] = new BuilderEnemy();
-				enemyShips[9] = new BuilderEnemy();
-				enemyShips[10] = new BuilderEnemy();
-//				enemyShips[3] = new SeekerEnemy();
-//				enemyShips[4] = new SeekerEnemy();
-//				enemyShips[5] = new SeekerEnemy();
-//				enemyShips[6] = new DefaultEnemy();
-//                              enemyShips[7] = new ConfusedEnemy();
-//				enemyShips[8] = new SeekerEnemy();
-//				enemyShips[9] = new DefaultEnemy();
-//				enemyShips[10] = new ConfusedEnemy();
-				enemyShips[11] = new SeekerEnemy();
-				enemyShips[12] = new SeekerEnemy();
-				enemyShips[13] = new SeekerEnemy();
-				enemyShips[14] = new SeekerEnemy();
-				enemyShips[15] = new DefaultEnemy();
-				enemyShips[16] = new ConfusedEnemy();
-				enemyShips[17] = new SeekerEnemy();
-				enemyShips[18] = new DefaultEnemy();
-				enemyShips[19] = new ConfusedEnemy();
-				enemyShips[20] = new SeekerEnemy();
-				enemyShips[21] = new SeekerEnemy();
-				enemyShips[22] = new SeekerEnemy();
-				enemyShips[23] = new SeekerEnemy();
-				enemyShips[24] = new SeekerEnemy();
+				enemyShips[6] = new SeekerEnemy();
+                                enemyShips[7] = new BuilderEnemy();
+				enemyShips[8] = new BlobEnemy();
+				enemyShips[9] = new BlobEnemy();
+				
 				
 				shipEntranceTimes[0] = 1;
 				shipEntranceTimes[1] = 3;
@@ -93,21 +72,7 @@ public class LevelCreator {
 				shipEntranceTimes[7] = 21;
 				shipEntranceTimes[8] = 23;
 				shipEntranceTimes[9] = 24;
-				shipEntranceTimes[10] = 25;
-				shipEntranceTimes[11] = 28;
-				shipEntranceTimes[12] = 30;
-				shipEntranceTimes[13] = 35;
-				shipEntranceTimes[14] = 36;
-				shipEntranceTimes[15] = 39;
-				shipEntranceTimes[16] = 40;
-				shipEntranceTimes[17] = 48;
-				shipEntranceTimes[18] = 49;
-				shipEntranceTimes[19] = 30;
-				shipEntranceTimes[20] = 30;
-				shipEntranceTimes[21] = 30;
-				shipEntranceTimes[22] = 30;
-				shipEntranceTimes[23] = 30;
-				shipEntranceTimes[24] = 30;
+				
 				
 				powerUps[0] = new AmmoPowerUp();
 				powerUps[1] = new AmmoPowerUp();
@@ -148,7 +113,118 @@ public class LevelCreator {
 				powerUpStopTimes[11] = 42;
 				
 				break;
-			case LEVEL2:
+                                case LEVEL2:
+				numEnemyShips = 25;
+				numPowerUps = 12;
+
+				enemyShips = new EnemyShip[numEnemyShips];
+				shipEntranceTimes = new int[numEnemyShips];
+				powerUps = new PowerUp[numPowerUps];
+				powerUpStartTimes = new int[numPowerUps];
+				powerUpStopTimes = new int[numPowerUps];
+
+				level.setLevelTime(60);
+
+				enemyShips[0] = new DefaultEnemy();
+				enemyShips[1] = new ConfusedEnemy();
+				enemyShips[2] = new SeekerEnemy();
+                                enemyShips[3] = new SplitEnemy(); //added splits for testing
+				enemyShips[4] = new SplitEnemy();
+				enemyShips[5] = new SplitEnemy();
+				enemyShips[6] = new SplitEnemy();
+                                enemyShips[7] = new BuilderEnemy(); //added builders for testing
+				enemyShips[8] = new BuilderEnemy();
+				enemyShips[9] = new BuilderEnemy();
+				enemyShips[10] = new BuilderEnemy();
+//				enemyShips[3] = new SeekerEnemy();
+//				enemyShips[4] = new SeekerEnemy();
+//				enemyShips[5] = new SeekerEnemy();
+//				enemyShips[6] = new DefaultEnemy();
+//                              enemyShips[7] = new ConfusedEnemy();
+//				enemyShips[8] = new SeekerEnemy();
+//				enemyShips[9] = new DefaultEnemy();
+//				enemyShips[10] = new ConfusedEnemy();
+				enemyShips[11] = new SeekerEnemy();
+				enemyShips[12] = new SeekerEnemy();
+				enemyShips[13] = new SeekerEnemy();
+				enemyShips[14] = new SeekerEnemy();
+				enemyShips[15] = new DefaultEnemy();
+				enemyShips[16] = new ConfusedEnemy();
+				enemyShips[17] = new SeekerEnemy();
+				enemyShips[18] = new DefaultEnemy();
+				enemyShips[19] = new ConfusedEnemy();
+				enemyShips[20] = new SeekerEnemy();
+				enemyShips[21] = new SeekerEnemy();
+				enemyShips[22] = new SeekerEnemy();
+				enemyShips[23] = new SeekerEnemy();
+				enemyShips[24] = new SeekerEnemy();
+
+				shipEntranceTimes[0] = 1;
+				shipEntranceTimes[1] = 3;
+				shipEntranceTimes[2] = 5;
+				shipEntranceTimes[3] = 9;
+				shipEntranceTimes[4] = 13;
+				shipEntranceTimes[5] = 18;
+				shipEntranceTimes[6] = 20;
+				shipEntranceTimes[7] = 21;
+				shipEntranceTimes[8] = 23;
+				shipEntranceTimes[9] = 24;
+				shipEntranceTimes[10] = 25;
+				shipEntranceTimes[11] = 28;
+				shipEntranceTimes[12] = 30;
+				shipEntranceTimes[13] = 35;
+				shipEntranceTimes[14] = 36;
+				shipEntranceTimes[15] = 39;
+				shipEntranceTimes[16] = 40;
+				shipEntranceTimes[17] = 48;
+				shipEntranceTimes[18] = 49;
+				shipEntranceTimes[19] = 30;
+				shipEntranceTimes[20] = 30;
+				shipEntranceTimes[21] = 30;
+				shipEntranceTimes[22] = 30;
+				shipEntranceTimes[23] = 30;
+				shipEntranceTimes[24] = 30;
+
+				powerUps[0] = new AmmoPowerUp();
+				powerUps[1] = new AmmoPowerUp();
+				powerUps[2] = new ShieldPowerUp();
+				powerUps[3] = new AmmoPowerUp();
+				powerUps[4] = new ShieldPowerUp();
+				powerUps[5] = new ShieldPowerUp();
+				powerUps[6] = new AmmoPowerUp();
+				powerUps[7] = new AmmoPowerUp();
+				powerUps[8] = new ShieldPowerUp();
+				powerUps[9] = new AmmoPowerUp();
+				powerUps[10] = new AmmoPowerUp();
+				powerUps[11] = new ShieldPowerUp();
+
+				powerUpStartTimes[0] = 6;
+				powerUpStopTimes[0] = 15;
+				powerUpStartTimes[1] = 10;
+				powerUpStopTimes[1] = 19;
+				powerUpStartTimes[2] = 12;
+				powerUpStopTimes[2] = 18;
+				powerUpStartTimes[3] = 26;
+				powerUpStopTimes[3] = 35;
+				powerUpStartTimes[4] = 29;
+				powerUpStopTimes[4] = 36;
+				powerUpStartTimes[5] = 36;
+				powerUpStopTimes[5] = 47;
+				powerUpStartTimes[6] = 6;
+				powerUpStopTimes[6] = 15;
+				powerUpStartTimes[7] = 10;
+				powerUpStopTimes[7] = 19;
+				powerUpStartTimes[8] = 22;
+				powerUpStopTimes[8] = 38;
+				powerUpStartTimes[9] = 26;
+				powerUpStopTimes[9] = 35;
+				powerUpStartTimes[10] = 29;
+				powerUpStopTimes[10] = 41;
+				powerUpStartTimes[11] = 32;
+				powerUpStopTimes[11] = 42;
+
+				break;
+			case LEVEL3:
 				numEnemyShips = 50;
 				numPowerUps = 15;
 				
