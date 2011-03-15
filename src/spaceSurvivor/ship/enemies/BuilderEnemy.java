@@ -8,6 +8,7 @@ import spaceSurvivor.SpaceSurvivor;
 import spaceSurvivor.ship.Bullet;
 import spaceSurvivor.ship.EnemyShip;
 import spaceSurvivor.ship.PlayerShip;
+import spaceSurvivor.ship.enemies.privateEnemies.WallEnemy;
 
 /*------------------------------------------------------------------------------
 These enemies build wallEnemys as they move

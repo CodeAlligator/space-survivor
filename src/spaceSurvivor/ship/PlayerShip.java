@@ -36,7 +36,7 @@ public class PlayerShip implements Hittable{
     /**
      * Speed of this ship.
      */
-    public final static int SPEED = 4;
+    public final static int SPEED = 8;
 
     Score score;
     Color shieldColor;
@@ -129,7 +129,7 @@ public class PlayerShip implements Hittable{
         // if dead, replace ship with failure text
         else{
             g.setColor(Color.red);
-            g.drawString ("You Died. Sorry.", 200, 250);
+            g.drawString ("You Died! Game will restart after this level.", SpaceSurvivor.GAME_WIDTH / 2 - 100, SpaceSurvivor.GAME_HEIGHT / 2);
         }
     }
     
@@ -212,6 +212,10 @@ public class PlayerShip implements Hittable{
         alive = false;
     }
 
+    public void alive(){
+    	alive = true;
+    }
+    
     public boolean isAlive() {
         return alive;
     }

@@ -8,6 +8,7 @@ import spaceSurvivor.SpaceSurvivor;
 import spaceSurvivor.ship.Bullet;
 import spaceSurvivor.ship.EnemyShip;
 import spaceSurvivor.ship.PlayerShip;
+import spaceSurvivor.ship.enemies.privateEnemies.SplitMiniEnemy;
 
 /*------------------------------------------------------------------------------
 These enemies split into 4 SplitMiniEnemies when they die

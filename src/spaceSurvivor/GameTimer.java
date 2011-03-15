@@ -40,7 +40,7 @@ public class GameTimer extends TimerTask{
         if(time < changeAtTime){
         	font = new Font("SansSerif", Font.PLAIN, 50 - time);
             g.setFont(font);
-        	g.drawString("Time left: " + time + "s", SpaceSurvivor.GAME_WIDTH / 2 - 130 + changeAtTime - time, 50 + changeAtTime - time);
+        	g.drawString("Time left: " + time + "s", SpaceSurvivor.GAME_WIDTH / 2 - 160 - changeAtTime + time, 50 + changeAtTime - time);
         }
         else{
         	g.drawString("Time left: " + time + "s", SpaceSurvivor.GAME_WIDTH / 2 - 80, 40);

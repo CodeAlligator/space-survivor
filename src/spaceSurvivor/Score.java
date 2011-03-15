@@ -27,9 +27,16 @@ public class Score {
 	 * Instantiates new <code>Score</code> object with score of 0, shield of 50, and ammo of 50.
 	 */
 	public Score() {
-		score = 0;
-        shield = 50;
-        ammo = 50;
+		this(50, 50);
+	}
+	
+	/**
+	 * Instantiates new <code>Score</code> object with the values being passed.
+	 */
+	public Score(int shield, int ammo) {
+		this.score = 0;
+        this.shield = shield;
+        this.ammo = ammo;
 	}
 	
 	/**
@@ -85,8 +92,26 @@ public class Score {
      */
     public void addShield(int add){
         shield += add;
-        if (shield>100) shield = 100;
-        if (shield<0) shield = 0;
+        if (shield > 100) shield = 100;
+        if (shield < 0) shield = 0;
+    }
+    
+    /**
+     * 
+     * @param add	amount to add to this ammo
+     */
+    public void setAmmo(int ammo){
+        this.ammo = ammo;
+    }
+    
+    /**
+     * 
+     * @param add	amount to add to this shield
+     */
+    public void setShield(int shield){
+    	this.shield = shield;
+        if (shield > 100) shield = 100;
+        if (shield < 0) shield = 0;
     }
     
     /**

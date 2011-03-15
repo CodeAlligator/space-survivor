@@ -45,6 +45,16 @@ public class Level {
 	private int levelTime;
 	
 	/**
+	 * Number of bullets when level starts.
+	 */
+	private int ammo;
+	
+	/**
+	 * Percent of shield when level starts.
+	 */
+	private int shield;
+	
+	/**
 	 * Default constructor.
 	 */
 	public Level(){
@@ -54,13 +64,15 @@ public class Level {
 	/**
 	 * Instantiates new <code>Level</code> object with these parameters.
 	 * @param enemyShips	
-	 * @param shipEntranceTimes	
+	 * @param shipEntranceTimes 
 	 * @param powerUps	
 	 * @param powerUpStartTimes	
 	 * @param powerUpStopTimes	
 	 * @param levelTime	
+	 * @param ammo 
+	 * @param shield 
 	 */
-	public Level(EnemyShip[] enemyShips, int[] shipEntranceTimes, PowerUp[] powerUps, int[] powerUpStartTimes, int[] powerUpStopTimes, int levelTime, int levelNumber) {
+	public Level(EnemyShip[] enemyShips, int[] shipEntranceTimes, PowerUp[] powerUps, int[] powerUpStartTimes, int[] powerUpStopTimes, int levelTime, int levelNumber, int ammo, int shield) {
 		this.enemyShips = enemyShips;
 		this.shipEntranceTimes = shipEntranceTimes;
 		this.powerUps = powerUps;
@@ -68,6 +80,8 @@ public class Level {
 		this.powerUpStopTimes = powerUpStopTimes;
 		this.levelTime = levelTime;
 		this.levelNumber = levelNumber;
+		this.ammo = ammo;
+		this.shield = shield;
 	}
 	
 	/**
@@ -166,5 +180,21 @@ public class Level {
 	 */
 	public void setLevelNumber(int levelNumber) {
 		this.levelNumber = levelNumber;
+	}
+
+	public int getAmmo() {
+		return ammo;
+	}
+
+	public void setAmmo(int ammo) {
+		this.ammo = ammo;
+	}
+
+	public int getShield() {
+		return shield;
+	}
+
+	public void setShield(int shield) {
+		this.shield = shield;
 	}
 }

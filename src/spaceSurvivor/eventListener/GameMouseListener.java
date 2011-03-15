@@ -22,7 +22,9 @@ public class GameMouseListener implements MouseListener, MouseMotionListener {
 	/**
 	 * whether mouse button was clicked
 	 */
-	private boolean clicked = false;
+	private boolean leftClicked = false;
+	
+	private boolean rightClicked = false;
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -40,8 +42,14 @@ public class GameMouseListener implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		//System.out.println("mouse released");
-		clicked = true;
+		if(e.getButton() == MouseEvent.BUTTON1){
+			//	left mouse button
+			leftClicked = true;
+		}
+		else if(e.getButton() == MouseEvent.BUTTON3){
+			//	right mouse button
+			rightClicked = true;
+		}
 	}
 	
 	@Override
@@ -57,12 +65,20 @@ public class GameMouseListener implements MouseListener, MouseMotionListener {
         mouseY = e.getY();
 	}
 	
-    public boolean getClicked(){
-        return clicked;
+    public boolean isLeftClicked(){
+        return leftClicked;
     }
 
-    public void clickReset(){
-        clicked = false;
+    public void leftClickReset(){
+        leftClicked = false;
+    }
+    
+    public boolean isRightClicked(){
+        return rightClicked;
+    }
+
+    public void rightClickReset(){
+    	rightClicked = false;
     }
     
 	public int getMouseX() {

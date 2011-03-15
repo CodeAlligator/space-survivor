@@ -1,4 +1,4 @@
-package spaceSurvivor.ship.enemies;
+package spaceSurvivor.ship.enemies.privateEnemies;
 
 import java.awt.Color;
 import java.awt.Graphics;

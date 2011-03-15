@@ -16,7 +16,7 @@ public class EnemyShip implements Hittable{
 
     protected double x,y,dx,dy,angle;
     public final static int RADIUS = 20;
-    public final static int SPEED = 4;
+    public final static int SPEED = 3;
     protected static Random generator = new Random ();
     protected PlayerShip p;
     protected Bullet[] shots;
@@ -24,6 +24,9 @@ public class EnemyShip implements Hittable{
     protected Score score;
     protected boolean alive;
     protected GameAudioPlayer audioFX = new GameAudioPlayer();
+    
+    public static final int HIT_PLAYER_ADD_TO_SCORE = -20;
+    public static final int HIT_PLAYER_ADD_TO_SHIELD = -10;
 
     public EnemyShip(){
         x = generator.nextInt(200) - 100; //spawn within 100 units of edges
@@ -69,9 +72,9 @@ public class EnemyShip implements Hittable{
             if(this.collidedWithPlayer()){
                 audioFX.playCrash();	//	play crash SFX
                 this.die();
-                score.addScore(-5);
+                score.addScore(HIT_PLAYER_ADD_TO_SCORE);
                 if (score.getShield()==0) p.die();
-                	score.addShield(-10);
+                	score.addShield(HIT_PLAYER_ADD_TO_SHIELD);
             }
 
         }
@@ -82,23 +85,28 @@ public class EnemyShip implements Hittable{
     }
 
     public boolean collidedWithPlayer(){
-		java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
+    	if(p.isAlive()){
+    		java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
 
-		//	get center of both objects
-		int thisCenterX = (int)thisBoundingBall.getCenterX();
-		int thisCenterY = (int)thisBoundingBall.getCenterY();
-		int otherCenterX = (int)p.getBoundingBall().getCenterX();
-		int otherCenterY = (int)p.getBoundingBall().getCenterY();
+    		//	get center of both objects
+    		int thisCenterX = (int)thisBoundingBall.getCenterX();
+    		int thisCenterY = (int)thisBoundingBall.getCenterY();
+    		int otherCenterX = (int)p.getBoundingBall().getCenterX();
+    		int otherCenterY = (int)p.getBoundingBall().getCenterY();
 
-		/*
-		 * underlying equation:
-		 * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
-		 */
-		double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
-		double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
-		double radiiComponent = Math.pow(RADIUS + p.getBoundingBall().height / 2, 2);
+    		/*
+    		 * underlying equation:
+    		 * (x1 - x2)^2 + (y1 - y2)^2 <= (r1 + r2)^2
+    		 */
+    		double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
+    		double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
+    		double radiiComponent = Math.pow(RADIUS + p.getBoundingBall().height / 2, 2);
 
-		return (xComponent + yComponent) <= radiiComponent;
+    		return (xComponent + yComponent) <= radiiComponent;
+    	}
+    	else{
+    		return false;
+    	}
     }
 
     public boolean collidedWithEnemy(EnemyShip e) {
