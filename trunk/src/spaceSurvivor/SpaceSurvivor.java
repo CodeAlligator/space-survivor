@@ -235,9 +235,6 @@ public class SpaceSurvivor extends JFrame implements Runnable{
         for(int i = 0; i < level.getPowerUps().length; i++){
         	powers[i] = level.getPowerUps()[i];
         }
-        
-        
-	    
 	}
 	
 	/**
@@ -597,7 +594,7 @@ public class SpaceSurvivor extends JFrame implements Runnable{
     }
     
     /**
-     * Determines if player ship has collided with any enemy ships.
+     * Determines if player ship has collided with any other elements (e.g. powerups or bullets)
      * @return
      */
     public void checkPlayerCollisions(){
@@ -647,8 +644,8 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 	                enemyShips[i].move(player, shots, enemyShips, score);
 
 	            // update powerups (time could expire)
-	                         for (int i=0; i<level.getPowerUps().length; i++)
-	                            powers[i].update();
+				for (int i=0; i<level.getPowerUps().length; i++)
+					powers[i].update();
 	            
 				player.move();
 				

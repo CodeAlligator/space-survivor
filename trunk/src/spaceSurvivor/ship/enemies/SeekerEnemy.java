@@ -16,7 +16,7 @@ public class SeekerEnemy extends EnemyShip {
 
     @Override
     public void draw(Graphics g) {
-        if(alive){
+        if(isAlive()){
             g.setColor(Color.RED);
             g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
         }
@@ -24,7 +24,7 @@ public class SeekerEnemy extends EnemyShip {
 
     @Override
     public void move() {
-        if(alive){
+        if(isAlive()){
             
             x += dx;
             y += dy;
