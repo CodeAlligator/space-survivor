@@ -469,10 +469,10 @@ public class SpaceSurvivor extends JFrame implements Runnable{
 		g.drawString("If your shield gets to 0%, you die.", splashX + 200, firstLineY + lineSpacing * 6);
 		g.drawString("The color of the ring around your ship reflects the amount of shield remaining (green=good, red=bad).", splashX + 200, firstLineY + lineSpacing * 7);
 		g.drawString("Game controls:", splashX + 200, firstLineY + lineSpacing * 9);
-		g.drawString("W moves up", splashX + 250, firstLineY + lineSpacing * 10);
-		g.drawString("A moves left", splashX + 250, firstLineY + lineSpacing * 11);
-		g.drawString("S moves down", splashX + 250, firstLineY + lineSpacing * 12);
-		g.drawString("D moves right", splashX + 250, firstLineY + lineSpacing * 13);
+		g.drawString("W or Up Arrow moves up", splashX + 250, firstLineY + lineSpacing * 10);
+		g.drawString("A or Left Arrow moves left", splashX + 250, firstLineY + lineSpacing * 11);
+		g.drawString("S or Down Arrow moves down", splashX + 250, firstLineY + lineSpacing * 12);
+		g.drawString("D or Right Arrow moves right", splashX + 250, firstLineY + lineSpacing * 13);
 		g.drawString("Move mouse to rotate gun", splashX + 250, firstLineY + lineSpacing * 14);
 		g.drawString("Left mouse click to fire gun", splashX + 250, firstLineY + lineSpacing * 15);
 		g.drawString("To quit the game: Press Esc, Q, or End", splashX + 250, firstLineY + lineSpacing * 17);

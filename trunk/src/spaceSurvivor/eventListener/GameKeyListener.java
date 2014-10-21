@@ -35,6 +35,22 @@ public class GameKeyListener implements KeyListener{
             	keyRightPressed = true;
             	//System.out.println("Key press: right");
                 break;
+            case KeyEvent.VK_UP:
+            	keyUpPressed = true;
+            	//System.out.println("Key press: up");
+                break;
+            case KeyEvent.VK_LEFT:
+            	keyLeftPressed = true;
+            	//System.out.println("Key press: left");
+                break;
+            case KeyEvent.VK_DOWN:
+            	keyDownPressed = true;
+            	//System.out.println("Key press: down");
+                break;
+            case KeyEvent.VK_RIGHT:
+            	keyRightPressed = true;
+            	//System.out.println("Key press: right");
+                break;
             case KeyEvent.VK_ENTER:
             	keyEnterPressed = true;
             	break;
@@ -58,6 +74,22 @@ public class GameKeyListener implements KeyListener{
             	//System.out.println("Key release: down");
                 break;
             case KeyEvent.VK_D:
+            	keyRightPressed = false;
+            	//System.out.println("Key release: right");
+                break;
+            case KeyEvent.VK_UP:
+            	keyUpPressed = false;
+            	//System.out.println("Key release: up");
+                break;
+            case KeyEvent.VK_LEFT:
+            	keyLeftPressed = false;
+            	//System.out.println("Key release: left");
+                break;
+            case KeyEvent.VK_DOWN:
+            	keyDownPressed = false;
+            	//System.out.println("Key release: down");
+                break;
+            case KeyEvent.VK_RIGHT:
             	keyRightPressed = false;
             	//System.out.println("Key release: right");
                 break;
