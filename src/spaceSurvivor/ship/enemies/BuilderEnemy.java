@@ -27,7 +27,6 @@ public class BuilderEnemy extends EnemyShip {
     angle = generator.nextDouble()*2*Math.PI; //random direction
     dx=SPEED*Math.cos(angle);
     dy=SPEED*Math.sin(angle);
-    alive = false;
     walls = new EnemyShip[100];
     moveCount = 0;
     wallIndex = 0;
@@ -73,7 +72,7 @@ public class BuilderEnemy extends EnemyShip {
 
     @Override
     public void move(PlayerShip p, Bullet[] shots, EnemyShip[] enemies, Score score){
-        if(alive){
+        if(isAlive()){
             this.p = p;
             this.shots = shots;
             this.enemies = enemies;
@@ -97,12 +96,13 @@ public class BuilderEnemy extends EnemyShip {
             if(this.collidedWithPlayer()){
                 audioFX.playCrash();	//	play crash SFX
                 this.die();
-                score.addScore(-5);
+                score.addScore(HIT_PLAYER_ADD_TO_SCORE);
                 if (score.getShield()==0) p.die();
-                	score.addShield(-10);
+                	score.addShield(HIT_PLAYER_ADD_TO_SHIELD);
             }
 
         }
+        
         //needs to move wall sprites in addition to itself
         for(int i=0;i<100;i++)
             walls[i].move(p, shots, enemies, score);
@@ -117,7 +117,7 @@ public class BuilderEnemy extends EnemyShip {
             }
         }
 
-         if(alive){
+         if(isAlive()){
             java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
 
             double thisCenterX = thisBoundingBall.getCenterX();

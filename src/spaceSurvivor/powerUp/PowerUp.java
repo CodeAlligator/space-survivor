@@ -36,7 +36,7 @@ public class PowerUp implements Hittable {
     
 	
 	public void draw(Graphics g){
-		//	TODO implement this method
+		
 	}
 	
     public void update(){

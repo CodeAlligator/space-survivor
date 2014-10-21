@@ -73,7 +73,7 @@ public class EnemyShip implements Hittable{
                 audioFX.playCrash();	//	play crash SFX
                 this.die();
                 score.addScore(HIT_PLAYER_ADD_TO_SCORE);
-                if (score.getShield()==0) p.die();
+                if (score.getShield()<=0) p.die();
                 	score.addShield(HIT_PLAYER_ADD_TO_SHIELD);
             }
 
@@ -152,7 +152,7 @@ public class EnemyShip implements Hittable{
                     double otherCenterY = shots[i].getBoundingBall().getCenterY();
 
                     // Sorta works, though not perfect   ~Andrew
-                    // checks bullet in 4 different previous spots since it moves fast enought to skip collisions
+                    // checks bullet in 4 different previous spots since it moves fast enough to skip collisions
                     double shotX,shotY;
                     for (double j=0;j<26;j+=1.0){
                         shotX = otherCenterX - (shots[i].getDX()*j/25);

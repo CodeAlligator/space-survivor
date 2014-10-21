@@ -142,18 +142,18 @@ public class PlayerShip implements Hittable{
 	
 	/**
 	 * Determines if this object has collided with another object.
-	 * @param enemyShip
+	 * @param collisionObject
 	 * @return	true if collided, false otherwise
 	 */
-	public boolean collided(Hittable enemyShip){
-        if(enemyShip.isAlive()){
+	public boolean collided(Hittable collisionObject){
+        if(collisionObject.isAlive()){
 			java.awt.geom.Ellipse2D.Double playerBoundingBall = getBoundingBall();
 	
 			//	get center of both objects
 			int thisCenterX = (int)playerBoundingBall.getCenterX();
 			int thisCenterY = (int)playerBoundingBall.getCenterY();
-			int otherCenterX = (int)enemyShip.getBoundingBall().getCenterX();
-			int otherCenterY = (int)enemyShip.getBoundingBall().getCenterY();
+			int otherCenterX = (int)collisionObject.getBoundingBall().getCenterX();
+			int otherCenterY = (int)collisionObject.getBoundingBall().getCenterY();
 			
 			/*
 			 * underlying equation:
@@ -161,7 +161,7 @@ public class PlayerShip implements Hittable{
 			 */
 			double xComponent = Math.pow(thisCenterX - otherCenterX, 2);
 			double yComponent = Math.pow(thisCenterY - otherCenterY, 2);
-			double radiiComponent = Math.pow(RADIUS + enemyShip.getBoundingBall().height / 2, 2);
+			double radiiComponent = Math.pow(RADIUS + collisionObject.getBoundingBall().height / 2, 2);
 			
 			return (xComponent + yComponent) <= radiiComponent;
         }

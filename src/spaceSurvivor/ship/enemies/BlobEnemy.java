@@ -29,7 +29,6 @@ public class BlobEnemy extends EnemyShip {
         angle = generator.nextDouble()*2*Math.PI; //random direction
         dx=SPEED*Math.cos(angle);
         dy=SPEED*Math.sin(angle);
-        alive = false;
         leftBlob = null;
         rightBlob = null;
         moveCount = 0;
@@ -43,6 +42,7 @@ public class BlobEnemy extends EnemyShip {
             g.setColor(Color.GREEN);
             g.fillOval((int)x-RADIUS, (int)y-RADIUS, RADIUS*2, RADIUS*2);
         }
+        
         //draw siblings
         if(leftBlob != null) leftBlob.draw(g);
         if(rightBlob != null) rightBlob.draw(g);
@@ -51,7 +51,6 @@ public class BlobEnemy extends EnemyShip {
     @Override
     public void move(){
         if (isAlive()){
-            
             moveCount++;
 
             //periodically grow if level isn't too big (grows new and dead siblings)
@@ -98,7 +97,7 @@ public class BlobEnemy extends EnemyShip {
 
     @Override
     public void move(PlayerShip p, Bullet[] shots, EnemyShip[] enemies, Score score){
-        if(alive){
+        if(isAlive()){
             this.p = p;
             this.shots = shots;
             this.enemies = enemies;
@@ -122,12 +121,13 @@ public class BlobEnemy extends EnemyShip {
             if(this.collidedWithPlayer()){
                 audioFX.playCrash();	//	play crash SFX
                 this.die();
-                score.addScore(-5);
+                score.addScore(HIT_PLAYER_ADD_TO_SCORE);
                 if (score.getShield()==0) p.die();
-                	score.addShield(-10);
+                	score.addShield(HIT_PLAYER_ADD_TO_SHIELD);
             }
 
         }
+        
         //move siblings
         if(leftBlob != null) leftBlob.move(p, shots, enemies, score);
         if(rightBlob != null) rightBlob.move(p, shots, enemies, score);
@@ -144,7 +144,7 @@ public class BlobEnemy extends EnemyShip {
                 rightBlob.die();
 
         //check own collisions
-        if(alive){
+        if(isAlive()){
             java.awt.geom.Ellipse2D.Double thisBoundingBall = getBoundingBall();
 
             double thisCenterX = thisBoundingBall.getCenterX();
@@ -158,7 +158,7 @@ public class BlobEnemy extends EnemyShip {
                     double otherCenterY = shots[i].getBoundingBall().getCenterY();
 
 //                  // Sorta works, though not perfect   ~Andrew
-                    // checks bullet in 4 different previous spots since it moves fast enought to skip collisions
+                    // checks bullet in 4 different previous spots since it moves fast enough to skip collisions
                     double shotX,shotY;
                     for (double j=0;j<26;j+=1.0){
                         shotX = otherCenterX - (shots[i].getDX()*j/25);
@@ -179,6 +179,7 @@ public class BlobEnemy extends EnemyShip {
                     }
                 }
             }
+            
             return hitBullet;
         }
         
